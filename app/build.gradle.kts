@@ -126,6 +126,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+            if (file("keystore/release.keystore").exists()) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
         debug {
             if (applicationIdOverride == null) {

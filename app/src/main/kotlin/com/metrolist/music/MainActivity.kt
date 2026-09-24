@@ -195,6 +195,7 @@ import com.metrolist.music.ui.screens.navigationBuilder
 import com.metrolist.music.ui.screens.settings.ChangelogScreen
 import com.metrolist.music.ui.screens.settings.DarkMode
 import com.metrolist.music.ui.screens.settings.NavigationTab
+import com.metrolist.music.ui.screens.update.MandatoryUpdateScreen
 import com.metrolist.music.ui.theme.ColorSaver
 import com.metrolist.music.ui.theme.DefaultThemeColor
 import com.metrolist.music.ui.theme.MetrolistTheme
@@ -473,14 +474,29 @@ class MainActivity : FragmentActivity() {
         }
 
         setContent {
-            MetrolistApp(
-                latestVersionName = latestVersionName,
-                onLatestVersionNameChange = { latestVersionName = it },
-                playerConnection = playerConnectionSnapshot,
-                database = database,
-                downloadUtil = downloadUtil,
-                syncUtils = syncUtils,
-            )
+            var mandatoryUpdateRelease by remember { mutableStateOf<ReleaseInfo?>(null) }
+
+            LaunchedEffect(Unit) {
+                Updater.checkForUpdate(forceRefresh = true).onSuccess { (releaseInfo, hasUpdate) ->
+                    if (hasUpdate && releaseInfo != null) {
+                        mandatoryUpdateRelease = releaseInfo
+                    }
+                }
+            }
+
+            val pendingMandatoryUpdate = mandatoryUpdateRelease
+            if (pendingMandatoryUpdate != null) {
+                MandatoryUpdateScreen(releaseInfo = pendingMandatoryUpdate)
+            } else {
+                MetrolistApp(
+                    latestVersionName = latestVersionName,
+                    onLatestVersionNameChange = { latestVersionName = it },
+                    playerConnection = playerConnectionSnapshot,
+                    database = database,
+                    downloadUtil = downloadUtil,
+                    syncUtils = syncUtils,
+                )
+            }
         }
     }
 

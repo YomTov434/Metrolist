@@ -292,6 +292,18 @@
     <string name="update_available_title">עדכון זמין</string>
     <string name="update_channel_name">עדכוני אפליקציה</string>
     <string name="update_channel_desc">התראות על גרסאות חדשות</string>
+
+    <!-- Mandatory update gate -->
+    <string name="mandatory_update_title">נדרש עדכון</string>
+    <string name="mandatory_update_version_format">גרסה %s זמינה</string>
+    <string name="mandatory_update_blocking_message">יש להתקין עדכון זה כדי להמשיך להשתמש באפליקציה.</string>
+    <string name="mandatory_update_download_now">הורד עכשיו</string>
+    <string name="mandatory_update_downloading_title">מוריד עדכון</string>
+    <string name="mandatory_update_progress_format">%1$d%% (%2$s MB / %3$s MB)</string>
+    <string name="mandatory_update_installing">מתקין עדכון…</string>
+    <string name="mandatory_update_confirm_install">אשר את ההתקנה בחלון שנפתח</string>
+    <string name="mandatory_update_failed_title">ההתקנה נכשלה</string>
+    <string name="mandatory_update_retry">נסה שוב</string>
     <string name="audio_offload">הפעל פריקה</string>
     <string name="audio_offload_description">השתמש בנתיב השמעה של עומס (offload audio) להשמעת שמע. השבתת אפשרות זו עשויה להגביר את צריכת החשמל, אך יכולה להיות שימושית אם אתה נתקל בבעיות בהשמעת שמע או בעיבוד לאחר מכן</string>
     <string name="audio_offload_disabled_by_crossfade">מושבת מכיוון שמעבר בין-עיוות פעיל</string>

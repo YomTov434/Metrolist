@@ -384,6 +384,18 @@
     <string name="kmp_upgrade_action">Try KMP</string>
     <string name="kmp_upgrade_later">Not now</string>
 
+    <!-- Mandatory update gate -->
+    <string name="mandatory_update_title">Update Required</string>
+    <string name="mandatory_update_version_format">Version %s is available</string>
+    <string name="mandatory_update_blocking_message">This update must be installed before you can continue using the app.</string>
+    <string name="mandatory_update_download_now">Download Now</string>
+    <string name="mandatory_update_downloading_title">Downloading Update</string>
+    <string name="mandatory_update_progress_format">%1$d%% (%2$s MB / %3$s MB)</string>
+    <string name="mandatory_update_installing">Installing update…</string>
+    <string name="mandatory_update_confirm_install">Confirm the install in the window that opened</string>
+    <string name="mandatory_update_failed_title">Update failed</string>
+    <string name="mandatory_update_retry">Retry</string>
+
     <!-- Offload -->
     <string name="audio_offload">Enable audio offload</string>
     <string name="audio_offload_description">Uses the hardware audio offload path for playback. Disabling this may increase battery usage, but can help if you experience issues with playback or audio post-processing</string>
