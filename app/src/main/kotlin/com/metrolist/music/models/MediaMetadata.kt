@@ -6,7 +6,6 @@
 package com.metrolist.music.models
 
 import androidx.compose.runtime.Immutable
-import com.metrolist.innertube.models.EpisodeItem
 import com.metrolist.innertube.models.SongItem
 import com.metrolist.innertube.models.WatchEndpoint.WatchEndpointMusicSupportedConfigs.WatchEndpointMusicConfig.Companion.MUSIC_VIDEO_TYPE_ATV
 import com.metrolist.music.db.entities.Song
@@ -33,7 +32,6 @@ data class MediaMetadata(
     val libraryAddToken: String? = null,
     val libraryRemoveToken: String? = null,
     val suggestedBy: String? = null,
-    val isEpisode: Boolean = false,
     val uploadEntityId: String? = null,
 ) : Serializable {
     val isVideoSong: Boolean
@@ -64,7 +62,6 @@ data class MediaMetadata(
             libraryAddToken = libraryAddToken,
             libraryRemoveToken = libraryRemoveToken,
             isVideo = isVideoSong,
-            isEpisode = isEpisode,
             uploadEntityId = uploadEntityId
         )
 
@@ -78,7 +75,6 @@ data class MediaMetadata(
         thumbnail = thumbnailUrl ?: "",
         explicit = explicit,
         setVideoId = setVideoId,
-        isEpisode = isEpisode,
         uploadEntityId = uploadEntityId
     )
 }
@@ -112,7 +108,6 @@ fun Song.toMediaMetadata() =
         // Use a non-ATV type if isVideo is true to indicate it's a video song
         musicVideoType = if (song.isVideo) "MUSIC_VIDEO_TYPE_OMV" else null,
         suggestedBy = null,
-        isEpisode = song.isEpisode,
     )
 
 /**
@@ -145,35 +140,5 @@ fun SongItem.toMediaMetadata() =
         libraryAddToken = libraryAddToken,
         libraryRemoveToken = libraryRemoveToken,
         suggestedBy = null,
-        isEpisode = isEpisode,
         uploadEntityId = uploadEntityId
-    )
-
-/**
- * Converts an InnerTube [EpisodeItem] into a [MediaMetadata] instance.
- * The episode's podcast is mapped to [MediaMetadata.Album] and [MediaMetadata.isEpisode] is set.
- */
-fun EpisodeItem.toMediaMetadata() =
-    MediaMetadata(
-        id = id,
-        title = title,
-        artists = listOfNotNull(author).map {
-            MediaMetadata.Artist(
-                id = it.id,
-                name = ArtistNameAliases.resolve(it.id, it.name),
-            )
-        },
-        duration = duration ?: -1,
-        thumbnailUrl = thumbnail.resize(1080, 1080),
-        album = podcast?.let {
-            MediaMetadata.Album(
-                id = it.id,
-                title = it.name,
-            )
-        },
-        explicit = explicit,
-        suggestedBy = null,
-        isEpisode = true,
-        libraryAddToken = libraryAddToken,
-        libraryRemoveToken = libraryRemoveToken,
     )

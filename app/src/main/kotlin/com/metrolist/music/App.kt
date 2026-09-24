@@ -32,6 +32,7 @@ import com.metrolist.music.constants.*
 import com.metrolist.music.di.ApplicationScope
 import com.metrolist.music.extensions.toEnum
 import com.metrolist.music.extensions.toInetSocketAddress
+import com.metrolist.music.utils.BrandImageInterceptor
 import com.metrolist.music.utils.CrashHandler
 import com.metrolist.music.utils.ArtistNameAliases
 import com.metrolist.music.utils.InnerTubeXPlayer
@@ -302,6 +303,13 @@ class App :
         return ImageLoader
             .Builder(this)
             .apply {
+                // Brand policy: no real artwork is ever fetched or rendered anywhere in the
+                // app (or in the notification/lock screen/Android Auto/widgets, which resolve
+                // artwork through this same singleton via CoilBitmapLoader). This interceptor
+                // must stay first so no other component can see the original request data.
+                components {
+                    add(BrandImageInterceptor())
+                }
                 crossfade(true)
                 allowHardware(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
                 // Memory cache for fast image loading (prevents network requests on recomposition)

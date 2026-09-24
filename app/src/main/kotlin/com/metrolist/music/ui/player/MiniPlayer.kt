@@ -108,7 +108,6 @@ import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 import com.metrolist.music.ui.component.Icon as MIcon
-import androidx.compose.ui.draw.blur
 import com.metrolist.music.constants.MiniPlayerBackgroundStyle
 import com.metrolist.music.constants.MiniPlayerBackgroundStyleKey
 import androidx.compose.runtime.LaunchedEffect
@@ -397,8 +396,7 @@ private fun NewMiniPlayer(
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier
-                                    .fillMaxSize()
-                                    .blur(60.dp),
+                                    .fillMaxSize(),
                             )
                             Box(
                                 Modifier
@@ -1093,9 +1091,7 @@ private fun FavoriteButton(
     val database = LocalDatabase.current
     val playerConnection = LocalPlayerConnection.current ?: return
     val librarySong by database.song(songId).collectAsStateWithLifecycle(initialValue = null)
-    // For episodes, show saved state (inLibrary); for songs, show liked state
-    val isEpisode = librarySong?.song?.isEpisode == true
-    val isLiked = if (isEpisode) librarySong?.song?.inLibrary != null else librarySong?.song?.liked == true
+    val isLiked = librarySong?.song?.liked == true
 
     Box(
         contentAlignment = Alignment.Center,

@@ -37,7 +37,6 @@ import com.metrolist.music.ui.screens.playlist.CachePlaylistScreen
 import com.metrolist.music.ui.screens.playlist.LocalPlaylistScreen
 import com.metrolist.music.ui.screens.playlist.OnlinePlaylistScreen
 import com.metrolist.music.ui.screens.playlist.TopPlaylistScreen
-import com.metrolist.music.ui.screens.podcast.OnlinePodcastScreen
 import com.metrolist.music.ui.screens.recognition.RecognitionHistoryScreen
 import com.metrolist.music.ui.screens.recognition.RecognitionScreen
 import com.metrolist.music.ui.screens.search.OnlineSearchResult
@@ -196,15 +195,11 @@ fun NavGraphBuilder.navigationBuilder(
     }
 
     composable(
-        route = "artist/{artistId}?isPodcastChannel={isPodcastChannel}",
+        route = "artist/{artistId}",
         arguments =
             listOf(
                 navArgument("artistId") {
                     type = NavType.StringType
-                },
-                navArgument("isPodcastChannel") {
-                    type = NavType.BoolType
-                    defaultValue = false
                 },
             ),
     ) {
@@ -265,18 +260,6 @@ fun NavGraphBuilder.navigationBuilder(
             ),
     ) {
         OnlinePlaylistScreen(navController)
-    }
-
-    composable(
-        route = "online_podcast/{podcastId}",
-        arguments =
-            listOf(
-                navArgument("podcastId") {
-                    type = NavType.StringType
-                },
-            ),
-    ) {
-        OnlinePodcastScreen(navController, scrollBehavior)
     }
 
     composable(

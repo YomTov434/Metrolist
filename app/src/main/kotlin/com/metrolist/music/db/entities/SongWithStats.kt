@@ -28,7 +28,6 @@ data class SongWithStats(
             "lastUpdateTime",
             "bookmarkedAt",
             "isLocal",
-            "isPodcastChannel",
         ],
         associateBy = Junction(
             value = SortedSongArtistMap::class,  // Junction table for the many-to-many relationship

@@ -14,9 +14,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.metrolist.innertube.YouTube
 import com.metrolist.innertube.models.AlbumItem
-import com.metrolist.innertube.models.EpisodeItem
 import com.metrolist.innertube.models.PlaylistItem
-import com.metrolist.innertube.models.PodcastItem
 import com.metrolist.innertube.models.SongItem
 import com.metrolist.innertube.models.filterExplicit
 import com.metrolist.innertube.models.filterVideoSongs
@@ -64,7 +62,6 @@ class ArtistViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     val artistId = savedStateHandle.get<String>("artistId")!!
-    private val isPodcastChannel = savedStateHandle.get<Boolean>("isPodcastChannel") ?: false
     var artistPage by mutableStateOf<ArtistPage?>(null)
 
     // Track API subscription state separately
@@ -165,8 +162,6 @@ class ArtistViewModel @Inject constructor(
                                 is SongItem -> item.copy(artists = item.artists.map { it.resolve() })
                                 is AlbumItem -> item.copy(artists = item.artists?.map { it.resolve() })
                                 is PlaylistItem -> item.copy(author = item.author?.resolve())
-                                is EpisodeItem -> item.copy(author = item.author?.resolve())
-                                is PodcastItem -> item.copy(author = item.author?.resolve())
                                 else -> item
                             }
                         })
@@ -283,12 +278,10 @@ class ArtistViewModel @Inject constructor(
                 } else {
                     null
                 }
-                // Also set isPodcastChannel if subscribing from podcast context
                 val updatedArtist = artist.copy(
                     bookmarkedAt = newBookmark,
-                    isPodcastChannel = if (shouldBeSubscribed && isPodcastChannel) true else artist.isPodcastChannel
                 )
-                Timber.d("[CHANNEL_TOGGLE] Updating existing artist: ${artist.id} -> bookmarkedAt=$newBookmark, isPodcastChannel=${updatedArtist.isPodcastChannel}")
+                Timber.d("[CHANNEL_TOGGLE] Updating existing artist: ${artist.id} -> bookmarkedAt=$newBookmark")
                 database.update(updatedArtist)
             } else if (shouldBeSubscribed) {
                 Timber.d("[CHANNEL_TOGGLE] No existing artist, inserting new one")
@@ -300,10 +293,9 @@ class ArtistViewModel @Inject constructor(
                             channelId = it.channelId,
                             thumbnailUrl = it.thumbnail,
                             bookmarkedAt = java.time.LocalDateTime.now(),
-                            isPodcastChannel = isPodcastChannel,
                         )
                     )
-                    Timber.d("[CHANNEL_TOGGLE] Inserted new artist: $artistId, isPodcastChannel=$isPodcastChannel")
+                    Timber.d("[CHANNEL_TOGGLE] Inserted new artist: $artistId")
                 } ?: Timber.d("[CHANNEL_TOGGLE] artistPage?.artist is null, cannot insert")
             } else {
                 Timber.d("[CHANNEL_TOGGLE] No artist and shouldBeSubscribed=false, nothing to do")

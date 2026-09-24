@@ -5,9 +5,7 @@ import androidx.room.PrimaryKey
 import com.metrolist.innertube.models.AlbumItem
 import com.metrolist.innertube.models.Artist
 import com.metrolist.innertube.models.ArtistItem
-import com.metrolist.innertube.models.EpisodeItem
 import com.metrolist.innertube.models.PlaylistItem
-import com.metrolist.innertube.models.PodcastItem
 import com.metrolist.innertube.models.SongItem
 import com.metrolist.innertube.models.YTItem
 
@@ -107,25 +105,6 @@ data class SpeedDialItem(
                     subtitleIds = item.author?.id,
                     thumbnailUrl = item.thumbnail,
                     type = "PLAYLIST"
-                )
-                is PodcastItem -> SpeedDialItem(
-                    id = item.id,
-                    title = item.title,
-                    subtitle = item.author?.name,
-                    subtitleIds = item.author?.id,
-                    thumbnailUrl = item.thumbnail,
-                    type = "PLAYLIST"
-                )
-                is EpisodeItem -> SpeedDialItem(
-                    id = item.id,
-                    title = item.title,
-                    subtitle = item.author?.name,
-                    subtitleIds = item.author?.id,
-                    thumbnailUrl = item.thumbnail,
-                    type = "SONG",
-                    explicit = item.explicit,
-                    albumId = item.podcast?.id,
-                    albumName = item.podcast?.name
                 )
             }
         }

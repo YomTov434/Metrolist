@@ -33,7 +33,7 @@ class AccountSettingsViewModel @Inject constructor(
 ) : ViewModel() {
 
     /**
-     * Clear all library data including songs, albums, artists, playlists, podcasts.
+     * Clear all library data including songs, albums, artists, playlists.
      */
     suspend fun clearAllLibraryData() {
         Timber.d("[LOGOUT_CLEAR] ViewModel: clearAllLibraryData called")

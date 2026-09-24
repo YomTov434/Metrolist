@@ -41,7 +41,6 @@ import com.metrolist.music.db.entities.Playlist
 import com.metrolist.music.db.entities.PlaylistEntity
 import com.metrolist.music.db.entities.PlaylistSong
 import com.metrolist.music.db.entities.PlaylistSongMap
-import com.metrolist.music.db.entities.PodcastEntity
 import com.metrolist.music.db.entities.RecognitionHistory
 import com.metrolist.music.db.entities.RelatedSongMap
 import com.metrolist.music.db.entities.SearchHistory
@@ -126,9 +125,6 @@ interface DatabaseDao {
 
     @Query("SELECT * FROM playlist ORDER BY name")
     suspend fun playlistEntitiesByNameAsc(): List<PlaylistEntity>
-
-    @Query("SELECT * FROM song WHERE isEpisode = 1 AND inLibrary IS NOT NULL ORDER BY inLibrary")
-    suspend fun savedEpisodeEntitiesByCreateDateAsc(): List<SongEntity>
 
     @Transaction
     @Query("SELECT * FROM song WHERE inLibrary IS NOT NULL ORDER BY rowId")
@@ -1243,15 +1239,15 @@ interface DatabaseDao {
     )
     fun playlistBlocking(playlistId: String): Playlist?
     @Transaction
-    @Query("SELECT * FROM song WHERE isDownloaded = 1 AND (isEpisode = 0 OR isEpisode IS NULL) ORDER BY dateDownload")
+    @Query("SELECT * FROM song WHERE isDownloaded = 1 ORDER BY dateDownload")
     fun downloadedSongsByCreateDateAsc(): Flow<List<Song>>
 
     @Transaction
-    @Query("SELECT * FROM song WHERE isDownloaded = 1 AND (isEpisode = 0 OR isEpisode IS NULL) ORDER BY title")
+    @Query("SELECT * FROM song WHERE isDownloaded = 1 ORDER BY title")
     fun downloadedSongsByNameAsc(): Flow<List<Song>>
 
     @Transaction
-    @Query("SELECT * FROM song WHERE isDownloaded = 1 AND (isEpisode = 0 OR isEpisode IS NULL) ORDER BY totalPlayTime")
+    @Query("SELECT * FROM song WHERE isDownloaded = 1 ORDER BY totalPlayTime")
     fun downloadedSongsByPlayTimeAsc(): Flow<List<Song>>
 
     @Query("UPDATE song SET isDownloaded = :downloaded, dateDownload = :date WHERE id = :songId")
@@ -1311,91 +1307,6 @@ interface DatabaseDao {
             }
 
         SongSortType.PLAY_TIME -> uploadedSongsByPlayTimeAsc()
-    }.map { it.reversed(descending) }
-
-    @Transaction
-    @Query("SELECT * FROM song WHERE isEpisode = 1 ORDER BY inLibrary")
-    fun podcastEpisodesByCreateDateAsc(): Flow<List<Song>>
-
-    @Transaction
-    @Query("SELECT * FROM song WHERE isEpisode = 1 ORDER BY title")
-    fun podcastEpisodesByNameAsc(): Flow<List<Song>>
-
-    @Transaction
-    @Query("SELECT * FROM song WHERE isEpisode = 1 ORDER BY totalPlayTime")
-    fun podcastEpisodesByPlayTimeAsc(): Flow<List<Song>>
-
-    @Transaction
-    @Query("SELECT * FROM song WHERE isEpisode = 1 ORDER BY rowId")
-    fun podcastEpisodesByRowIdAsc(): Flow<List<Song>>
-
-    @Transaction
-    @Query("SELECT * FROM song WHERE isEpisode = 1 AND isDownloaded = 1 ORDER BY dateDownload")
-    fun downloadedPodcastEpisodesByCreateDateAsc(): Flow<List<Song>>
-
-    @Transaction
-    @Query("SELECT * FROM song WHERE isEpisode = 1 AND isDownloaded = 1 ORDER BY title")
-    fun downloadedPodcastEpisodesByNameAsc(): Flow<List<Song>>
-
-    @Transaction
-    @Query("SELECT * FROM song WHERE isEpisode = 1 AND isDownloaded = 1 ORDER BY totalPlayTime")
-    fun downloadedPodcastEpisodesByPlayTimeAsc(): Flow<List<Song>>
-
-    // Saved episodes (in library but not necessarily downloaded)
-    @Transaction
-    @Query("SELECT * FROM song WHERE isEpisode = 1 AND inLibrary IS NOT NULL ORDER BY inLibrary DESC")
-    fun savedPodcastEpisodesByCreateDateAsc(): Flow<List<Song>>
-
-    @Transaction
-    @Query("SELECT * FROM song WHERE isEpisode = 1 AND inLibrary IS NOT NULL ORDER BY title")
-    fun savedPodcastEpisodesByNameAsc(): Flow<List<Song>>
-
-    @Transaction
-    @Query("SELECT * FROM song WHERE isEpisode = 1 AND inLibrary IS NOT NULL ORDER BY totalPlayTime")
-    fun savedPodcastEpisodesByPlayTimeAsc(): Flow<List<Song>>
-
-    fun savedPodcastEpisodes(
-        sortType: SongSortType,
-        descending: Boolean,
-    ) = when (sortType) {
-        SongSortType.CREATE_DATE -> savedPodcastEpisodesByCreateDateAsc()
-        SongSortType.NAME ->
-            savedPodcastEpisodesByNameAsc().map { songs ->
-                val collator = Collator.getInstance(Locale.getDefault())
-                collator.strength = Collator.PRIMARY
-                songs.sortedWith(compareBy(collator) { it.song.title })
-            }
-        SongSortType.ARTIST ->
-            savedPodcastEpisodesByNameAsc().map { songs ->
-                val collator = Collator.getInstance(Locale.getDefault())
-                collator.strength = Collator.PRIMARY
-                songs.sortedWith(compareBy(collator) { song ->
-                    song.orderedArtists.joinToString("") { it.name }
-                })
-            }
-        SongSortType.PLAY_TIME -> savedPodcastEpisodesByPlayTimeAsc()
-    }.map { it.reversed(descending) }
-
-    fun downloadedPodcastEpisodes(
-        sortType: SongSortType,
-        descending: Boolean,
-    ) = when (sortType) {
-        SongSortType.CREATE_DATE -> downloadedPodcastEpisodesByCreateDateAsc()
-        SongSortType.NAME ->
-            downloadedPodcastEpisodesByNameAsc().map { songs ->
-                val collator = Collator.getInstance(Locale.getDefault())
-                collator.strength = Collator.PRIMARY
-                songs.sortedWith(compareBy(collator) { it.song.title })
-            }
-        SongSortType.ARTIST ->
-            downloadedPodcastEpisodesByNameAsc().map { songs ->
-                val collator = Collator.getInstance(Locale.getDefault())
-                collator.strength = Collator.PRIMARY
-                songs.sortedWith(compareBy(collator) { song ->
-                    song.orderedArtists.joinToString("") { it.name }
-                })
-            }
-        SongSortType.PLAY_TIME -> downloadedPodcastEpisodesByPlayTimeAsc()
     }.map { it.reversed(descending) }
 
     @Transaction
@@ -2013,34 +1924,4 @@ interface DatabaseDao {
         raw("PRAGMA wal_checkpoint(FULL)".toSQLiteQuery())
     }
 
-    // Podcast methods
-
-    @Query("SELECT * FROM podcast WHERE bookmarkedAt IS NOT NULL ORDER BY bookmarkedAt DESC")
-    fun subscribedPodcasts(): Flow<List<PodcastEntity>>
-
-    @Query("SELECT * FROM podcast WHERE id = :id")
-    fun podcast(id: String): Flow<PodcastEntity?>
-
-    @Transaction
-    @SuppressWarnings(RoomWarnings.QUERY_MISMATCH)
-    @Query("""
-        SELECT *, (SELECT COUNT(1) FROM song_artist_map JOIN song ON song_artist_map.songId = song.id WHERE artistId = artist.id AND song.inLibrary IS NOT NULL) AS songCount
-        FROM artist
-        WHERE artist.bookmarkedAt IS NOT NULL
-        AND artist.isPodcastChannel = 1
-        ORDER BY artist.name COLLATE NOCASE ASC
-    """)
-    fun bookmarkedPodcastChannels(): Flow<List<Artist>>
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(podcast: PodcastEntity): Long
-
-    @Update
-    fun update(podcast: PodcastEntity)
-
-    @Upsert
-    fun upsert(podcast: PodcastEntity)
-
-    @Delete
-    fun delete(podcast: PodcastEntity)
 }

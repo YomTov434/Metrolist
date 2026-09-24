@@ -16,7 +16,6 @@ import com.metrolist.innertube.models.filterYoutubeShorts
 import com.metrolist.innertube.utils.completed
 import com.metrolist.music.constants.HideYoutubeShortsKey
 import com.metrolist.music.db.MusicDatabase
-import com.metrolist.music.db.entities.PodcastEntity
 import com.metrolist.music.ui.utils.resize
 import com.metrolist.music.utils.dataStore
 import com.metrolist.music.utils.get
@@ -33,7 +32,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 enum class AccountContentType {
-    PLAYLISTS, ALBUMS, ARTISTS, PODCASTS
+    PLAYLISTS, ALBUMS, ARTISTS
 }
 
 @HiltViewModel
@@ -44,15 +43,6 @@ class AccountViewModel @Inject constructor(
     val playlists = MutableStateFlow<List<PlaylistItem>?>(null)
     val albums = MutableStateFlow<List<AlbumItem>?>(null)
     val artists = MutableStateFlow<List<ArtistItem>?>(null)
-    // SE "Episodes for Later" playlist shown in Podcasts tab
-    val sePlaylist = MutableStateFlow<PlaylistItem?>(null)
-    // RDPN "New Episodes" playlist (real thumbnail + count from YouTube)
-    val rdpnPlaylist = MutableStateFlow<PlaylistItem?>(null)
-    // Subscribed podcast shows (from local DB, synced from YT Music)
-    val podcastPlaylists = database.subscribedPodcasts()
-        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
-    // Podcast host channels from YT Music library
-    val podcastChannels = MutableStateFlow<List<ArtistItem>>(emptyList())
 
     // Selected content type for chips
     val selectedContentType = MutableStateFlow(AccountContentType.PLAYLISTS)
@@ -60,11 +50,7 @@ class AccountViewModel @Inject constructor(
     private suspend fun loadPlaylists() {
         val hideYoutubeShorts = context.dataStore.get(HideYoutubeShortsKey, false)
         YouTube.library("FEmusic_liked_playlists").completed().onSuccess {
-            val all = it.items.filterIsInstance<PlaylistItem>()
-            // Extract SE playlist separately for Podcasts tab
-            sePlaylist.value = all.find { it.id == "SE" }
-            playlists.value = all
-                .filterNot { it.id == "SE" }
+            playlists.value = it.items.filterIsInstance<PlaylistItem>()
                 .filterYoutubeShorts(hideYoutubeShorts)
         }.onFailure {
             reportException(it)
@@ -85,20 +71,6 @@ class AccountViewModel @Inject constructor(
                         thumbnail = artist.thumbnail?.resize(544, 544)
                     )
                 }
-            }.onFailure {
-                reportException(it)
-            }
-        }
-        viewModelScope.launch {
-            YouTube.newEpisodesPlaylistInfo().onSuccess {
-                rdpnPlaylist.value = it
-            }.onFailure {
-                reportException(it)
-            }
-        }
-        viewModelScope.launch(Dispatchers.IO) {
-            YouTube.libraryPodcastChannels().onSuccess {
-                podcastChannels.value = it.items.filterIsInstance<ArtistItem>()
             }.onFailure {
                 reportException(it)
             }

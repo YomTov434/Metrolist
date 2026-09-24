@@ -117,10 +117,6 @@ class HomeViewModel @Inject constructor(
     val selectedChip = MutableStateFlow<HomePage.Chip?>(null)
     private val previousHomePage = MutableStateFlow<HomePage?>(null)
 
-    // Official API data for podcast sections
-    val savedPodcastShows = MutableStateFlow<List<com.metrolist.innertube.models.PodcastItem>>(emptyList())
-    val episodesForLater = MutableStateFlow<List<SongItem>>(emptyList())
-
     val allLocalItems = MutableStateFlow<List<LocalItem>>(emptyList())
     val allYtItems = MutableStateFlow<List<YTItem>>(emptyList())
 
@@ -629,27 +625,6 @@ class HomeViewModel @Inject constructor(
                 }
             )
             selectedChip.value = chip
-
-            // Fetch podcast-specific data when podcasts chip is selected
-            if (chip.title.contains("Podcast", ignoreCase = true)) {
-                fetchPodcastData()
-            }
-        }
-    }
-
-    private suspend fun fetchPodcastData() {
-        // Fetch saved podcast shows from official API
-        YouTube.savedPodcastShows().onSuccess { shows ->
-            savedPodcastShows.value = shows.filterOutNulls()
-        }.onFailure {
-            reportException(it)
-        }
-
-        // Fetch episodes for later from official API
-        YouTube.episodesForLater().onSuccess { episodes ->
-            episodesForLater.value = episodes.filterOutNulls()
-        }.onFailure {
-            reportException(it)
         }
     }
 

@@ -88,7 +88,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -863,8 +862,7 @@ fun BottomSheetPlayer(
                                         contentScale = ContentScale.Crop,
                                         modifier =
                                             Modifier
-                                                .fillMaxSize()
-                                                .blur(if (useDarkTheme) 150.dp else 100.dp),
+                                                .fillMaxSize(),
                                     )
                                     Box(
                                         modifier =
@@ -1232,9 +1230,7 @@ fun BottomSheetPlayer(
                                     )
                                 }
                             } else {
-                                // For episodes, show saved state (inLibrary); for songs, show liked state
-                                val isEpisode = currentSong?.song?.isEpisode == true
-                                val isFavorite = if (isEpisode) currentSong?.song?.inLibrary != null else currentSong?.song?.liked == true
+                                val isFavorite = currentSong?.song?.liked == true
                                 FilledIconButton(
                                     onClick = playerConnection::toggleLike,
                                     shape = favShape,
@@ -1821,9 +1817,7 @@ fun BottomSheetPlayer(
                             }
 
                             Box(modifier = Modifier.weight(1f)) {
-                                // For episodes, show saved state (inLibrary); for songs, show liked state
-                                val isEpisode = currentSong?.song?.isEpisode == true
-                                val isFavorite = if (isEpisode) currentSong?.song?.inLibrary != null else currentSong?.song?.liked == true
+                                val isFavorite = currentSong?.song?.liked == true
                                 ResizableIconButton(
                                     icon = if (isFavorite) R.drawable.favorite else R.drawable.favorite_border,
                                     color = if (isFavorite) MaterialTheme.colorScheme.error else TextBackgroundColor,

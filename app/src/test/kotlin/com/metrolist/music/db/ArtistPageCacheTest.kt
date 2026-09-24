@@ -53,7 +53,6 @@ class ArtistPageCacheTest {
                     channelId = "UCchannel",
                     lastUpdateTime = UPDATED_AT,
                     bookmarkedAt = BOOKMARKED_AT,
-                    isPodcastChannel = true,
                     cachedPageJson = CACHED_PAGE,
                 ),
             )
@@ -88,7 +87,6 @@ class ArtistPageCacheTest {
         assertEquals(UPDATED_AT, artist.lastUpdateTime)
         assertEquals(BOOKMARKED_AT, artist.bookmarkedAt)
         assertEquals(false, artist.isLocal)
-        assertEquals(true, artist.isPodcastChannel)
     }
 
     @Test

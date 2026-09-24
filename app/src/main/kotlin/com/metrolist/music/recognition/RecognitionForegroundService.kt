@@ -17,7 +17,7 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import coil3.ImageLoader
+import coil3.imageLoader
 import coil3.request.ImageRequest
 import coil3.request.allowHardware
 import coil3.toBitmap
@@ -61,8 +61,6 @@ class RecognitionForegroundService : Service() {
     private var pulseJob: Job? = null
     private var keepNotificationOnStop = false
     private var terminalStateHandled = false
-
-    private val imageLoader by lazy { ImageLoader.Builder(this).build() }
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -395,7 +393,7 @@ class RecognitionForegroundService : Service() {
     private suspend fun loadBitmap(url: String): Bitmap? =
         withContext(Dispatchers.IO) {
             runCatching {
-                imageLoader
+                this@RecognitionForegroundService.imageLoader
                     .execute(
                         ImageRequest
                             .Builder(this@RecognitionForegroundService)

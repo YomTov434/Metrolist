@@ -176,9 +176,7 @@ fun QueueMenu(
         }
     }
 
-    // Song header with like button (for episodes, this toggles save for later)
-    val isEpisode = librarySong?.song?.isEpisode == true || mediaMetadata.isEpisode
-    val isFavorite = if (isEpisode) librarySong?.song?.inLibrary != null else librarySong?.song?.liked == true
+    val isFavorite = librarySong?.song?.liked == true
     MediaMetadataListItem(
         mediaMetadata = mediaMetadata,
         trailingContent = {
@@ -193,45 +191,11 @@ fun QueueMenu(
                         val dbSong = database.song(mediaMetadata.id).firstOrNull()
                         dbSong?.let { songWithArtists ->
                             val songEntity = songWithArtists.song
-                            if (songEntity.isEpisode) {
-                                // Episode: toggle save for later
-                                val isCurrentlySaved = songEntity.inLibrary != null
-                                database.query {
-                                    update(songEntity.copy(inLibrary = if (isCurrentlySaved) null else java.time.LocalDateTime.now()))
-                                }
-                                launch {
-                                    if (isCurrentlySaved) {
-                                        val setVideoIdEntity = database.getSetVideoId(songEntity.id)
-                                        val setVideoId = setVideoIdEntity?.setVideoId
-                                        if (setVideoId != null) {
-                                            YouTube.removeEpisodeFromSavedEpisodes(songEntity.id, setVideoId).onSuccess {
-                                                timber.log.Timber.d("[EPISODE_SAVE] Removed episode from Episodes for Later: ${songEntity.id}")
-                                            }.onFailure { e ->
-                                                timber.log.Timber.e(e, "[EPISODE_SAVE] Failed to remove episode: ${songEntity.id}")
-                                                kotlinx.coroutines.withContext(Dispatchers.Main) {
-                                                    android.widget.Toast.makeText(context, R.string.error_episode_remove, android.widget.Toast.LENGTH_SHORT).show()
-                                                }
-                                            }
-                                        }
-                                    } else {
-                                        YouTube.addEpisodeToSavedEpisodes(songEntity.id).onSuccess {
-                                            timber.log.Timber.d("[EPISODE_SAVE] Saved episode to Episodes for Later: ${songEntity.id}")
-                                        }.onFailure { e ->
-                                            timber.log.Timber.e(e, "[EPISODE_SAVE] Failed to save episode: ${songEntity.id}")
-                                            kotlinx.coroutines.withContext(Dispatchers.Main) {
-                                                android.widget.Toast.makeText(context, R.string.error_episode_save, android.widget.Toast.LENGTH_SHORT).show()
-                                            }
-                                        }
-                                    }
-                                }
-                            } else {
-                                // Regular song: toggle like
-                                val s = songEntity.toggleLike()
-                                database.query {
-                                    update(s)
-                                }
-                                syncUtils.likeSong(s)
+                            val s = songEntity.toggleLike()
+                            database.query {
+                                update(s)
                             }
+                            syncUtils.likeSong(s)
                         }
                     }
                 },

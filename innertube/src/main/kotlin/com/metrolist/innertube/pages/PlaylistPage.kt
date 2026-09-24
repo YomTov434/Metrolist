@@ -52,8 +52,7 @@ data class PlaylistPage(
                 endpoint = renderer.overlay?.musicItemThumbnailOverlayRenderer?.content?.musicPlayButtonRenderer?.playNavigationEndpoint?.watchEndpoint,
                 setVideoId = renderer.playlistSetVideoId ?: return null,
                 libraryAddToken = libraryTokens.addToken,
-                libraryRemoveToken = libraryTokens.removeToken,
-                isEpisode = renderer.isEpisode
+                libraryRemoveToken = libraryTokens.removeToken
             )
         }
     }

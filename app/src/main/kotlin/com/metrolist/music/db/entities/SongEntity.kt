@@ -56,8 +56,6 @@ data class SongEntity(
     val isUploaded: Boolean = false,
     @ColumnInfo(name = "isVideo", defaultValue = false.toString())
     val isVideo: Boolean = false,
-    @ColumnInfo(name = "isEpisode", defaultValue = false.toString())
-    val isEpisode: Boolean = false,
     @ColumnInfo(name = "playbackPosition", defaultValue = "NULL")
     val playbackPosition: Long? = null,
     @ColumnInfo(name = "uploadEntityId", defaultValue = "NULL")

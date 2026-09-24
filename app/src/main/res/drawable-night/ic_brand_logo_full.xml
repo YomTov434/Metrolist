@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PLACEHOLDER brand mark (dark theme) — replace with the real Gold Communications full logo asset. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="512dp"
+    android:height="256dp"
+    android:viewportWidth="512"
+    android:viewportHeight="256">
+    <path
+        android:fillColor="#E0B45C"
+        android:pathData="M128,8 C193.03,8 246,60.97 246,126 C246,191.03 193.03,246 128,246 C62.97,246 10,193.03 10,128 C10,62.97 62.97,8 128,8 Z" />
+    <path
+        android:fillColor="#15151A"
+        android:pathData="M88,148 L110,148 L110,192 L88,192 Z M117,100 L139,100 L139,192 L117,192 Z M146,124 L168,124 L168,192 L146,192 Z" />
+    <path
+        android:fillColor="#E0B45C"
+        android:pathData="M282,96 C282,89 287,84 294,84 L466,84 C473,84 478,89 478,96 C478,103 473,108 466,108 L294,108 C287,108 282,103 282,96 Z" />
+    <path
+        android:fillColor="#E0B45C"
+        android:pathData="M282,148 C282,141 287,136 294,136 L400,136 C407,136 412,141 412,148 C412,155 407,160 400,160 L294,160 C287,160 282,155 282,148 Z" />
+</vector>

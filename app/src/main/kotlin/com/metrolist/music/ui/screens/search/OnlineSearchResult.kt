@@ -69,17 +69,13 @@ import com.metrolist.music.LocalNavController
 import com.metrolist.innertube.YouTube.SearchFilter.Companion.FILTER_ALBUM
 import com.metrolist.innertube.YouTube.SearchFilter.Companion.FILTER_ARTIST
 import com.metrolist.innertube.YouTube.SearchFilter.Companion.FILTER_COMMUNITY_PLAYLIST
-import com.metrolist.innertube.YouTube.SearchFilter.Companion.FILTER_EPISODE
 import com.metrolist.innertube.YouTube.SearchFilter.Companion.FILTER_FEATURED_PLAYLIST
-import com.metrolist.innertube.YouTube.SearchFilter.Companion.FILTER_PODCAST
 import com.metrolist.innertube.YouTube.SearchFilter.Companion.FILTER_PROFILE
 import com.metrolist.innertube.YouTube.SearchFilter.Companion.FILTER_SONG
 import com.metrolist.innertube.YouTube.SearchFilter.Companion.FILTER_VIDEO
 import com.metrolist.innertube.models.AlbumItem
 import com.metrolist.innertube.models.ArtistItem
-import com.metrolist.innertube.models.EpisodeItem
 import com.metrolist.innertube.models.PlaylistItem
-import com.metrolist.innertube.models.PodcastItem
 import com.metrolist.innertube.models.SongItem
 import com.metrolist.innertube.models.WatchEndpoint
 import com.metrolist.innertube.models.YTItem
@@ -262,21 +258,6 @@ fun OnlineSearchResult(
                             onDismiss = menuState::dismiss,
                         )
                     }
-
-                    is PodcastItem -> {
-                        YouTubePlaylistMenu(
-                            playlist = item.asPlaylistItem(),
-                            coroutineScope = coroutineScope,
-                            onDismiss = menuState::dismiss,
-                        )
-                    }
-
-                    is EpisodeItem -> {
-                        YouTubeSongMenu(
-                            song = item.asSongItem(),
-                            onDismiss = menuState::dismiss,
-                        )
-                    }
                 }
             }
         }
@@ -286,7 +267,6 @@ fun OnlineSearchResult(
                 when (item) {
                     is SongItem -> mediaMetadata?.id == item.id
                     is AlbumItem -> mediaMetadata?.album?.id == item.id
-                    is EpisodeItem -> mediaMetadata?.id == item.id
                     else -> false
                 },
             isPlaying = isPlaying,
@@ -335,23 +315,6 @@ fun OnlineSearchResult(
 
                                 is PlaylistItem -> {
                                     navController.navigate("online_playlist/${item.id}")
-                                }
-
-                                is PodcastItem -> {
-                                    navController.navigate("online_podcast/${item.id}")
-                                }
-
-                                is EpisodeItem -> {
-                                    if (item.id == mediaMetadata?.id) {
-                                        playerConnection.togglePlayPause()
-                                    } else {
-                                        playerConnection.playQueue(
-                                            YouTubeQueue(
-                                                WatchEndpoint(videoId = item.id),
-                                                item.toMediaMetadata(),
-                                            ),
-                                        )
-                                    }
                                 }
                             }
                         },
@@ -468,8 +431,6 @@ fun OnlineSearchResult(
                             FILTER_ARTIST to stringResource(R.string.filter_artists),
                             FILTER_COMMUNITY_PLAYLIST to stringResource(R.string.filter_community_playlists),
                             FILTER_FEATURED_PLAYLIST to stringResource(R.string.filter_featured_playlists),
-                            FILTER_PODCAST to stringResource(R.string.filter_podcasts),
-                            FILTER_EPISODE to stringResource(R.string.filter_episodes),
                             FILTER_PROFILE to stringResource(R.string.filter_profiles),
                         )
 

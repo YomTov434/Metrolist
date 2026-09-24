@@ -28,7 +28,6 @@ data class Album(
             "lastUpdateTime",
             "bookmarkedAt",
             "isLocal",
-            "isPodcastChannel",
         ],
         associateBy =
         Junction(

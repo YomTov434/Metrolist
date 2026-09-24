@@ -221,45 +221,20 @@ fun YouTubeSongMenu(
             }
         },
         trailingContent = {
-            // For episodes, show saved state and toggle save for later
-            val isEpisode = song.isEpisode
-            val isFavorite = if (isEpisode) librarySong?.song?.inLibrary != null else librarySong?.song?.liked == true
+            val isFavorite = librarySong?.song?.liked == true
             IconButton(
                 onClick = {
-                    if (isEpisode) {
-                        // Episode: toggle save for later
-                        val currentLibrarySong = librarySong
-                        val isCurrentlySaved = currentLibrarySong?.song?.inLibrary != null
-                        val shouldBeSaved = !isCurrentlySaved
-
-                        // Update local database first (optimistic update)
-                        database.query {
-                            if (currentLibrarySong != null) {
-                                update(currentLibrarySong.song.copy(inLibrary = if (shouldBeSaved) LocalDateTime.now() else null))
+                    database.transaction {
+                        librarySong.let { librarySong ->
+                            val s: SongEntity
+                            if (librarySong == null) {
+                                insert(song.toMediaMetadata(), SongEntity::toggleLike)
+                                s = song.toMediaMetadata().toSongEntity().let(SongEntity::toggleLike)
                             } else {
-                                insert(song.toMediaMetadata().toSongEntity().copy(inLibrary = LocalDateTime.now(), isEpisode = true))
+                                s = librarySong.song.toggleLike()
+                                update(s)
                             }
-                        }
-
-                        // Sync with YouTube (handles login check internally)
-                        coroutineScope.launch(Dispatchers.IO) {
-                            val setVideoId = if (isCurrentlySaved) song.setVideoId ?: database.getSetVideoId(song.id)?.setVideoId else null
-                            syncUtils.saveEpisode(song.id, shouldBeSaved, setVideoId)
-                        }
-                    } else {
-                        // Regular song: toggle like
-                        database.transaction {
-                            librarySong.let { librarySong ->
-                                val s: SongEntity
-                                if (librarySong == null) {
-                                    insert(song.toMediaMetadata(), SongEntity::toggleLike)
-                                    s = song.toMediaMetadata().toSongEntity().let(SongEntity::toggleLike)
-                                } else {
-                                    s = librarySong.song.toggleLike()
-                                    update(s)
-                                }
-                                syncUtils.likeSong(s)
-                            }
+                            syncUtils.likeSong(s)
                         }
                     }
                 },
@@ -419,59 +394,6 @@ fun YouTubeSongMenu(
         item {
             Material3MenuGroup(
                 items = buildList {
-                    // Save/Remove for Later option for podcast episodes
-                    if (song.isEpisode) {
-                        if (song.setVideoId != null) {
-                            // Episode is saved - show remove option
-                            add(
-                                Material3MenuItemData(
-                                    title = { Text(text = stringResource(R.string.remove_episode_from_saved)) },
-                                    icon = {
-                                        Icon(
-                                            painter = painterResource(R.drawable.remove),
-                                            contentDescription = null,
-                                        )
-                                    },
-                                    onClick = {
-                                        // Update local database first (optimistic update)
-                                        database.query {
-                                            librarySong?.song?.let { update(it.copy(inLibrary = null)) }
-                                        }
-                                        // Sync with YouTube (handles login check internally)
-                                        syncUtils.saveEpisode(song.id, false, song.setVideoId)
-                                        onDismiss()
-                                    }
-                                )
-                            )
-                        } else {
-                            // Episode not saved - show save option
-                            add(
-                                Material3MenuItemData(
-                                    title = { Text(text = stringResource(R.string.save_episode_for_later)) },
-                                    description = { Text(text = stringResource(R.string.save_episode_for_later_desc)) },
-                                    icon = {
-                                        Icon(
-                                            painter = painterResource(R.drawable.playlist_add),
-                                            contentDescription = null,
-                                        )
-                                    },
-                                    onClick = {
-                                        // Update local database first (optimistic update)
-                                        database.query {
-                                            if (librarySong != null) {
-                                                update(librarySong!!.song.copy(inLibrary = java.time.LocalDateTime.now()))
-                                            } else {
-                                                insert(song.toMediaMetadata().toSongEntity().copy(inLibrary = java.time.LocalDateTime.now(), isEpisode = true))
-                                            }
-                                        }
-                                        // Sync with YouTube (handles login check internally)
-                                        syncUtils.saveEpisode(song.id, true, null)
-                                        onDismiss()
-                                    }
-                                )
-                            )
-                        }
-                    }
                     if (song.historyRemoveToken != null) {
                         add(
                             Material3MenuItemData(
@@ -638,13 +560,9 @@ fun YouTubeSongMenu(
         item { Spacer(modifier = Modifier.height(12.dp)) }
 
         item {
-            // Check if this is a podcast episode (album ID doesn't start with MPREb_)
-            val isPodcast = song.album?.let { !it.id.startsWith("MPREb_") } ?: false
-
             Material3MenuGroup(
                 items = buildList {
-                    // Don't show "View Artist" for podcasts - only show "View Podcast"
-                    if (artists.isNotEmpty() && !isPodcast) {
+                    if (artists.isNotEmpty()) {
                         add(
                             Material3MenuItemData(
                                 title = { Text(text = stringResource(R.string.view_artist)) },
@@ -675,20 +593,16 @@ fun YouTubeSongMenu(
                     song.album?.let { album ->
                         add(
                             Material3MenuItemData(
-                                title = { Text(text = stringResource(if (isPodcast) R.string.view_podcast else R.string.view_album)) },
+                                title = { Text(text = stringResource(R.string.view_album)) },
                                 description = { Text(text = album.name) },
                                 icon = {
                                     Icon(
-                                        painter = painterResource(if (isPodcast) R.drawable.mic else R.drawable.album),
+                                        painter = painterResource(R.drawable.album),
                                         contentDescription = null,
                                     )
                                 },
                                 onClick = {
-                                    if (isPodcast) {
-                                        navController.navigate("online_podcast/${album.id}")
-                                    } else {
-                                        navController.navigate("album/${album.id}")
-                                    }
+                                    navController.navigate("album/${album.id}")
                                     onDismiss()
                                 }
                             )

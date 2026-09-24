@@ -2,9 +2,7 @@ package com.metrolist.music.db.entities
 
 import com.metrolist.innertube.models.ArtistItem
 import com.metrolist.innertube.models.AlbumItem
-import com.metrolist.innertube.models.EpisodeItem
 import com.metrolist.innertube.models.PlaylistItem
-import com.metrolist.innertube.models.PodcastItem
 import com.metrolist.innertube.models.SongItem
 import com.metrolist.innertube.models.YTItem
 import com.metrolist.innertube.pages.ArtistSection
@@ -94,28 +92,6 @@ sealed class CachedItem {
         val channelId: String? = null
     ) : CachedItem()
 
-    @Serializable
-    @SerialName("podcast")
-    data class Podcast(
-        val id: String,
-        val title: String,
-        val thumbnail: String,
-        val author: CachedArtist? = null,
-        val episodeCountText: String? = null,
-        val channelId: String? = null
-    ) : CachedItem()
-
-    @Serializable
-    @SerialName("episode")
-    data class Episode(
-        val id: String,
-        val title: String,
-        val thumbnail: String,
-        val explicit: Boolean = false,
-        val author: CachedArtist? = null,
-        val album: CachedAlbum? = null,
-        val duration: Int? = null
-    ) : CachedItem()
 }
 
 @Serializable
@@ -235,26 +211,6 @@ private fun CachedItem.toYTItem(): YTItem {
             shuffleEndpoint = null,
             radioEndpoint = null,
         )
-        is CachedItem.Podcast -> PodcastItem(
-            id = id,
-            title = title,
-            thumbnail = thumbnail.takeIf { it.isNotBlank() },
-            author = author?.let { com.metrolist.innertube.models.Artist(it.name, it.id) },
-            episodeCountText = episodeCountText,
-            playEndpoint = null,
-            shuffleEndpoint = null,
-            channelId = channelId,
-        )
-        is CachedItem.Episode -> EpisodeItem(
-            id = id,
-            title = title,
-            thumbnail = thumbnail,
-            explicit = explicit,
-            author = author?.let { com.metrolist.innertube.models.Artist(it.name, it.id) },
-            podcast = album?.let { com.metrolist.innertube.models.Album(it.name, it.id) },
-            duration = duration,
-            endpoint = null,
-        )
     }
 }
 
@@ -293,23 +249,6 @@ private fun YTItem.toCachedItem(): CachedItem {
             title = title,
             thumbnail = thumbnail ?: "",
             channelId = channelId,
-        )
-        is PodcastItem -> CachedItem.Podcast(
-            id = id,
-            title = title,
-            thumbnail = thumbnail ?: "",
-            author = author?.let { CachedArtist(it.name, it.id) },
-            episodeCountText = episodeCountText,
-            channelId = channelId,
-        )
-        is EpisodeItem -> CachedItem.Episode(
-            id = id,
-            title = title,
-            thumbnail = thumbnail,
-            explicit = explicit,
-            author = author?.let { CachedArtist(it.name, it.id) },
-            album = podcast?.let { CachedAlbum(it.name, it.id) },
-            duration = duration,
         )
     }
 }

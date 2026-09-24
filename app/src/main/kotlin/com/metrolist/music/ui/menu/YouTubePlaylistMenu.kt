@@ -201,23 +201,6 @@ fun YouTubePlaylistMenu(
                                     database.addSongsToPlaylist(playlistFull, songIds)
                                 }
                             }
-                            if (playlist.isPodcast) {
-                                YouTube
-                                    .savePodcast(playlist.id, !isCurrentlySaved)
-                                    .onSuccess {
-                                        timber.log.Timber.d("[PODCAST_SAVE] savePodcast API success for ${playlist.id}")
-                                    }.onFailure { e ->
-                                        timber.log.Timber.e(e, "[PODCAST_SAVE] savePodcast API failed for ${playlist.id}")
-                                        withContext(Dispatchers.Main) {
-                                            android.widget.Toast
-                                                .makeText(
-                                                    context,
-                                                    if (isCurrentlySaved) R.string.error_podcast_unsubscribe else R.string.error_podcast_subscribe,
-                                                    android.widget.Toast.LENGTH_SHORT,
-                                                ).show()
-                                        }
-                                    }
-                            }
                         }
                     },
                 ) {

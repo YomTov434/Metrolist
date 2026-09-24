@@ -30,7 +30,6 @@ constructor(
             "lastUpdateTime",
             "bookmarkedAt",
             "isLocal",
-            "isPodcastChannel",
         ],
         associateBy =
             Junction(

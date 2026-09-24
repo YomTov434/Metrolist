@@ -7,24 +7,26 @@ package com.metrolist.music.utils
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.net.Uri
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.createBitmap
-import androidx.core.net.toUri
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.util.BitmapLoader
-import coil3.imageLoader
-import coil3.request.ErrorResult
-import coil3.request.ImageRequest
-import coil3.request.SuccessResult
-import coil3.request.allowHardware
-import coil3.toBitmap
 import com.google.common.util.concurrent.ListenableFuture
+import com.metrolist.music.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.guava.future
 import timber.log.Timber
 
+/**
+ * Brand policy: notification, lock screen, Android Auto and widget artwork must never show
+ * real song/album/artist images. This loader ignores whatever artwork data or URI media3
+ * hands it and always returns the local brand bitmap instead — independent of Coil's global
+ * interceptor (BrandImageInterceptor), since [decodeBitmap] here handles embedded artwork
+ * bytes that never go through Coil at all.
+ */
 class CoilBitmapLoader(
     private val context: Context,
     private val scope: CoroutineScope,
@@ -33,64 +35,33 @@ class CoilBitmapLoader(
 
     private fun createFallbackBitmap(): Bitmap = createBitmap(64, 64)
 
-    private fun Bitmap.createIndependentCopy(): Bitmap {
-        if (isRecycled) return createFallbackBitmap()
-        return try {
-            val copy = createBitmap(width, height)
-            val canvas = android.graphics.Canvas(copy)
-            canvas.drawBitmap(this, 0f, 0f, null)
-            copy
+    private val brandBitmap: Bitmap by lazy { renderBrandBitmap() }
+
+    private fun renderBrandBitmap(): Bitmap =
+        try {
+            val drawable = ContextCompat.getDrawable(context, R.drawable.ic_brand_logo_full)
+            if (drawable == null) {
+                createFallbackBitmap()
+            } else {
+                val width = drawable.intrinsicWidth.takeIf { it > 0 } ?: 512
+                val height = drawable.intrinsicHeight.takeIf { it > 0 } ?: 512
+                val bitmap = createBitmap(width, height)
+                val canvas = Canvas(bitmap)
+                drawable.setBounds(0, 0, width, height)
+                drawable.draw(canvas)
+                bitmap
+            }
         } catch (e: Exception) {
-            Timber.tag("CoilBitmapLoader").w(e, "Failed to create independent copy")
+            Timber.tag("CoilBitmapLoader").w(e, "Failed to render brand bitmap")
             createFallbackBitmap()
         }
-    }
 
     override fun decodeBitmap(data: ByteArray): ListenableFuture<Bitmap> =
-        scope.future(Dispatchers.IO) {
-            try {
-                val bitmap = BitmapFactory.decodeByteArray(data, 0, data.size)
-                bitmap?.createIndependentCopy() ?: createFallbackBitmap()
-            } catch (e: Exception) {
-                Timber.tag("CoilBitmapLoader").w(e, "Failed to decode bitmap data")
-                createFallbackBitmap()
-            }
-        }
+        scope.future(Dispatchers.IO) { brandBitmap }
 
     override fun loadBitmap(uri: Uri): ListenableFuture<Bitmap> =
-        scope.future(Dispatchers.IO) {
-            try {
-                val request =
-                    ImageRequest
-                        .Builder(context)
-                        .data(uri)
-                        .allowHardware(false)
-                        .build()
+        scope.future(Dispatchers.IO) { brandBitmap }
 
-                when (val result = context.imageLoader.execute(request)) {
-                    is ErrorResult -> {
-                        createFallbackBitmap()
-                    }
-
-                    is SuccessResult -> {
-                        try {
-                            val bitmap = result.image.toBitmap()
-                            bitmap.createIndependentCopy()
-                        } catch (e: Exception) {
-                            Timber.tag("CoilBitmapLoader").w(e, "Failed to convert image to bitmap")
-                            createFallbackBitmap()
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                Timber.tag("CoilBitmapLoader").w(e, "Failed to load bitmap from uri")
-                createFallbackBitmap()
-            }
-        }
-
-    override fun loadBitmapFromMetadata(metadata: MediaMetadata): ListenableFuture<Bitmap>? {
-        metadata.artworkData?.let { return decodeBitmap(it) }
-        val artworkUri = metadata.artworkUri ?: metadata.extras?.getString("artwork_uri")?.toUri() ?: return null
-        return loadBitmap(artworkUri)
-    }
+    override fun loadBitmapFromMetadata(metadata: MediaMetadata): ListenableFuture<Bitmap> =
+        scope.future(Dispatchers.IO) { brandBitmap }
 }

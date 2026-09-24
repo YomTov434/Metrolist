@@ -28,9 +28,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.metrolist.innertube.models.AlbumItem
 import com.metrolist.innertube.models.ArtistItem
-import com.metrolist.innertube.models.EpisodeItem
 import com.metrolist.innertube.models.PlaylistItem
-import com.metrolist.innertube.models.PodcastItem
 import com.metrolist.innertube.models.SongItem
 import com.metrolist.music.LocalPlayerAwareWindowInsets
 import com.metrolist.music.LocalPlayerConnection
@@ -125,20 +123,6 @@ fun YouTubeBrowseScreen(
                                     is PlaylistItem -> {
                                         navController.navigate("online_playlist/${item.id}")
                                     }
-
-                                    is PodcastItem -> {
-                                        navController.navigate("online_podcast/${item.id}")
-                                    }
-
-                                    is EpisodeItem -> {
-                                        if (item.id == mediaMetadata?.id) {
-                                            playerConnection.togglePlayPause()
-                                        } else {
-                                            playerConnection.playQueue(
-                                                YouTubeQueue.radio(item.toMediaMetadata()),
-                                            )
-                                        }
-                                    }
                                 }
                             },
                             onLongClick = {
@@ -170,21 +154,6 @@ fun YouTubeBrowseScreen(
                                             YouTubePlaylistMenu(
                                                 playlist = item,
                                                 coroutineScope = coroutineScope,
-                                                onDismiss = menuState::dismiss,
-                                            )
-                                        }
-
-                                        is PodcastItem -> {
-                                            YouTubePlaylistMenu(
-                                                playlist = item.asPlaylistItem(),
-                                                coroutineScope = coroutineScope,
-                                                onDismiss = menuState::dismiss,
-                                            )
-                                        }
-
-                                        is EpisodeItem -> {
-                                            YouTubeSongMenu(
-                                                song = item.asSongItem(),
                                                 onDismiss = menuState::dismiss,
                                             )
                                         }

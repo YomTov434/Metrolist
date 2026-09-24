@@ -6,7 +6,6 @@ import com.metrolist.innertube.models.Artist
 import com.metrolist.innertube.models.ArtistItem
 import com.metrolist.innertube.models.MusicCardShelfRenderer
 import com.metrolist.innertube.models.PlaylistItem
-import com.metrolist.innertube.models.PodcastItem
 import com.metrolist.innertube.models.SongItem
 import com.metrolist.innertube.models.YTItem
 import com.metrolist.innertube.models.filterExplicit
@@ -199,35 +198,6 @@ data class SearchSummaryPage(
                                 ?.watchPlaylistEndpoint
                                 ?: return null,
                         radioEndpoint = null,
-                    )
-                }
-
-                renderer.onTap.browseEndpoint?.isPodcastEndpoint == true -> {
-                    PodcastItem(
-                        id = renderer.onTap.browseEndpoint.browseId,
-                        title =
-                            renderer.header?.musicCardShelfHeaderBasicRenderer?.title?.runs
-                                ?.joinToString(separator = "") { it.text }
-                                ?: return null,
-                        author =
-                            Artist(
-                                id = null,
-                                name = renderer.subtitle.runs?.joinToString { it.text } ?: return null,
-                            ),
-                        episodeCountText = null,
-                        thumbnail = renderer.thumbnail.getThumbnailUrl() ?: return null,
-                        playEndpoint =
-                            renderer.buttons
-                                .find { it.buttonRenderer.icon?.iconType == "PLAY_ARROW" }
-                                ?.buttonRenderer
-                                ?.command
-                                ?.watchPlaylistEndpoint,
-                        shuffleEndpoint =
-                            renderer.buttons
-                                .find { it.buttonRenderer.icon?.iconType == "MUSIC_SHUFFLE" }
-                                ?.buttonRenderer
-                                ?.command
-                                ?.watchPlaylistEndpoint,
                     )
                 }
 

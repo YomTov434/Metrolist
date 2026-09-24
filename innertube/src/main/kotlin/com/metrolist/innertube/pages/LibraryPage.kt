@@ -7,7 +7,6 @@ import com.metrolist.innertube.models.ArtistItem
 import com.metrolist.innertube.models.MusicResponsiveListItemRenderer
 import com.metrolist.innertube.models.MusicTwoRowItemRenderer
 import com.metrolist.innertube.models.PlaylistItem
-import com.metrolist.innertube.models.PodcastItem
 import com.metrolist.innertube.models.Run
 import com.metrolist.innertube.models.SongItem
 import com.metrolist.innertube.models.YTItem
@@ -75,45 +74,7 @@ data class LibraryPage(
                     }?.menuNavigationItemRenderer?.navigationEndpoint?.watchPlaylistEndpoint ?: return null,
                 )
 
-                // Podcast host channels use MUSIC_PAGE_TYPE_USER_CHANNEL (not ARTIST)
-                renderer.isUserChannel -> ArtistItem(
-                    id = renderer.navigationEndpoint.browseEndpoint?.browseId ?: return null,
-                    title = renderer.title.runs?.firstOrNull()?.text ?: return null,
-                    thumbnail = renderer.thumbnailRenderer.getThumbnailUrl(),
-                    shuffleEndpoint = renderer.menu?.menuRenderer?.items?.find {
-                        it.menuNavigationItemRenderer?.icon?.iconType == "MUSIC_SHUFFLE"
-                    }?.menuNavigationItemRenderer?.navigationEndpoint?.watchPlaylistEndpoint,
-                    radioEndpoint = renderer.menu?.menuRenderer?.items?.find {
-                        it.menuNavigationItemRenderer?.icon?.iconType == "MIX"
-                    }?.menuNavigationItemRenderer?.navigationEndpoint?.watchPlaylistEndpoint,
-                )
-
-                renderer.isPodcast -> {
-                    val libraryTokens = PageHelper.extractLibraryTokensFromMenuItems(renderer.menu?.menuRenderer?.items)
-                    PodcastItem(
-                        id = renderer.navigationEndpoint.browseEndpoint?.browseId ?: return null,
-                        title = renderer.title.runs?.firstOrNull()?.text ?: return null,
-                        author = renderer.subtitle?.runs?.firstOrNull()?.let {
-                            Artist(
-                                name = it.text,
-                                id = it.navigationEndpoint?.browseEndpoint?.browseId
-                            )
-                        },
-                        episodeCountText = renderer.subtitle?.runs?.lastOrNull()?.text,
-                        thumbnail = renderer.thumbnailRenderer.getThumbnailUrl(),
-                        playEndpoint = renderer.thumbnailOverlay
-                            ?.musicItemThumbnailOverlayRenderer?.content
-                            ?.musicPlayButtonRenderer?.playNavigationEndpoint
-                            ?.watchPlaylistEndpoint,
-                        shuffleEndpoint = renderer.menu?.menuRenderer?.items?.find {
-                            it.menuNavigationItemRenderer?.icon?.iconType == "MUSIC_SHUFFLE"
-                        }?.menuNavigationItemRenderer?.navigationEndpoint?.watchPlaylistEndpoint,
-                        libraryAddToken = libraryTokens.addToken,
-                        libraryRemoveToken = libraryTokens.removeToken,
-                    )
-                }
-
-                renderer.isEpisode || renderer.isSong -> {
+                renderer.isSong -> {
                     val libraryTokens = PageHelper.extractLibraryTokensFromMenuItems(renderer.menu?.menuRenderer?.items)
                     val videoId = renderer.thumbnailOverlay
                         ?.musicItemThumbnailOverlayRenderer?.content
@@ -148,7 +109,6 @@ data class LibraryPage(
                             .watchEndpoint,
                         libraryAddToken = libraryTokens.addToken,
                         libraryRemoveToken = libraryTokens.removeToken,
-                        isEpisode = renderer.isEpisode,
                     )
                 }
 
@@ -209,7 +169,6 @@ data class LibraryPage(
                         endpoint = renderer.overlay?.musicItemThumbnailOverlayRenderer?.content?.musicPlayButtonRenderer?.playNavigationEndpoint?.watchEndpoint,
                         libraryAddToken = libraryTokens.addToken,
                         libraryRemoveToken = libraryTokens.removeToken,
-                        isEpisode = renderer.isEpisode,
                         uploadEntityId = uploadEntityId
                     )
                 }
@@ -227,43 +186,6 @@ data class LibraryPage(
                         ?.find { it.menuNavigationItemRenderer?.icon?.iconType == "MIX" }
                         ?.menuNavigationItemRenderer?.navigationEndpoint?.watchPlaylistEndpoint
                 )
-
-                // Podcast host channels use MUSIC_PAGE_TYPE_USER_CHANNEL (not ARTIST)
-                renderer.isUserChannel -> ArtistItem(
-                    id = renderer.navigationEndpoint?.browseEndpoint?.browseId ?: return null,
-                    title = renderer.flexColumns.firstOrNull()?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.firstOrNull()?.text
-                        ?: return null,
-                    thumbnail = renderer.thumbnail?.getThumbnailUrl(),
-                    shuffleEndpoint = renderer.menu?.menuRenderer?.items
-                        ?.find { it.menuNavigationItemRenderer?.icon?.iconType == "MUSIC_SHUFFLE" }
-                        ?.menuNavigationItemRenderer?.navigationEndpoint?.watchPlaylistEndpoint,
-                    radioEndpoint = renderer.menu?.menuRenderer?.items
-                        ?.find { it.menuNavigationItemRenderer?.icon?.iconType == "MIX" }
-                        ?.menuNavigationItemRenderer?.navigationEndpoint?.watchPlaylistEndpoint
-                )
-
-                renderer.isPodcast -> {
-                    val podcastLibraryTokens = PageHelper.extractLibraryTokensFromMenuItems(renderer.menu?.menuRenderer?.items)
-                    PodcastItem(
-                        id = renderer.navigationEndpoint?.browseEndpoint?.browseId ?: return null,
-                        title = renderer.flexColumns.firstOrNull()?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.firstOrNull()?.text
-                            ?: return null,
-                        author = renderer.flexColumns.getOrNull(1)?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.firstOrNull()?.let {
-                            Artist(
-                                name = it.text,
-                                id = it.navigationEndpoint?.browseEndpoint?.browseId
-                            )
-                        },
-                        episodeCountText = renderer.flexColumns.getOrNull(1)?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.lastOrNull()?.text,
-                        thumbnail = renderer.thumbnail?.getThumbnailUrl(),
-                        playEndpoint = renderer.overlay?.musicItemThumbnailOverlayRenderer?.content?.musicPlayButtonRenderer?.playNavigationEndpoint?.watchPlaylistEndpoint,
-                        shuffleEndpoint = renderer.menu?.menuRenderer?.items
-                            ?.find { it.menuNavigationItemRenderer?.icon?.iconType == "MUSIC_SHUFFLE" }
-                            ?.menuNavigationItemRenderer?.navigationEndpoint?.watchPlaylistEndpoint,
-                        libraryAddToken = podcastLibraryTokens.addToken,
-                        libraryRemoveToken = podcastLibraryTokens.removeToken,
-                    )
-                }
 
                 else -> null
             }

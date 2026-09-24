@@ -7,7 +7,6 @@ import com.metrolist.innertube.models.ArtistItem
 import com.metrolist.innertube.models.MusicResponsiveListItemRenderer
 import com.metrolist.innertube.models.MusicTwoRowItemRenderer
 import com.metrolist.innertube.models.PlaylistItem
-import com.metrolist.innertube.models.PodcastItem
 import com.metrolist.innertube.models.SongItem
 import com.metrolist.innertube.models.YTItem
 import com.metrolist.innertube.models.oddElements
@@ -67,8 +66,7 @@ data class RelatedPage(
                         it.musicInlineBadgeRenderer?.icon?.iconType == "MUSIC_EXPLICIT_BADGE"
                     } != null,
                 libraryAddToken = libraryTokens.addToken,
-                libraryRemoveToken = libraryTokens.removeToken,
-                isEpisode = renderer.isEpisode
+                libraryRemoveToken = libraryTokens.removeToken
             )
         }
 
@@ -173,27 +171,6 @@ data class RelatedPage(
                                 }?.menuNavigationItemRenderer
                                 ?.navigationEndpoint
                                 ?.watchPlaylistEndpoint ?: return null,
-                    )
-                }
-                renderer.isPodcast -> {
-                    PodcastItem(
-                        id = renderer.navigationEndpoint.browseEndpoint?.browseId ?: return null,
-                        title = renderer.title.runs?.firstOrNull()?.text ?: return null,
-                        author = renderer.subtitle?.runs?.firstOrNull()?.let {
-                            Artist(
-                                name = it.text,
-                                id = it.navigationEndpoint?.browseEndpoint?.browseId
-                            )
-                        },
-                        episodeCountText = renderer.subtitle?.runs?.lastOrNull()?.text,
-                        thumbnail = renderer.thumbnailRenderer.getThumbnailUrl(),
-                        playEndpoint = renderer.thumbnailOverlay
-                            ?.musicItemThumbnailOverlayRenderer?.content
-                            ?.musicPlayButtonRenderer?.playNavigationEndpoint
-                            ?.watchPlaylistEndpoint,
-                        shuffleEndpoint = renderer.menu?.menuRenderer?.items?.find {
-                            it.menuNavigationItemRenderer?.icon?.iconType == "MUSIC_SHUFFLE"
-                        }?.menuNavigationItemRenderer?.navigationEndpoint?.watchPlaylistEndpoint,
                     )
                 }
                 else -> null

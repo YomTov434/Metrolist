@@ -33,7 +33,6 @@ import com.metrolist.music.db.entities.PlayCountEntity
 import com.metrolist.music.db.entities.PlaylistEntity
 import com.metrolist.music.db.entities.PlaylistSongMap
 import com.metrolist.music.db.entities.PlaylistSongMapPreview
-import com.metrolist.music.db.entities.PodcastEntity
 import com.metrolist.music.db.entities.RecognitionHistory
 import com.metrolist.music.db.entities.RelatedSongMap
 import com.metrolist.music.db.entities.SearchHistory
@@ -106,14 +105,13 @@ class MusicDatabase(
         PlayCountEntity::class,
         RecognitionHistory::class,
         SpeedDialItem::class,
-        PodcastEntity::class,
     ],
     views = [
         SortedSongArtistMap::class,
         SortedSongAlbumMap::class,
         PlaylistSongMapPreview::class,
     ],
-    version = 38,
+    version = 39,
     exportSchema = true,
     autoMigrations = [
         AutoMigration(from = 2, to = 3),
@@ -152,6 +150,7 @@ class MusicDatabase(
         AutoMigration(from = 35, to = 36, spec = Migration35To36::class),
         AutoMigration(from = 36, to = 37),
         AutoMigration(from = 37, to = 38),
+        AutoMigration(from = 38, to = 39, spec = Migration38To39::class),
     ],
 )
 @TypeConverters(Converters::class)
@@ -866,3 +865,16 @@ class Migration35To36 : AutoMigrationSpec {
         }
     }
 }
+
+// Removes podcast support: drops the dedicated `podcast` table and the podcast-only
+// `song.isEpisode` / `artist.isPodcastChannel` columns. Room's AutoMigration generates the
+// actual table-rebuild SQL (create-copy-drop-rename) for the column deletions, and a plain
+// `DROP TABLE` for the table deletion, based on the @DeleteColumn/@DeleteTable hints below.
+@DeleteColumn.Entries(
+    DeleteColumn(tableName = "song", columnName = "isEpisode"),
+    DeleteColumn(tableName = "artist", columnName = "isPodcastChannel"),
+)
+@DeleteTable.Entries(
+    DeleteTable(tableName = "podcast"),
+)
+class Migration38To39 : AutoMigrationSpec

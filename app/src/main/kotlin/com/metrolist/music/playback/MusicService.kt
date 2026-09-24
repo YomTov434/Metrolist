@@ -1273,11 +1273,6 @@ class MusicService :
                 if (cachedPersistentQueue) {
                     savePlayerStateToDisk()
                 }
-                val currentMetadata = player.currentMediaItem?.metadata
-                if (currentMetadata?.isEpisode == true && player.isPlaying && player.currentPosition > 0) {
-                    previousEpisodePosition = player.currentPosition
-                    saveEpisodePosition(currentMetadata.id, player.currentPosition)
-                }
             }
         }
     }
@@ -1568,7 +1563,7 @@ class MusicService :
         player.pause()
     }
 
-    private fun updateNotification(isLiked: Boolean? = currentSong.value?.song?.let { if (it.isEpisode) it.inLibrary != null else it.liked }) {
+    private fun updateNotification(isLiked: Boolean? = currentSong.value?.song?.liked) {
         mediaSession?.setCustomLayout(
             listOf(
                 CommandButton
@@ -2165,12 +2160,6 @@ class MusicService :
             songToToggle?.let { librarySong ->
                 val songEntity = librarySong.song
 
-                // For podcast episodes, toggle save for later instead of like
-                if (songEntity.isEpisode) {
-                    toggleEpisodeSaveForLater(songEntity)
-                    return@let
-                }
-
                 val song = songEntity.toggleLike(syncToYouTube = false)
 
                 updateNotification(isLiked = song.liked)
@@ -2219,30 +2208,6 @@ class MusicService :
                 )
             }
         }
-    }
-
-    private suspend fun toggleEpisodeSaveForLater(songEntity: com.metrolist.music.db.entities.SongEntity) {
-        val isCurrentlySaved = songEntity.inLibrary != null
-        val shouldBeSaved = !isCurrentlySaved
-
-        updateNotification(isLiked = shouldBeSaved)
-        updateWidgetUI(player.isPlaying, isLiked = shouldBeSaved)
-
-        // Update database first (optimistic update)
-        // Also ensure isEpisode = true so it appears in saved episodes list
-        database.query {
-            update(
-                songEntity.copy(
-                    inLibrary = if (isCurrentlySaved) null else java.time.LocalDateTime.now(),
-                    isEpisode = true,
-                ),
-            )
-        }
-        currentMediaMetadata.value = player.currentMetadata
-
-        // Sync with YouTube (handles login check internally)
-        val setVideoId = if (isCurrentlySaved) database.getSetVideoId(songEntity.id)?.setVideoId else null
-        syncUtils.saveEpisode(songEntity.id, shouldBeSaved, setVideoId)
     }
 
     fun toggleStartRadio() {
@@ -2454,46 +2419,11 @@ class MusicService :
     }
 
     private var previousMediaItemIndex = C.INDEX_UNSET
-    private var previousEpisodeId: String? = null
 
     // Tracks the mediaId that was playing immediately before the current
     // onMediaItemTransition call, so we can decide whether IT finished
     // naturally (and is therefore safe to mark as fully cached).
     private var lastTransitionedMediaId: String? = null
-    private var previousEpisodePosition: Long = 0L
-
-    /**
-     * Save podcast episode playback position to database.
-     * Only saves if the item is an episode and position is meaningful (> 3 seconds).
-     */
-    private fun saveEpisodePosition(
-        episodeId: String,
-        positionMs: Long,
-    ) {
-        if (positionMs < 3000) return // Don't save if less than 3 seconds played
-        scope.launch(Dispatchers.IO + SilentHandler) {
-            database.updatePlaybackPosition(episodeId, positionMs)
-            Timber.tag(TAG).d("Saved episode position: $episodeId at ${positionMs}ms")
-        }
-    }
-
-    /**
-     * Restore podcast episode playback position from database.
-     * Seeks to saved position if available.
-     */
-    private fun restoreEpisodePosition(episodeId: String) {
-        scope.launch(Dispatchers.IO + SilentHandler) {
-            val savedPosition = database.getPlaybackPosition(episodeId)
-            if (savedPosition != null && savedPosition > 0) {
-                withContext(Dispatchers.Main) {
-                    if (player.currentMediaItem?.mediaId == episodeId) {
-                        player.seekTo(savedPosition)
-                        Timber.tag(TAG).d("Restored episode position: $episodeId to ${savedPosition}ms")
-                    }
-                }
-            }
-        }
-    }
 
     override fun onMediaItemTransition(
         mediaItem: MediaItem?,
@@ -2515,23 +2445,6 @@ class MusicService :
         retryJob?.cancel()
         retryJob = null
         updateInitialBufferRecovery(player.playbackState)
-
-        previousEpisodeId?.let { episodeId ->
-            if (previousEpisodePosition > 0) {
-                saveEpisodePosition(episodeId, previousEpisodePosition)
-            }
-        }
-        previousEpisodeId = null
-        previousEpisodePosition = 0L
-
-        val newMetadata = mediaItem?.metadata
-        if (newMetadata?.isEpisode == true) {
-            previousEpisodeId = newMetadata.id
-            scope.launch {
-                delay(100)
-                restoreEpisodePosition(newMetadata.id)
-            }
-        }
 
         // Force Repeat One if the player ignored it and auto-advanced
         if (reason == Player.MEDIA_ITEM_TRANSITION_REASON_AUTO) {
@@ -2681,13 +2594,6 @@ class MusicService :
             }
         }
 
-        if (!playWhenReady) {
-            val currentMetadata = player.currentMediaItem?.metadata
-            if (currentMetadata?.isEpisode == true && player.currentPosition > 0) {
-                saveEpisodePosition(currentMetadata.id, player.currentPosition)
-                previousEpisodePosition = player.currentPosition
-            }
-        }
 
         if (playWhenReady) {
             applyCachedAudioNormalizationNow()
@@ -4254,13 +4160,6 @@ class MusicService :
             return
         }
 
-        val currentMetadata = player.currentMediaItem?.metadata
-        if (currentMetadata?.isEpisode == true && player.currentPosition > 0) {
-            runBlocking(Dispatchers.IO) {
-                database.updatePlaybackPosition(currentMetadata.id, player.currentPosition)
-            }
-        }
-
         try {
             unregisterReceiver(screenStateReceiver)
         } catch (e: Exception) {
@@ -4650,7 +4549,7 @@ class MusicService :
 
     private fun updateWidgetUI(
         isPlaying: Boolean,
-        isLiked: Boolean? = currentSong.value?.song?.let { if (it.isEpisode) it.inLibrary != null else it.liked }
+        isLiked: Boolean? = currentSong.value?.song?.liked
     ) {
         pendingWidgetUpdate = isPlaying to isLiked
         if (widgetUpdateInFlight) return

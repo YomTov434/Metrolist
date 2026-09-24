@@ -132,7 +132,6 @@ fun OnlinePlaylistScreen(
     val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
     val isLoadingMore by viewModel.isLoadingMore.collectAsStateWithLifecycle()
     val error by viewModel.error.collectAsStateWithLifecycle()
-    val isPodcastPlaylist = viewModel.isPodcastPlaylist
 
     val hideExplicit by rememberPreference(key = HideExplicitKey, defaultValue = false)
 
@@ -255,7 +254,6 @@ fun OnlinePlaylistScreen(
                                 dbPlaylist = dbPlaylist,
                                 coroutineScope = coroutineScope,
                                 continuation = viewModel.continuation,
-                                isPodcastPlaylist = isPodcastPlaylist,
                                 modifier = Modifier.animateItem(),
                             )
                         }
@@ -363,12 +361,7 @@ fun OnlinePlaylistScreen(
             title = {
                 if (inSelectMode) {
                     Text(
-                        text =
-                            if (isPodcastPlaylist) {
-                                pluralStringResource(R.plurals.n_episode, selection.size, selection.size)
-                            } else {
-                                pluralStringResource(R.plurals.n_song, selection.size, selection.size)
-                            },
+                        text = pluralStringResource(R.plurals.n_song, selection.size, selection.size),
                         style = MaterialTheme.typography.titleLarge,
                     )
                 } else if (isSearching) {
@@ -488,7 +481,6 @@ private fun OnlinePlaylistHeader(
     dbPlaylist: Playlist?,
     coroutineScope: CoroutineScope,
     continuation: String?,
-    isPodcastPlaylist: Boolean = false,
     modifier: Modifier = Modifier,
 ) {
     val navController = LocalNavController.current
@@ -578,7 +570,7 @@ private fun OnlinePlaylistHeader(
         // Metadata row - song count, duration
         val totalDuration = songs.sumOf { it.duration ?: 0 }
         val nSongs = pluralStringResource(
-            if (isPodcastPlaylist) R.plurals.n_episode else R.plurals.n_song,
+            R.plurals.n_song,
             songs.size,
             songs.size,
         )

@@ -92,9 +92,7 @@ import coil3.request.ImageRequest
 import com.metrolist.innertube.YouTube
 import com.metrolist.innertube.models.AlbumItem
 import com.metrolist.innertube.models.ArtistItem
-import com.metrolist.innertube.models.EpisodeItem
 import com.metrolist.innertube.models.PlaylistItem
-import com.metrolist.innertube.models.PodcastItem
 import com.metrolist.innertube.models.SongItem
 import com.metrolist.innertube.models.YTItem
 import com.metrolist.music.LocalDatabase
@@ -1186,18 +1184,6 @@ fun YouTubeListItem(
                         item.author?.let { ArtistNameAliases.resolve(artistNameAliases, it.id, it.name) },
                         item.songCountText,
                     )
-
-                is PodcastItem ->
-                    joinByBullet(
-                        item.author?.let { ArtistNameAliases.resolve(artistNameAliases, it.id, it.name) },
-                        item.episodeCountText,
-                    )
-
-                is EpisodeItem ->
-                    joinByBullet(
-                        item.author?.let { ArtistNameAliases.resolve(artistNameAliases, it.id, it.name) },
-                        makeTimeString(item.duration?.times(1000L)),
-                    )
             },
             badges = badges,
             thumbnailContent = {
@@ -1283,8 +1269,6 @@ fun YouTubeGridItem(
              is AlbumItem -> joinByBullet(item.artists?.joinToArtistString(artistSeparator) { ArtistNameAliases.resolve(artistNameAliases, it.id, it.name) }, item.year?.toString())
             is ArtistItem -> null
             is PlaylistItem -> joinByBullet(item.author?.let { ArtistNameAliases.resolve(artistNameAliases, it.id, it.name) }, item.songCountText)
-            is PodcastItem -> joinByBullet(item.author?.let { ArtistNameAliases.resolve(artistNameAliases, it.id, it.name) }, item.episodeCountText)
-            is EpisodeItem -> joinByBullet(item.author?.let { ArtistNameAliases.resolve(artistNameAliases, it.id, it.name) }, makeTimeString(item.duration?.times(1000L)))
         }
         if (subtitle != null) {
             Text(
