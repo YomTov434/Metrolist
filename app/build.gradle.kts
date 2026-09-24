@@ -40,8 +40,12 @@ android {
         applicationId = applicationIdOverride ?: baseApplicationId
         minSdk = 26
         targetSdk = 36
-        versionCode = 154
-        versionName = "13.7.1"
+        // Gold Communications' own release numbering, independent of upstream Metrolist's.
+        // Bump UPSTREAM_METROLIST_VERSION only when merging a newer upstream base.
+        versionCode = 155
+        versionName = "1.0.0"
+        val upstreamMetrolistVersion = "13.7.1"
+        buildConfigField("String", "UPSTREAM_METROLIST_VERSION", "\"$upstreamMetrolistVersion\"")
         val baseVersionName = requireNotNull(versionName)
         buildConfigField("String", "BASE_VERSION_NAME", "\"$baseVersionName\"")
         buildCommit?.let { versionName = "$baseVersionName+$it" }
