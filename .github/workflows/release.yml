@@ -227,6 +227,7 @@ jobs:
           echo "Creating release v${{ needs.check-version.outputs.new_version }}"
 
           {
+            echo "VersionCode: ${{ needs.check-version.outputs.version_code }}"
             echo "Released by @${{ github.triggering_actor }}"
             echo ""
             cat release_notes.md
