@@ -232,16 +232,16 @@ jobs:
             cat release_notes.md
           } > attributed_release_notes.md
 
-TAG="v${{ needs.check-version.outputs.new_version }}"
+          TAG="v${{ needs.check-version.outputs.new_version }}"
 
           if gh release view "$TAG" >/dev/null 2>&1; then
-                    gh release edit "$TAG" --title "${{ needs.check-version.outputs.new_version }}" --notes-file attributed_release_notes.md --latest
-                              gh release upload "$TAG" release_files/*.apk --clobber
-                                        echo "Release updated successfully!"
-                                                  else
-                                                            gh release create "$TAG" --title "${{ needs.check-version.outputs.new_version }}" --notes-file attributed_release_notes.md --latest release_files/*.apk
-                                                                      echo "Release created successfully!"
-                                                                                fi
+            gh release edit "$TAG" --title "${{ needs.check-version.outputs.new_version }}" --notes-file attributed_release_notes.md --latest
+            gh release upload "$TAG" release_files/*.apk --clobber
+            echo "Release updated successfully!"
+          else
+            gh release create "$TAG" --title "${{ needs.check-version.outputs.new_version }}" --notes-file attributed_release_notes.md --latest release_files/*.apk
+            echo "Release created successfully!"
+          fi
 
       - name: Update release summary
         run: |
