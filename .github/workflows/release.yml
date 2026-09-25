@@ -57,15 +57,16 @@ jobs:
 
           if git show HEAD^:app/build.gradle.kts > /dev/null 2>&1; then
             OLD_VERSION=$(git show HEAD^:app/build.gradle.kts | grep -m1 -oP '^\s*versionName\s*=\s*"\K[^"]+' || echo "")
-            echo "Previous version: $OLD_VERSION"
+            OLD_VERSION_CODE=$(git show HEAD^:app/build.gradle.kts | grep -m1 -oP '^\s*versionCode\s*=\s*\K\d+' || echo "")
+            echo "Previous version: $OLD_VERSION (code: $OLD_VERSION_CODE)"            
             
-            if [ "$OLD_VERSION" != "$NEW_VERSION" ]; then
-              echo "Version changed from $OLD_VERSION to $NEW_VERSION"
+          if [ "$OLD_VERSION" != "$NEW_VERSION" ] || [ "$OLD_VERSION_CODE" != "$VERSION_CODE" ]; then
+            echo "Version changed from $OLD_VERSION (code $OLD_VERSION_CODE) to $NEW_VERSION (code $VERSION_CODE)"
               echo "version_changed=true" >> $GITHUB_OUTPUT
               echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
               echo "version_code=$VERSION_CODE" >> $GITHUB_OUTPUT
             else
-              echo "Version unchanged: $NEW_VERSION"
+            echo "Version unchanged: $NEW_VERSION (code $VERSION_CODE)"
               echo "version_changed=false" >> $GITHUB_OUTPUT
             fi
           else
