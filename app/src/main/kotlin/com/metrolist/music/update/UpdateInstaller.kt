@@ -8,7 +8,9 @@ package com.metrolist.music.update
 import android.content.Context
 import android.content.Intent
 import androidx.core.content.FileProvider
+import com.metrolist.music.BuildConfig
 import io.ktor.client.HttpClient
+import io.ktor.client.request.header
 import io.ktor.client.request.prepareGet
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsChannel
@@ -32,7 +34,14 @@ object UpdateInstaller {
         destFile.parentFile?.mkdirs()
         if (destFile.exists()) destFile.delete()
 
-        httpClient.prepareGet(url).execute { response: HttpResponse ->
+        httpClient.prepareGet(url) {
+            // Needed once the repo is private; GitHub ignores it for a public
+            // repo's asset download, so this is harmless either way.
+            if (BuildConfig.RELEASE_READ_TOKEN.isNotBlank()) {
+                header("Authorization", "Bearer ${BuildConfig.RELEASE_READ_TOKEN}")
+                header("Accept", "application/octet-stream")
+            }
+        }.execute { response: HttpResponse ->
             val totalBytes = response.contentLength() ?: -1L
             val channel = response.bodyAsChannel()
             var bytesRead = 0L

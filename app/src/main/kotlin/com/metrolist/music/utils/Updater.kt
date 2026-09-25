@@ -8,6 +8,8 @@ package com.metrolist.music.utils
 import com.metrolist.music.BuildConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
+import io.ktor.client.request.header
+import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -43,6 +45,18 @@ object Updater {
     private const val GITHUB_API_BASE = "https://api.github.com/repos/YomTov434/Metrolist"
     private const val KMP_LATEST_RELEASE_URL = "https://api.github.com/repos/MetrolistGroup/Metrolist-KMP/releases/latest"
     private const val KMP_APK_NAME = "Metrolist.apk"
+
+    /**
+     * GET against our own repo's API, authenticated when RELEASE_READ_TOKEN is
+     * configured (needed once the repo is private; harmless no-op on a public
+     * repo since GitHub ignores the header for public read access).
+     */
+    private suspend fun getFromOwnRepo(url: String): HttpResponse =
+        client.get(url) {
+            if (BuildConfig.RELEASE_READ_TOKEN.isNotBlank()) {
+                header("Authorization", "Bearer ${BuildConfig.RELEASE_READ_TOKEN}")
+            }
+        }
 
     /**
      * Compares two version strings.
@@ -139,7 +153,7 @@ object Updater {
                     return@runCatching cachedReleaseInfo!!
                 }
                 
-                val response = client.get("$GITHUB_API_BASE/releases/latest")
+                val response = getFromOwnRepo("$GITHUB_API_BASE/releases/latest")
                     .bodyAsText()
                 val json = JSONObject(response)
                 val body = json.getString("body")
@@ -174,7 +188,7 @@ object Updater {
                 var hasMore = true
                 
                 while (hasMore && page <= 10) { // Limit to 10 pages
-                    val response = client.get("$GITHUB_API_BASE/releases?page=$page&per_page=30")
+                    val response = getFromOwnRepo("$GITHUB_API_BASE/releases?page=$page&per_page=30")
                         .bodyAsText()
                     val json = JSONArray(response)
                     

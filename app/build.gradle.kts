@@ -61,6 +61,10 @@ android {
 
         buildConfigField("String", "LASTFM_API_KEY", "\"$lastFmKey\"")
         buildConfigField("String", "LASTFM_SECRET", "\"$lastFmSecret\"")
+
+        // Read-only, repo-scoped token so the updater can reach a private GitHub repo.
+        val releaseReadToken = localProperties.getProperty("RELEASE_READ_TOKEN") ?: System.getenv("RELEASE_READ_TOKEN") ?: ""
+        buildConfigField("String", "RELEASE_READ_TOKEN", "\"$releaseReadToken\"")
         buildConfigField("String", "ARCHITECTURE", "\"universal\"")
         buildConfigField("Long", "DISCORD_APP_ID", "1447278780795064401L")
     }
