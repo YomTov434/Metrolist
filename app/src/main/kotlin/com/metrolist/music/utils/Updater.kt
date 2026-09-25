@@ -19,7 +19,8 @@ data class ReleaseInfo(
     val versionName: String,
     val description: String,
     val releaseDate: String,
-    val assets: List<ReleaseAsset>
+    val assets: List<ReleaseAsset>,
+    val versionCode: Int? = null,
 )
 
 data class ReleaseAsset(
@@ -120,6 +121,14 @@ object Updater {
     }
 
     /**
+     * Releases published by our workflow embed a "VersionCode: N" line as the
+     * first line of the release notes, so internal versionCode-only bumps
+     * (which don't change versionName) can still be detected as updates.
+     */
+    private fun parseVersionCode(body: String): Int? =
+        Regex("(?m)^VersionCode:\\s*(\\d+)").find(body)?.groupValues?.get(1)?.toIntOrNull()
+
+    /**
      * Fetch latest release from GitHub API
      */
     suspend fun getLatestRelease(forceRefresh: Boolean = false): Result<ReleaseInfo> =
@@ -133,13 +142,15 @@ object Updater {
                 val response = client.get("$GITHUB_API_BASE/releases/latest")
                     .bodyAsText()
                 val json = JSONObject(response)
-                
+                val body = json.getString("body")
+
                 val releaseInfo = ReleaseInfo(
                     tagName = json.getString("tag_name"),
                     versionName = json.getString("name"),
-                    description = json.getString("body"),
+                    description = body,
                     releaseDate = json.getString("published_at"),
-                    assets = parseAssets(json.getJSONArray("assets"))
+                    assets = parseAssets(json.getJSONArray("assets")),
+                    versionCode = parseVersionCode(body),
                 )
                 
                 cachedReleaseInfo = releaseInfo
@@ -174,12 +185,14 @@ object Updater {
                     
                     for (i in 0 until json.length()) {
                         val releaseObj = json.getJSONObject(i)
+                        val body = releaseObj.getString("body")
                         releases.add(ReleaseInfo(
                             tagName = releaseObj.getString("tag_name"),
                             versionName = releaseObj.getString("name"),
-                            description = releaseObj.getString("body"),
+                            description = body,
                             releaseDate = releaseObj.getString("published_at"),
-                            assets = parseAssets(releaseObj.getJSONArray("assets"))
+                            assets = parseAssets(releaseObj.getJSONArray("assets")),
+                            versionCode = parseVersionCode(body),
                         ))
                     }
                     
@@ -227,30 +240,34 @@ object Updater {
     }
 
     /**
+     * Prefers comparing versionCode (works for internal versionCode-only bumps
+     * that intentionally leave versionName unchanged); falls back to the
+     * versionName string comparison for releases published before this field
+     * existed.
+     */
+    private fun hasNewerVersion(releaseInfo: ReleaseInfo): Boolean =
+        releaseInfo.versionCode?.let { it > BuildConfig.VERSION_CODE }
+            ?: isUpdateAvailable(BuildConfig.BASE_VERSION_NAME, releaseInfo.versionName)
+
+    /**
      * Check if update is needed (respects 2-hour cache)
      */
     suspend fun checkForUpdate(forceRefresh: Boolean = false): Result<Pair<ReleaseInfo?, Boolean>> =
         withContext(Dispatchers.IO) {
             runCatching {
                 // Check if we should fetch (2 hour interval)
-                val shouldFetch = forceRefresh || 
+                val shouldFetch = forceRefresh ||
                     (System.currentTimeMillis() - lastCheckTime) > CHECK_INTERVAL_MILLIS
-                
+
                 if (!shouldFetch && cachedReleaseInfo != null) {
-                    val hasUpdate = isUpdateAvailable(
-                        BuildConfig.BASE_VERSION_NAME,
-                        cachedReleaseInfo!!.versionName
-                    )
+                    val hasUpdate = hasNewerVersion(cachedReleaseInfo!!)
                     return@runCatching cachedReleaseInfo!! to hasUpdate
                 }
-                
+
                 val result = getLatestRelease(forceRefresh = true)
                 if (result.isSuccess) {
                     val releaseInfo = result.getOrThrow()
-                    val hasUpdate = isUpdateAvailable(
-                        BuildConfig.BASE_VERSION_NAME,
-                        releaseInfo.versionName
-                    )
+                    val hasUpdate = hasNewerVersion(releaseInfo)
                     releaseInfo to hasUpdate
                 } else {
                     throw result.exceptionOrNull() ?: Exception("Unknown error")
