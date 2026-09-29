@@ -309,6 +309,7 @@
     <string name="audio_offload_disabled_by_crossfade">מושבת מכיוון שמעבר בין-עיוות פעיל</string>
     <string name="google_cast">גוגל Cast</string>
     <string name="google_cast_description">הפעלת העברת אודיו ל-Chromecast ולמכשירים אחרים התומכים ב-Cast</string>
+    <string name="casting">מזרים</string>
     <string name="lyrics_romanize_as_main">הצג מילים שעברו רומיניזציה כראשי</string>
     <string name="integrations">אינטגרציות</string>
     <string name="username">שם משתמש</string>
@@ -473,6 +474,11 @@
     <string name="listen_together_notification_channel_desc">התראות עבור אירועי האזנה משותפת</string>
     <string name="listen_together_room_created">חדר נוצר: %s</string>
     <string name="listen_together_cannot_edit_username_in_room">לא ניתן לערוך שם משתמש בזמן נוכחות בחדר</string>
+    <string name="listen_together_joined_room">הצטרפת לחדר: %1$s</string>
+    <string name="listen_together_join_rejected">ההצטרפות נדחתה: %1$s</string>
+    <string name="listen_together_kicked">הוסרת מהחדר: %1$s</string>
+    <string name="listen_together_connection_error">שגיאת חיבור: %1$s</string>
+    <string name="listen_together_generic_error">שגיאה: %1$s</string>
     <string name="waiting_for_approval">ממתין לאישור מהמארח</string>
     <string name="invalid_room_code">קוד חדר לא תקין</string>
     <string name="join_request_denied">בקשת ההצטרפות נדחתה</string>
@@ -628,6 +634,7 @@
     <string name="continue_action">המשך</string>
     <string name="importing_csv">מייבא CSV</string>
     <string name="importing_playlist">מייבא רשימת השמעה</string>
+    <string name="csv_preview_failed">נכשלה תצוגה מקדימה של קובץ ה-CSV</string>
     <string name="recently_converted">הומר לאחרונה</string>
     <string name="discord_status">סטטוס</string>
     <string name="discord_status_online">אונליין</string>
@@ -646,6 +653,9 @@
     <string name="discord_presence">נוכחות</string>
     <string name="parsed_from_link">מנותח מהקישור</string>
     <string name="more_options">אפשרויות נוספות</string>
+    <string name="clear_artists">ניקוי אמנים</string>
+    <string name="select_button">בחירה</string>
+    <string name="artist_image">תמונת אמן</string>
     <string name="mixes">מיקסים</string>
     <string name="and">וכן</string>
     <string name="hide_status_bar_fullscreen_desc">הסתרת סרגל הסטטוס כשמצב מסך מלא של המילים מופעל</string>

@@ -59,6 +59,9 @@
     <string name="radio">רדיו</string>
     <string name="shuffle">ערבוב</string>
     <string name="reset">איפוס</string>
+    <string name="reconnect">התחברות מחדש</string>
+    <string name="decrease">הפחתה</string>
+    <string name="increase">הגדלה</string>
     <string name="details">פרטים</string>
     <string name="edit">עריכה</string>
     <string name="start_radio">התחל רדיו</string>

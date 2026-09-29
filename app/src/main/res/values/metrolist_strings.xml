@@ -413,6 +413,7 @@
     <!-- Google Cast -->
     <string name="google_cast">Google Cast</string>
     <string name="google_cast_description">Cast audio to Chromecast and other Cast-enabled devices</string>
+    <string name="casting">Casting</string>
 
     <string name="lyrics_romanize_as_main">Show romanized lyrics as main</string>
 
@@ -632,6 +633,11 @@
     <string name="listen_together_notification_channel_desc">Notifications for Listen Together events</string>
     <string name="listen_together_room_created">Room created: %s</string>
     <string name="listen_together_cannot_edit_username_in_room">The username cannot be changed while in a room</string>
+    <string name="listen_together_joined_room">Joined room: %1$s</string>
+    <string name="listen_together_join_rejected">Join rejected: %1$s</string>
+    <string name="listen_together_kicked">Kicked: %1$s</string>
+    <string name="listen_together_connection_error">Connection error: %1$s</string>
+    <string name="listen_together_generic_error">Error: %1$s</string>
     <string name="waiting_for_approval">Waiting for host approval…</string>
     <string name="invalid_room_code">Invalid room code</string>
     <string name="join_request_denied">Join request denied</string>
@@ -796,6 +802,7 @@
     <string name="continue_action">Continue</string>
     <string name="importing_csv">Importing CSV…</string>
     <string name="importing_playlist">Importing playlist…</string>
+    <string name="csv_preview_failed">Failed to preview CSV file</string>
 
     <string name="recently_converted">Recently converted</string>
     <string name="column_label">Column %d</string>
@@ -964,6 +971,9 @@
     <string name="switch_to_list_view">Switch to list view</string>
     <string name="switch_to_grid_view">Switch to grid view</string>
     <string name="more_options">More options</string>
+    <string name="clear_artists">Clear Artists</string>
+    <string name="select_button">Select</string>
+    <string name="artist_image">Artist image</string>
 
     <!-- Loudness Level -->
     <string name="loudness_level">Loudness level</string>
