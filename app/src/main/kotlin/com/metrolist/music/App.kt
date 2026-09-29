@@ -128,17 +128,14 @@ class App :
             runCatching { getString(id) }.getOrNull()
         }
 
+        // Gold Communications is a single-market (Hebrew/Israel) product: YouTube Music
+        // content (home feed sections, mood chips, etc.) must always come back in Hebrew,
+        // regardless of what system language a customer's phone happens to be set to.
+        // An explicit Content Language/Country override in Settings still wins.
         YouTube.locale =
             YouTubeLocale(
-                gl =
-                    settings[ContentCountryKey]?.takeIf { it != SYSTEM_DEFAULT }
-                        ?: locale.country.takeIf { it in CountryCodeToName }
-                        ?: "US",
-                hl =
-                    settings[ContentLanguageKey]?.takeIf { it != SYSTEM_DEFAULT }
-                        ?: locale.language.takeIf { it in LanguageCodeToName }
-                        ?: languageTag.takeIf { it in LanguageCodeToName }
-                        ?: "en",
+                gl = settings[ContentCountryKey]?.takeIf { it != SYSTEM_DEFAULT } ?: "IL",
+                hl = settings[ContentLanguageKey]?.takeIf { it != SYSTEM_DEFAULT } ?: "iw",
             )
 
         if (languageTag == "zh-TW") {
@@ -268,26 +265,13 @@ class App :
             dataStore.data
                 .map { Triple(it[ContentCountryKey], it[ContentLanguageKey], it[AppLanguageKey]) }
                 .distinctUntilChanged()
-                .collect { (contentCountry, contentLanguage, appLanguage) ->
-                    val systemLocale = Locale.getDefault()
-                    val effectiveAppLocale =
-                        appLanguage
-                            ?.takeUnless { it == SYSTEM_DEFAULT }
-                            ?.let { Locale.forLanguageTag(it) }
-                            ?: systemLocale
-
+                .collect { (contentCountry, contentLanguage, _) ->
+                    // See initializeSettings(): always default to Hebrew/Israel content,
+                    // never the device's system locale, unless explicitly overridden.
                     YouTube.locale =
                         YouTubeLocale(
-                            gl =
-                                contentCountry?.takeIf { it != SYSTEM_DEFAULT }
-                                    ?: effectiveAppLocale.country.takeIf { it in CountryCodeToName }
-                                    ?: systemLocale.country.takeIf { it in CountryCodeToName }
-                                    ?: "US",
-                            hl =
-                                contentLanguage?.takeIf { it != SYSTEM_DEFAULT }
-                                    ?: effectiveAppLocale.toLanguageTag().takeIf { it in LanguageCodeToName }
-                                    ?: effectiveAppLocale.language.takeIf { it in LanguageCodeToName }
-                                    ?: "en",
+                            gl = contentCountry?.takeIf { it != SYSTEM_DEFAULT } ?: "IL",
+                            hl = contentLanguage?.takeIf { it != SYSTEM_DEFAULT } ?: "iw",
                         )
                 }
         }
