@@ -19,6 +19,8 @@ import android.os.IBinder
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
@@ -169,6 +171,7 @@ import com.metrolist.music.constants.StopMusicOnTaskClearKey
 import com.metrolist.music.constants.UpdateNotificationsEnabledKey
 import com.metrolist.music.constants.UseNewMiniPlayerDesignKey
 import com.metrolist.music.constants.VideoThumbnailMigrationDoneKey
+import com.metrolist.music.constants.DefaultHebrewAppLocaleAppliedKey
 import com.metrolist.music.constants.WelcomeMessageShownKey
 import com.metrolist.music.db.MusicDatabase
 import com.metrolist.music.db.entities.SearchHistory
@@ -226,6 +229,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.util.Locale
@@ -406,13 +410,24 @@ class MainActivity : FragmentActivity() {
         // Initialize Listen Together manager
         listenTogetherManager.initialize()
 
+        // Gold Communications is a single-market (Hebrew) product: the app's own UI
+        // must default to Hebrew regardless of the device's system language, not just
+        // YouTube Music's content (see App.kt). A customer can still switch languages
+        // via Settings > App language.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             val locale =
                 dataStore[AppLanguageKey]
                     ?.takeUnless { it == SYSTEM_DEFAULT }
                     ?.let { Locale.forLanguageTag(it) }
-                    ?: Locale.getDefault()
+                    ?: Locale.forLanguageTag("iw")
             setAppLocale(this, locale)
+        } else if (dataStore[DefaultHebrewAppLocaleAppliedKey] != true) {
+            // One-time only: never re-apply after this, so it doesn't fight a language
+            // the customer later picks via the system's per-app language screen.
+            runBlocking(Dispatchers.IO) {
+                safeDataStoreEdit { settings -> settings[DefaultHebrewAppLocaleAppliedKey] = true }
+            }
+            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("iw"))
         }
 
         lifecycleScope.launch {
