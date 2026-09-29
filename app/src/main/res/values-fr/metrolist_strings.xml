@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="liked">Favoris</string>
     <string name="offline">Téléchargés</string>
@@ -523,11 +523,6 @@
     <string name="restore_account_warning">Les informations de compte suivantes seront restaurées et conservées :</string>
     <string name="restore_confirm_message">Cela permettra de restaurer les données de votre application à partir de la sauvegarde sélectionnée</string>
     <string name="restore_confirm_title">Restaurer la sauvegarde ?</string>
-    <plurals name="n_episode">
-        <item quantity="one">%d épisode</item>
-        <item quantity="many">%d épisodes</item>
-        <item quantity="other">%d épisodes</item>
-    </plurals>
     <string name="display_density">Densité d\'affichage</string>
     <string name="restart">Redémarrer</string>
     <string name="restart_required">Redémarrage requis !</string>
@@ -560,10 +555,6 @@
     <string name="sleep_timer_default_set">La minuterie de mise en veille est réglée par défaut sur %d minutes</string>
     <string name="found_in_settings_content">Situé dans Paramètres &gt; Contenu</string>
     <string name="plays">lectures</string>
-    <string name="error_episode_save">Impossible de sauvegarder l\'épisode</string>
-    <string name="error_episode_remove">Impossible de supprimer l\'épisode</string>
-    <string name="error_podcast_subscribe">Impossible de s\'abonner au podcast</string>
-    <string name="error_podcast_unsubscribe">Impossible de se désabonner du podcast</string>
     <string name="listen_together_auto_approval_suggestions">Approuver automatiquement les suggestions de titres</string>
     <string name="listen_together_auto_approval_suggestions_desc">Approuver automatiquement et mettre en file d\'attente les suggestions de titres des invités</string>
     <string name="speed_dial">Accès Rapide</string>
@@ -589,17 +580,6 @@
     <string name="wanna_play_favorite_song">Envie de jouer leur titre préféré ?</string>
     <string name="yeah">Oui !</string>
     <string name="stands_with_palestine">Ce projet soutient la Palestine 🇵🇸</string>
-    <string name="filter_podcasts">Podcasts</string>
-    <string name="view_podcast">Voir le podcast</string>
-    <string name="podcast_channels">Chaînes de podcast</string>
-    <string name="latest_episodes">Derniers épisodes</string>
-    <string name="your_shows">Vos émissions</string>
-    <string name="new_episodes">Nouveaux épisodes</string>
-    <string name="episodes_for_later">Épisodes à venir</string>
-    <string name="save_episode_for_later">Enregistrer pour plus tard</string>
-    <string name="save_episode_for_later_desc">Ajouter à votre playlist « Épisodes à venir »</string>
-    <string name="remove_episode_from_saved">Supprimer des enregistrements</string>
-    <string name="subscribe_to_podcast">Enregistrer le podcast dans la bibliothèque</string>
     <string name="importing_playlist">Importation de la playlist…</string>
     <string name="widget_recognizer_name">Reconnaissance Musicale</string>
     <string name="widget_recognizer_description">Identifiez les titres diffusés autour de vous directement depuis votre écran d\'accueil</string>
@@ -615,7 +595,6 @@
     <string name="widget_recognizer_channel_name">Reconnaissance Musicale</string>
     <string name="widget_recognizer_channel_desc">Affiche une notification lors de l\'identification d\'un titre à partir du widget</string>
     <string name="widget_recognizer_notification_text">Enregistrement audio pour identifier le titre…</string>
-    <string name="filter_episodes">Épisodes</string>
     <string name="filter_channels">Chaînes</string>
     <string name="auto_playlist">Playlist Automatique</string>
     <string name="downloaded_episodes">Épisodes téléchargés</string>

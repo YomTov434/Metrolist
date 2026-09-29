@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="charts">Класации</string>
     <string name="back_button_desc">Назад</string>
@@ -388,10 +388,6 @@
     <string name="error_playing">Грешка при възпроизвеждането</string>
     <string name="failed_to_parse_proxy">Грешка при разчитане на прокси адреса</string>
     <string name="error_playback_failed">Грешка на възпроизвеждането</string>
-    <string name="error_episode_save">Неуспешно запазване на епизода</string>
-    <string name="error_episode_remove">Неуспешно премахване ма епизода</string>
-    <string name="error_podcast_subscribe">Неуспешно абониране към подкаста</string>
-    <string name="error_podcast_unsubscribe">Неуспешно премахване на абонамента от подкаста</string>
     <string name="view_channel">Виж канала</string>
     <string name="album_art">Обложка на албума</string>
     <string name="no_song_playing">Няма пусната песен</string>
@@ -743,7 +739,4 @@
     <string name="wanna_play_favorite_song">Искате ли да пуснете любимата им песен?</string>
     <string name="yeah">Да!</string>
     <string name="stands_with_palestine">Този проект подкрепя Палестина 🇵🇸</string>
-    <string name="filter_podcasts">Подкасти</string>
-    <string name="view_podcast">Преглед на подкаста</string>
-    <string name="podcast_channels">Подкаст канали</string>
 </resources>

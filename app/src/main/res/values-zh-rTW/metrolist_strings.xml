@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="local_history">本地</string>
     <string name="remote_history">雲端</string>
@@ -315,14 +315,6 @@
     <string name="auto_playlist">自動播放清單</string>
     <string name="filter_channels">頻道</string>
     <string name="filter_profiles">簡介</string>
-    <string name="subscribe_to_podcast">將播客儲存到媒體庫</string>
-    <string name="remove_episode_from_saved">從已儲存的清單中刪除</string>
-    <string name="save_episode_for_later_desc">添加到稍後觀看列表</string>
-    <string name="save_episode_for_later">稍後儲存</string>
-    <string name="your_shows">你的節目</string>
-    <string name="podcast_channels">播客頻道</string>
-    <string name="view_podcast">查看播客</string>
-    <string name="filter_podcasts">播客</string>
     <string name="stands_with_palestine">這個計畫支持巴勒斯坦🇵🇸</string>
     <string name="yeah">是的！</string>
     <string name="wanna_play_favorite_song">想播放他們最喜歡的歌曲嗎？</string>
@@ -530,8 +522,6 @@
     <string name="found_in_settings_content">位於「設定」&gt;「內容」中</string>
     <string name="casting_to">轉換為 %s</string>
     <string name="error_playback_failed">播放失敗</string>
-    <string name="error_podcast_subscribe">訂閱播客失敗</string>
-    <string name="error_podcast_unsubscribe">取消訂閱播客失敗</string>
     <string name="view_channel">查看頻道</string>
     <string name="album_art">專輯封面</string>
     <string name="no_song_playing">沒有歌曲播放</string>
@@ -742,20 +732,11 @@
     <string name="wizard_save_profiles">儲存設定檔</string>
     <string name="plays">播放次數</string>
     <string name="more_options">更多選項</string>
-    <string name="latest_episodes">最新分集</string>
-    <string name="new_episodes">新分集</string>
-    <string name="episodes_for_later">待播分集</string>
-    <string name="filter_episodes">分集</string>
-    <plurals name="n_episode">
-        <item quantity="other">%d 個分集</item>
-    </plurals>
     <string name="downloaded_episodes">已下載分集</string>
     <plurals name="n_channel">
         <item quantity="other">%d 頻道</item>
     </plurals>
     <string name="no_downloaded_episodes">沒有下載分集</string>
-    <string name="error_episode_save">無法儲存分集</string>
-    <string name="error_episode_remove">無法移除分集</string>
     <string name="widget_turntable">虛擬打碟台</string>
     <string name="ai_deepl_formality">語氣功能</string>
     <string name="cd_palette_item">樣式 %1$s</string>

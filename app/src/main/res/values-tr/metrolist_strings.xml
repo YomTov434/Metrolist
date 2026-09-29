@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="local_history">Yerel</string>
     <string name="remote_history">Uzak</string>
@@ -540,10 +540,6 @@
     <string name="sleep_timer_default_set">Uyku zamanlayıcısı varsayılanı %d dakika olarak ayarlandı</string>
     <string name="found_in_settings_content">Ayarlar &gt; İçerik bölümünde bulunur</string>
     <string name="plays">dinleme</string>
-    <string name="error_episode_save">Bölüm kaydedilemedi</string>
-    <string name="error_episode_remove">Bölüm kaldırılamadı</string>
-    <string name="error_podcast_subscribe">Podcast\'e abone olunamadı</string>
-    <string name="error_podcast_unsubscribe">Podcast aboneliğinden çıkılamadı</string>
     <string name="listen_together_auto_approval_suggestions">Şarkı önerilerini otomatik olarak onayla</string>
     <string name="listen_together_auto_approval_suggestions_desc">Konuklardan gelen şarkı önerilerini otomatik onayla ve sıraya al</string>
     <string name="speed_dial">Hızlı arama</string>
@@ -575,21 +571,6 @@
     <string name="wanna_play_favorite_song">Onların en sevdiği şarkıyı çalmak ister misin?</string>
     <string name="yeah">Evet!</string>
     <string name="stands_with_palestine">Bu proje Filistin\'in yanındadır 🇵🇸</string>
-    <string name="filter_podcasts">Podcastler</string>
-    <string name="view_podcast">Podcast\'i görüntüle</string>
-    <string name="podcast_channels">Podcast kanalları</string>
-    <string name="latest_episodes">Son bölümler</string>
-    <string name="your_shows">Programlarınız</string>
-    <string name="new_episodes">Yeni bölümler</string>
-    <string name="episodes_for_later">Daha sonraki bölümler</string>
-    <string name="save_episode_for_later">Daha sonrası için kaydet</string>
-    <string name="save_episode_for_later_desc">Daha sonra dinle listenize ekleyin</string>
-    <string name="remove_episode_from_saved">Kaydedilenlerden kaldır</string>
-    <string name="subscribe_to_podcast">Podcast\'i kitaplığa kaydet</string>
-    <plurals name="n_episode">
-        <item quantity="one">%d bölüm</item>
-        <item quantity="other">%d bölüm</item>
-    </plurals>
     <string name="restore_confirm_title">Yedek geri yüklensin mi?</string>
     <string name="restore_confirm_message">Bu, uygulama verilerinizi seçilen yedekten geri yükleyecektir</string>
     <string name="restore_account_warning">Aşağıdaki hesap bilgileri geri yüklenecek ve korunacaktır:</string>
@@ -611,7 +592,6 @@
     <string name="widget_recognizer_channel_name">Müzik Tanıma</string>
     <string name="widget_recognizer_channel_desc">Widget\'tan şarkı tanımlanırken bir bildirim gösterir</string>
     <string name="widget_recognizer_notification_text">Şarkıyı tanımlamak için ses kaydediliyor…</string>
-    <string name="filter_episodes">Bölümler</string>
     <string name="filter_channels">Kanallar</string>
     <string name="auto_playlist">Otomatik oynatma listesi</string>
     <string name="downloaded_episodes">İndirilen bölümler</string>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="liked">Oblíbené</string>
     <string name="offline">Offline</string>
@@ -570,24 +570,6 @@
     <string name="wanna_play_favorite_song">Chcete přehrát autorovu oblíbenou skladbu?</string>
     <string name="yeah">Jasně!</string>
     <string name="stands_with_palestine">Tento projekt podporuje Palestinu 🇵🇸</string>
-    <string name="filter_podcasts">Podcasty</string>
-    <string name="view_podcast">Zobrazit podcast</string>
-    <string name="podcast_channels">Podcastové kanály</string>
-    <string name="latest_episodes">Nejnovější epizody</string>
-    <string name="your_shows">Vaše pořady</string>
-    <string name="new_episodes">Nové epizody</string>
-    <string name="episodes_for_later">Epizody na později</string>
-    <string name="save_episode_for_later">Uložit na později</string>
-    <string name="save_episode_for_later_desc">Přidat do playlistu Epizody na později</string>
-    <string name="remove_episode_from_saved">Odebrat z uložených</string>
-    <string name="subscribe_to_podcast">Uložit podcast do knihovny</string>
-    <plurals name="n_episode">
-        <item quantity="one">%d epizoda</item>
-        <item quantity="few">%d epizody</item>
-        <item quantity="many">%d epizod</item>
-        <item quantity="other">%d epizod</item>
-    </plurals>
-    <string name="filter_episodes">Epizody</string>
     <string name="filter_channels">Kanály</string>
     <string name="auto_playlist">Automatický playlist</string>
     <string name="downloaded_episodes">Stažené epizody</string>
@@ -606,10 +588,6 @@
     <string name="checking_previous_account">Kontroluji předchozí účet…</string>
     <string name="no_account_found">Žádný účet nenalezen</string>
     <string name="importing_playlist">Importuji playlist…</string>
-    <string name="error_podcast_unsubscribe">Nepodařilo se odhlásit z podcastu</string>
-    <string name="error_podcast_subscribe">Nepodařilo se přihlásit k odběru podcastu</string>
-    <string name="error_episode_save">Nepodařilo se uložit epizodu</string>
-    <string name="error_episode_remove">Nepodařilo se odebrat epizodu</string>
     <string name="youtube_music_lyrics_note">UPOZORNĚNÍ: Texty YouTube Music budou zobrazeny automaticky, když není dostupný jiný zdroj. Obvykle nejsou synchronizované</string>
     <string name="enable_lyricsplus">Povolit LyricsPlus</string>
     <string name="enable_lyricsplus_desc">Synchronizované texty z několika zdrojů</string>

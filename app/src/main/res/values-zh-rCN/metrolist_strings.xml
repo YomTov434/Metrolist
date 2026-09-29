@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="local_history">本地</string>
     <string name="remote_history">远程</string>
@@ -536,10 +536,6 @@
     <string name="set_as_default">设为默认</string>
     <string name="sleep_timer_default_set">睡眠定时器默认设置为 %d 分钟</string>
     <string name="found_in_settings_content">可在“设置”&gt;“内容”中找到</string>
-    <string name="error_episode_save">无法保存分集</string>
-    <string name="error_episode_remove">无法移除分集</string>
-    <string name="error_podcast_subscribe">无法订阅播客</string>
-    <string name="error_podcast_unsubscribe">无法取消订阅播客</string>
     <string name="widget_recognizer_name">音乐识别器</string>
     <string name="widget_recognizer_description">直接从主屏幕识别周围播放的歌曲</string>
     <string name="widget_recognizer_tap_to_search">点击识别歌曲</string>
@@ -573,20 +569,6 @@
     <string name="wanna_play_favorite_song">想播放他们最喜欢的歌曲吗？</string>
     <string name="yeah">是的！</string>
     <string name="stands_with_palestine">本项目声援巴勒斯坦 🇵🇸</string>
-    <string name="filter_podcasts">播客</string>
-    <string name="view_podcast">查看播客</string>
-    <string name="podcast_channels">播客频道</string>
-    <string name="latest_episodes">最新分集</string>
-    <string name="your_shows">您的节目</string>
-    <string name="new_episodes">新分集</string>
-    <string name="episodes_for_later">待播分集</string>
-    <string name="save_episode_for_later">保存以稍后收听</string>
-    <string name="save_episode_for_later_desc">添加到“待播分集”播放列表</string>
-    <string name="remove_episode_from_saved">从已保存中移除</string>
-    <string name="subscribe_to_podcast">将播客保存到媒体库</string>
-    <plurals name="n_episode">
-        <item quantity="other">%d 个分集</item>
-    </plurals>
     <string name="restore_confirm_title">恢复备份？</string>
     <string name="restore_confirm_message">这将从所选备份中恢复您的应用数据</string>
     <string name="restore_account_warning">以下账号信息将被恢复并保留：</string>
@@ -607,7 +589,6 @@
     <string name="daily_discover_based_on">基于 %1$s</string>
     <string name="daily_discover_for_fans_of">%1$s 粉丝专享</string>
     <string name="from_the_community">来自社区</string>
-    <string name="filter_episodes">分集</string>
     <string name="filter_channels">频道</string>
     <string name="auto_playlist">自动播放列表</string>
     <string name="downloaded_episodes">已下载的分集</string>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="local_history">Plaaslik</string>
     <string name="remote_history">Afstandsbediening</string>
@@ -620,8 +620,6 @@
     <string name="wanna_play_favorite_song">Wil jy hul gunstelingliedjie speel?</string>
     <string name="yeah">Ja!</string>
     <string name="stands_with_palestine">Hierdie projek staan saam met Palestina 🇵🇸</string>
-    <string name="filter_podcasts">Podcasts</string>
-    <string name="view_podcast">Bekyk podcast</string>
     <string name="wrapped_top_song_title">Jou mees gespeelde liedjie is</string>
     <string name="wrapped_top_song_listening_time">Jy het vir %d minute geluister!</string>
     <string name="wrapped_total_artists_title">Jy het geluister na</string>
@@ -704,20 +702,6 @@
     <string name="copy_code">Kopieer kode</string>
     <string name="kick_user_desc">Verwyder hierdie persoon uit die sessie</string>
     <string name="permanently_kick_user">Blokkeer permanent</string>
-    <string name="podcast_channels">Podcastkanale</string>
-    <string name="latest_episodes">Nuutste episodes</string>
-    <string name="your_shows">Jou programme</string>
-    <string name="new_episodes">Nuwe episodes</string>
-    <string name="episodes_for_later">Episodes vir later</string>
-    <string name="save_episode_for_later">Stoor vir later</string>
-    <string name="save_episode_for_later_desc">Voeg by jou Episodes vir later-snitlys</string>
-    <string name="remove_episode_from_saved">Verwyder uit gestoor</string>
-    <string name="subscribe_to_podcast">Stoor Podcast in biblioteek</string>
-    <plurals name="n_episode">
-        <item quantity="one">%d-episode</item>
-        <item quantity="other">%d-episodes</item>
-    </plurals>
-    <string name="filter_episodes">Episodes</string>
     <string name="filter_profiles">Profiele</string>
     <string name="filter_channels">Kanale</string>
     <string name="auto_playlist">Outomatiese snitlys</string>
@@ -821,10 +805,6 @@
     <string name="failed_to_parse_proxy">Kon nie proxy-URL ontleed nie</string>
     <string name="error_playback_failed">Afspeel het misluk</string>
     <string name="error_job_cancelled">Die video is nie beskikbaar vir afspeel nie. Probeer weer of slaan oor na die volgende liedjie.</string>
-    <string name="error_episode_save">Kon nie episode stoor nie</string>
-    <string name="error_episode_remove">Kon nie episode verwyder nie</string>
-    <string name="error_podcast_subscribe">Kon nie op Podcast inteken nie</string>
-    <string name="error_podcast_unsubscribe">Kon nie van Podcast onttrek nie</string>
     <string name="view_channel">Bekyk kanaal</string>
     <string name="album_art">Albumkuns</string>
     <string name="no_song_playing">Geen liedjie speel nie</string>

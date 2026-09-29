@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="local_history">Daxili</string>
     <string name="remote_history">Server tərəfi</string>
@@ -450,10 +450,6 @@
     <string name="failed_to_parse_proxy">Proksi URL təhlil etmək mümkün olmadı</string>
     <string name="error_playback_failed">Oxutma uğursuz oldu</string>
     <string name="error_job_cancelled">Video oxudula bilmir. Yenidən cəhd edin və ya növbəti mahnıya keçin.</string>
-    <string name="error_episode_save">Epizod yadda saxlanıla bilmədi</string>
-    <string name="error_episode_remove">Epizod silinə bilmədi</string>
-    <string name="error_podcast_subscribe">Podkasta abunə olmaq mümkün olmadı</string>
-    <string name="error_podcast_unsubscribe">Podkast abunəliyindən imtina etmək mümkün olmadı</string>
     <string name="view_channel">Kanala bax</string>
     <string name="album_art">Albomun tərtibatı</string>
     <string name="no_song_playing">Heç bir mahnı səslənmir</string>
@@ -746,22 +742,6 @@
     <string name="wanna_play_favorite_song">Onların sevimli mahnısını çalmaq istəyirsiniz?</string>
     <string name="yeah">Bəli!</string>
     <string name="stands_with_palestine">Bu layihə Fələstinin yanındadır 🇵🇸</string>
-    <string name="filter_podcasts">Podkastlar</string>
-    <string name="view_podcast">Podkasta baxın</string>
-    <string name="podcast_channels">Podkast kanalları</string>
-    <string name="latest_episodes">Ən son epizodlar</string>
-    <string name="your_shows">Sizin şoularınız</string>
-    <string name="new_episodes">Yeni epizodlar</string>
-    <string name="episodes_for_later">Sonradan izləmək üçün epizodlar</string>
-    <string name="save_episode_for_later">Sonraya saxla</string>
-    <string name="save_episode_for_later_desc">\"Daha sonra baxılacaq epizodlar\" siyahısına əlavə edin</string>
-    <string name="remove_episode_from_saved">Yaddaşdan sil</string>
-    <string name="subscribe_to_podcast">Podkastı kitabxanaya saxla</string>
-    <plurals name="n_episode">
-        <item quantity="one">%d-ci epizod</item>
-        <item quantity="other">%d-ci epizod</item>
-    </plurals>
-    <string name="filter_episodes">Epizodlar</string>
     <string name="filter_profiles">Profillər</string>
     <string name="filter_channels">Kanallar</string>
     <string name="auto_playlist">Avtomatik pleylist</string>

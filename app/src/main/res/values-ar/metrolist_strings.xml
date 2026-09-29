@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="back_button_desc">للخلف</string>
     <string name="album_cover_desc">غلاف الألبوم</string>
@@ -563,10 +563,6 @@
     <string name="failed_to_check_updates">فشل التحقق من وجود تحديثات: %s</string>
     <string name="set_as_default">تعيين كافتراضي</string>
     <string name="sleep_timer_default_set">تم ضبط مؤقت النوم إفتراضياً على %d دقيقة</string>
-    <string name="error_episode_save">فشل حفظ الحلقة</string>
-    <string name="error_episode_remove">فشل حذف الحلقة</string>
-    <string name="error_podcast_subscribe">فشل الاشتراك في البودكاست</string>
-    <string name="error_podcast_unsubscribe">فشل إلغاء الاشتراك في البودكاست</string>
     <string name="listen_together_auto_approval_suggestions">الموافقة التلقائية على اقتراحات الأغاني</string>
     <string name="listen_together_auto_approval_suggestions_desc">الموافقة التلقائية على اقتراحات الأغاني من الضيوف ووضعها في قائمة الانتظار</string>
     <string name="logout_dialog_title">الاحتفاظ ببيانات المكتبة؟</string>
@@ -588,25 +584,6 @@
     <string name="wanna_play_favorite_song">هل تريد تشغيل أغنيتهم المفضلة؟</string>
     <string name="yeah">نعم</string>
     <string name="stands_with_palestine">هذا المشروع يقف مع فلسطين 🇵🇸</string>
-    <string name="filter_podcasts">بودكاست</string>
-    <string name="view_podcast">عرض البودكاست</string>
-    <string name="podcast_channels">قنوات البودكاست</string>
-    <string name="latest_episodes">أحدث الحلقات</string>
-    <string name="your_shows">عروضك</string>
-    <string name="new_episodes">حلقات جديدة</string>
-    <string name="episodes_for_later">الحلقات لاحقًا</string>
-    <string name="save_episode_for_later">حفظ لوقت لاحق</string>
-    <string name="save_episode_for_later_desc">أضف إلى حلقاتك للمشاهدة لاحقًا قائمة التشغيل</string>
-    <string name="remove_episode_from_saved">إزالة من المحفوظات</string>
-    <string name="subscribe_to_podcast">حفظ البودكاست في المكتبة</string>
-    <plurals name="n_episode">
-        <item quantity="zero">%d حلقة</item>
-        <item quantity="one">%d حلقة</item>
-        <item quantity="two">%d حلقتان</item>
-        <item quantity="few">%d حلقات</item>
-        <item quantity="many">%d حلقة</item>
-        <item quantity="other">%d حلقة</item>
-    </plurals>
     <string name="restore_confirm_title">استعادة النسخة الاحتياطية؟</string>
     <string name="restore_confirm_message">سيؤدي هذا إلى استعادة بيانات تطبيقك من النسخة الاحتياطية.</string>
     <string name="restore_account_warning">سيتم استعادة معلومات الحساب التالي والاحتفاظ بها:</string>
@@ -654,7 +631,6 @@
     <string name="sleep_timer_sunday">الأحد</string>
     <string name="view_channel">عرض القناة</string>
     <string name="qs_tile_music_recognizer">التعرف على الموسيقى</string>
-    <string name="filter_episodes">حلقات</string>
     <string name="filter_profiles">الملفات الشخصية</string>
     <string name="filter_channels">قنوات</string>
     <string name="auto_playlist">قائمة تشغيل تلقائية</string>

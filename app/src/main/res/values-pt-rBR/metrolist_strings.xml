@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="weeks">Semanas</string>
     <string name="months">Meses</string>
@@ -543,10 +543,6 @@
     <string name="density_restart_message">A mudança de densidade de exibição vai ser aplicada após reiniciar o app. Você deseja reiniciar agora?</string>
     <string name="found_in_settings_content">Encontrado em Configurações &gt; Conteúdo</string>
     <string name="plays">reproduções</string>
-    <string name="error_episode_save">Falha ao salvar episódio</string>
-    <string name="error_episode_remove">Falha ao remover episódio</string>
-    <string name="error_podcast_subscribe">Falha ao se inscrever no podcast</string>
-    <string name="error_podcast_unsubscribe">Falha ao se desinscrever do podcast</string>
     <string name="listen_together_auto_approval_suggestions">Aprovar automaticamente sugestões de músicas</string>
     <string name="listen_together_auto_approval_suggestions_desc">Aprovar e enfileirar sugestões de convidados automaticamente</string>
     <string name="speed_dial">Acesso rápido</string>
@@ -578,22 +574,6 @@
     <string name="wanna_play_favorite_song">Quer tocar sua música favorita?</string>
     <string name="yeah">Sim!</string>
     <string name="stands_with_palestine">Esse projeto apoia a Palestina 🇵🇸</string>
-    <string name="filter_podcasts">Podcasts</string>
-    <string name="view_podcast">Ver podcast</string>
-    <string name="podcast_channels">Canais de podcast</string>
-    <string name="latest_episodes">Últimos episódios</string>
-    <string name="your_shows">Seus programas</string>
-    <string name="new_episodes">Novos episódios</string>
-    <string name="episodes_for_later">Episódios para mais tarde</string>
-    <string name="save_episode_for_later">Guarde para mais tarde</string>
-    <string name="save_episode_for_later_desc">Adicionar à sua playlist de Episódios para mais tarde</string>
-    <string name="remove_episode_from_saved">Remover dos salvos</string>
-    <string name="subscribe_to_podcast">Salvar podcast na biblioteca</string>
-    <plurals name="n_episode">
-        <item quantity="one">%d episódio</item>
-        <item quantity="many">%d episódios</item>
-        <item quantity="other">%d episódios</item>
-    </plurals>
     <string name="restore_confirm_title">Restaurar backup?</string>
     <string name="restore_confirm_message">Isto vai restaurar seus dados do app do backup selecionado</string>
     <string name="restore_account_warning">As seguintes informações da conta serão restauradas e preservadas:</string>
@@ -615,7 +595,6 @@
     <string name="widget_recognizer_channel_name">Reconhecimento de música</string>
     <string name="widget_recognizer_channel_desc">Mostra uma notificação enquanto identifica uma música do widget</string>
     <string name="widget_recognizer_notification_text">Gravando áudio para identificar a música…</string>
-    <string name="filter_episodes">Episódios</string>
     <string name="filter_channels">Canais</string>
     <string name="auto_playlist">Playlist automática</string>
     <string name="downloaded_episodes">Episódios baixados</string>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="local_history">Локально</string>
     <string name="remote_history">Віддалено</string>
@@ -546,10 +546,6 @@
     <string name="experimental_lyrics_beta_message">Новий режим текстів пісень наразі перебуває на стадії розробки і може містити помилки. Ви впевнені, що хочете його увімкнути?</string>
     <string name="lyrics_animation_style_title">Стиль анімації «слово за словом»</string>
     <string name="plays">відтворень</string>
-    <string name="error_episode_save">Не вдалося зберегти епізод</string>
-    <string name="error_episode_remove">Не вдалося видалити епізод</string>
-    <string name="error_podcast_subscribe">Не вдалося підписатися на подкаст</string>
-    <string name="error_podcast_unsubscribe">Не вдалося відписатись від подкаста</string>
     <string name="listen_together_in_top_bar">«Слухати разом» у верхній панелі</string>
     <string name="listen_together_suggestion_sent">Пропозицію надіслано організатору!</string>
     <string name="connect">Підключитись</string>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="local_history">Local</string>
     <string name="remote_history">Remoto</string>
@@ -554,10 +554,6 @@
     <string name="failed_to_check_updates">Error al buscar actualizaciones: %s</string>
     <string name="set_as_default">Establecer como predeterminado</string>
     <string name="sleep_timer_default_set">Temporizador de apagado predeterminado establecido en %d minutos</string>
-    <string name="error_episode_save">No se pudo guardar el episodio</string>
-    <string name="error_episode_remove">No se pudo eliminar el episodio</string>
-    <string name="error_podcast_subscribe">Error al suscribirse al pódcast</string>
-    <string name="error_podcast_unsubscribe">Error al cancelar la suscripción al pódcast</string>
     <string name="listen_together_auto_approval_suggestions">Aprobar automáticamente las sugerencias de canciones</string>
     <string name="listen_together_auto_approval_suggestions_desc">Aprobar automáticamente y añadir a la cola las sugerencias de canciones de invitados</string>
     <string name="importing_playlist">Importando lista de reproducción…</string>
@@ -579,22 +575,6 @@
     <string name="wanna_play_favorite_song">¿Quieres reproducir su canción favorita?</string>
     <string name="yeah">¡Sí!</string>
     <string name="stands_with_palestine">Este proyecto apoya a Palestina 🇵🇸</string>
-    <string name="filter_podcasts">Podcasts</string>
-    <string name="view_podcast">Ver podcast</string>
-    <string name="podcast_channels">Canales de podcast</string>
-    <string name="latest_episodes">Últimos episodios</string>
-    <string name="your_shows">Tus programas</string>
-    <string name="new_episodes">Nuevos episodios</string>
-    <string name="episodes_for_later">Episodios para más tarde</string>
-    <string name="save_episode_for_later">Guardar para más tarde</string>
-    <string name="save_episode_for_later_desc">Añadir a tu lista de episodios para más tarde</string>
-    <string name="remove_episode_from_saved">Quitar de guardados</string>
-    <string name="subscribe_to_podcast">Guardar podcast en la biblioteca</string>
-    <plurals name="n_episode">
-        <item quantity="one">%d episodio</item>
-        <item quantity="many">%d episodios</item>
-        <item quantity="other">%d episodios</item>
-    </plurals>
     <string name="restore_confirm_title">¿Restaurar copia de seguridad?</string>
     <string name="restore_confirm_message">Esto restaurará los datos de la aplicación desde la copia de seguridad</string>
     <string name="restore_account_warning">La siguiente información de la cuenta será restaurada y conservada:</string>
@@ -615,7 +595,6 @@
     <string name="widget_recognizer_channel_name">Identificación de música</string>
     <string name="widget_recognizer_channel_desc">Muestra una notificación mientras se identifica una canción desde el widget</string>
     <string name="widget_recognizer_notification_text">Grabando audio para identificar la canción…</string>
-    <string name="filter_episodes">Episodios</string>
     <string name="filter_channels">Canales</string>
     <string name="auto_playlist">Lista de reproducción automática</string>
     <string name="downloaded_episodes">Episodios descargados</string>

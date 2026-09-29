@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="liked">Polubione</string>
     <string name="offline">Pobrane</string>
@@ -410,10 +410,6 @@
     <string name="lyrics_romanize_as_main">Pokaż zromanizowane teksty jako główne</string>
     <string name="found_in_settings_content">Znajdujące się w Ustawieniach &gt; Zawartość</string>
     <string name="plays">odtworzeń</string>
-    <string name="error_episode_save">Nie udało się zapisać epizodu</string>
-    <string name="error_episode_remove">Nie udało się usunąć epizodu</string>
-    <string name="error_podcast_subscribe">Nie udało się zasubskrybować do podcastu</string>
-    <string name="error_podcast_unsubscribe">Nie udało się odsubskrybować od podcastu</string>
     <string name="view_channel">Pokaż Kanał</string>
     <string name="not_playing">Brak odtwarzanego utworu</string>
     <string name="tap_to_play">Dotknij, aby otworzyć Metrolist</string>
@@ -638,24 +634,6 @@
     <string name="wanna_play_favorite_song">Chcesz zagrać ich ulubioną piosenkę?</string>
     <string name="yeah">Spoko!</string>
     <string name="stands_with_palestine">Ten projekt wspiera Palestynę 🇵🇸</string>
-    <string name="filter_podcasts">Podcasty</string>
-    <string name="view_podcast">Pokaż podcast</string>
-    <string name="podcast_channels">Kanały z podcastami</string>
-    <string name="latest_episodes">Najnowsze Epizody</string>
-    <string name="your_shows">Twoje Seriale</string>
-    <string name="new_episodes">Nowe Epizody</string>
-    <string name="episodes_for_later">Epizody na później</string>
-    <string name="save_episode_for_later">Zapisz na później</string>
-    <string name="save_episode_for_later_desc">Dodaj do playlisty „Odcinki na później”</string>
-    <string name="remove_episode_from_saved">Usuń z zapisanych</string>
-    <string name="subscribe_to_podcast">Zapisz podcast w bibliotece</string>
-    <plurals name="n_episode">
-        <item quantity="one">%d epizod</item>
-        <item quantity="few">%d epizody</item>
-        <item quantity="many">%d epizody</item>
-        <item quantity="other">%d epizody</item>
-    </plurals>
-    <string name="filter_episodes">Epizody</string>
     <string name="restore_confirm_message">Spowoduje to przywrócenie danych aplikacji z wybranej kopii zapasowej</string>
     <string name="restore_account_warning">Po przywróceniu będziesz musiał się ponownie zalogować. Następujące konto zostanie wylogowane:</string>
     <string name="restore">Przywróć</string>

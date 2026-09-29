@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="local_history">로컬</string>
     <string name="remote_history">원격</string>
@@ -297,10 +297,6 @@
     <string name="error_playing">재생 오류</string>
     <string name="failed_to_parse_proxy">프록시 URL을 분석하지 못했습니다</string>
     <string name="error_playback_failed">재생에 실패했습니다</string>
-    <string name="error_episode_save">에피소드를 저장하지 못했습니다</string>
-    <string name="error_episode_remove">에피소드를 삭제하지 못했습니다</string>
-    <string name="error_podcast_subscribe">팟캐스트를 구독하지 못했습니다</string>
-    <string name="error_podcast_unsubscribe">팟캐스트 구독을 해제하지 못했습니다</string>
     <string name="view_channel">채널 보기</string>
     <string name="metrolist">METROLIST</string>
     <string name="start_radio_desc">이 항목을 기반으로 라디오 시작</string>
@@ -550,20 +546,6 @@
     <string name="alarm_exact_permission_desc">앱이 백그라운드에 있을 때도 알람이 정확하게 울릴 수 있도록 권한을 허용합니다</string>
     <string name="alarm_battery_optimization_title">배터리 최적화</string>
     <string name="alarm_battery_optimization_desc">백그라운드에서 알람이 안정적으로 작동할 수 있도록 배터리 최적화를 비활성화해 주십시오</string>
-    <string name="filter_podcasts">팟캐스트</string>
-    <string name="view_podcast">팟캐스트 보기</string>
-    <string name="podcast_channels">팟캐스트 채널</string>
-    <string name="latest_episodes">최신 에피소드</string>
-    <string name="new_episodes">새 에피소드</string>
-    <string name="episodes_for_later">나중에 들을 에피소드</string>
-    <string name="save_episode_for_later">나중에 듣기</string>
-    <string name="save_episode_for_later_desc">\'나중에 들을 에피소드\' 재생목록에 추가합니다</string>
-    <string name="remove_episode_from_saved">저장된 에피소드 제거</string>
-    <string name="subscribe_to_podcast">보관함에 팟캐스트 저장</string>
-    <plurals name="n_episode">
-        <item quantity="other">에피소드 %d개</item>
-    </plurals>
-    <string name="filter_episodes">에피소드</string>
     <string name="filter_profiles">프로필</string>
     <string name="filter_channels">채널</string>
     <string name="downloaded_episodes">다운로드된 에피소드</string>
@@ -757,7 +739,6 @@
     <string name="wrapped_total_artists_subtitle">다채로운 아티스트들!</string>
     <string name="wrapped_total_songs_title">당신이 즐겨 들은</string>
     <string name="wrapped_total_songs_subtitle">다채로운 곡들!</string>
-    <string name="your_shows">내 프로그램</string>
     <string name="mixes">믹스</string>
     <string name="and">및</string>
     <string name="show_most_stats_playlists">주간 및 월간 가장 많이 재생된 플레이리스트 표시</string>

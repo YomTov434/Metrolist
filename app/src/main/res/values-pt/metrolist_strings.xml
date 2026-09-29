@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="local_history">Local</string>
     <string name="remote_history">Remoto</string>
@@ -452,10 +452,6 @@
     <string name="wizard_save_profiles">Guardar Perfis</string>
     <string name="your_daily_discover">A tua descoberta diária</string>
     <string name="error_job_cancelled">Este vídeo não está disponível para reprodução. Tenta novamente ou vai para a próxima música.</string>
-    <string name="error_episode_save">Falha ao guardar episódio</string>
-    <string name="error_episode_remove">Falha ao remover episódio</string>
-    <string name="error_podcast_subscribe">Falha ao subscrever ao podcast</string>
-    <string name="error_podcast_unsubscribe">Falha a remover subscrição do podcast</string>
     <string name="view_channel">Ver canal</string>
     <string name="not_playing">Sem música a tocar</string>
     <string name="tap_to_play">Toca para abrir o Metrolist</string>
@@ -764,23 +760,6 @@
     <string name="wanna_play_favorite_song">Queres reproduzir a música favorita dele(ela)</string>
     <string name="yeah">Sim!</string>
     <string name="stands_with_palestine">Este projeto suporta moralmente a Palestina 🇵🇸</string>
-    <string name="filter_podcasts">Podcasts</string>
-    <string name="view_podcast">Ver podcast</string>
-    <string name="podcast_channels">Canais de Podcast</string>
-    <string name="latest_episodes">Últimos episódios</string>
-    <string name="your_shows">Os teus shows</string>
-    <string name="new_episodes">Novos episódios</string>
-    <string name="episodes_for_later">Episódios para mais tarde</string>
-    <string name="save_episode_for_later">Guardar para depois</string>
-    <string name="save_episode_for_later_desc">Adiciona o episódio em questão para ouvires mais tarde</string>
-    <string name="remove_episode_from_saved">Removido da tua biblioteca</string>
-    <string name="subscribe_to_podcast">Guardar podcast na tua biblioteca</string>
-    <plurals name="n_episode">
-        <item quantity="one">Episódio %d</item>
-        <item quantity="many">%d Episódios</item>
-        <item quantity="other">Episódio %d</item>
-    </plurals>
-    <string name="filter_episodes">Episódios</string>
     <string name="filter_profiles">Perfil</string>
     <string name="filter_channels">Canais</string>
     <string name="auto_playlist">Playlist automática</string>

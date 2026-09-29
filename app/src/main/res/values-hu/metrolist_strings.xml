@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="local_history">Helyi</string>
     <string name="remote_history">Távoli</string>
@@ -493,22 +493,6 @@
     <string name="wanna_play_favorite_song">Játszuk a kedvenc dalukat?</string>
     <string name="yeah">Naná!</string>
     <string name="stands_with_palestine">Ez a projekt Palesztina mellett áll 🇵🇸</string>
-    <string name="filter_podcasts">Podcastok</string>
-    <string name="view_podcast">Podcast megtekintése</string>
-    <string name="podcast_channels">Podcast csatornák</string>
-    <string name="latest_episodes">Legutóbbi epizódok</string>
-    <string name="your_shows">Az Ön műsorai</string>
-    <string name="new_episodes">Új epizódok</string>
-    <string name="episodes_for_later">Epizódok későbbre</string>
-    <string name="save_episode_for_later">Mentés későbbre</string>
-    <string name="save_episode_for_later_desc">Epizódok hozzáadása egy lejátszási listához későbbre</string>
-    <string name="remove_episode_from_saved">Eltávolítás a mentettek közül</string>
-    <string name="subscribe_to_podcast">Podcast mentése a könyvtárba</string>
-    <plurals name="n_episode">
-        <item quantity="one">%d epizód</item>
-        <item quantity="other">%d epizód</item>
-    </plurals>
-    <string name="filter_episodes">Epizódok</string>
     <string name="filter_profiles">Profilok</string>
     <string name="filter_channels">Csatornák</string>
     <string name="auto_playlist">Automatikus lejátszási lista</string>
@@ -568,10 +552,6 @@
     <string name="error_playing">Lejátszási hiba</string>
     <string name="failed_to_parse_proxy">Proxy URL feldolgozása sikertelen</string>
     <string name="error_playback_failed">Lejátszás sikertelen</string>
-    <string name="error_episode_save">Epizód mentése sikertelen</string>
-    <string name="error_episode_remove">Epizód eltávolítása sikertelen</string>
-    <string name="error_podcast_subscribe">Podcast feliratkozás sikertelen</string>
-    <string name="error_podcast_unsubscribe">Podcast leiratkozás sikertelen</string>
     <string name="view_channel">Csatorna megtekintése</string>
     <string name="album_art">Lemezborító</string>
     <string name="no_song_playing">Nincs lejátszott dal</string>

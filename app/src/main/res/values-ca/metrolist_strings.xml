@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="local_history">Local</string>
     <string name="remote_history">Remot</string>
@@ -572,10 +572,6 @@
     <string name="sleep_timer_friday">Divendres</string>
     <string name="sleep_timer_saturday">Dissabte</string>
     <string name="sleep_timer_sunday">Diumenge</string>
-    <string name="error_episode_save">No s\'ha pogut desar l\'episodi</string>
-    <string name="error_episode_remove">No s\'ha pogut eliminar l\'episodi</string>
-    <string name="error_podcast_subscribe">No s\'ha pogut subscriure\'s al podcast</string>
-    <string name="error_podcast_unsubscribe">No s\'ha pogut llevar la subscripció al podcast</string>
     <string name="view_channel">Visualitzar Canal</string>
     <string name="widget_recognizer_name">Reconeixedor de música</string>
     <string name="widget_recognizer_description">Reconeix les cançons que sonen al teu voltant directament des de la pantalla d\'inici</string>
@@ -612,23 +608,6 @@
     <string name="wanna_play_favorite_song">Vols escoltar la teua cançó preferida?</string>
     <string name="yeah">Sí</string>
     <string name="stands_with_palestine">Aquest projecte dona suport a Palestina 🇵🇸</string>
-    <string name="filter_podcasts">Podcasts</string>
-    <string name="view_podcast">Veure el podcast</string>
-    <string name="podcast_channels">Canals de Podcast</string>
-    <string name="latest_episodes">Últims episodis</string>
-    <string name="your_shows">Els teus programes</string>
-    <string name="new_episodes">Nou episodi</string>
-    <string name="episodes_for_later">Episodis per a més tard</string>
-    <string name="save_episode_for_later">Guardar per a més tard</string>
-    <string name="save_episode_for_later_desc">Afig als teus Episodis per a més tard</string>
-    <string name="remove_episode_from_saved">Elimina de desats</string>
-    <string name="subscribe_to_podcast">Desa podcast a la llibreria</string>
-    <plurals name="n_episode">
-        <item quantity="one">%d episodi</item>
-        <item quantity="many">%d d\'episodis</item>
-        <item quantity="other">%d episodis</item>
-    </plurals>
-    <string name="filter_episodes">Episodis</string>
     <string name="filter_profiles">Perfils</string>
     <string name="filter_channels">Canals</string>
     <string name="auto_playlist">Llista de reproducció automàtica</string>

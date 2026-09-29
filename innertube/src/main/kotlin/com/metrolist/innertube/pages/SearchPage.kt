@@ -32,6 +32,7 @@ object SearchPage {
                 ?: return null
         return when {
             renderer.isEpisode -> null
+            renderer.isPodcast -> null
             renderer.isSong -> {
                 val libraryTokens = PageHelper.extractLibraryTokensFromMenuItems(renderer.menu?.menuRenderer?.items)
                 val metadataRuns = renderer.flexColumns

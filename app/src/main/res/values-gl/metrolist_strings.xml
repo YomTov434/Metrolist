@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="weeks">Semanas</string>
     <string name="months">Meses</string>
@@ -300,10 +300,6 @@
     <string name="error_playing">Erro na reprodución</string>
     <string name="failed_to_parse_proxy">Erro ao analizar o URL do proxy</string>
     <string name="error_playback_failed">Fallo na reprodución</string>
-    <string name="error_episode_save">Fallo ao gardar o episodio</string>
-    <string name="error_episode_remove">Fallo ao eliminar o episodio</string>
-    <string name="error_podcast_subscribe">Erro ao subscribirse ao pódcast</string>
-    <string name="error_podcast_unsubscribe">Erro ao cancelar a subscrición ao pódcast</string>
     <string name="view_channel">Ver canle</string>
     <string name="album_art">Portada do álbum</string>
     <string name="no_song_playing">Ningunha canción soando</string>
@@ -503,22 +499,6 @@
     <string name="wanna_play_favorite_song">Queres reproducir a súa canción favorita?</string>
     <string name="yeah">Si!</string>
     <string name="stands_with_palestine">Este proxecto apoia a Palestina 🇵🇸</string>
-    <string name="filter_podcasts">Pódcasts</string>
-    <string name="view_podcast">Ver pódcast</string>
-    <string name="podcast_channels">Canles de pódcast</string>
-    <string name="latest_episodes">Últimos episodios</string>
-    <string name="your_shows">Os teus programas</string>
-    <string name="new_episodes">Novos episodios</string>
-    <string name="episodes_for_later">Episodios para máis tarde</string>
-    <string name="save_episode_for_later">Gardar para máis tarde</string>
-    <string name="save_episode_for_later_desc">Engadir á túa lista de reprodución de episodios para máis tarde</string>
-    <string name="remove_episode_from_saved">Eliminar de gardados</string>
-    <string name="subscribe_to_podcast">Gardar pódcast na biblioteca</string>
-    <plurals name="n_episode">
-        <item quantity="one">%d episodio</item>
-        <item quantity="other">%d episodios</item>
-    </plurals>
-    <string name="filter_episodes">Episodios</string>
     <string name="filter_profiles">Perfís</string>
     <string name="filter_channels">Canles</string>
     <string name="discord_enable_button_1">Amosar botón 1</string>

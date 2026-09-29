@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="local_history">Locale</string>
     <string name="remote_history">Remoto</string>
@@ -531,9 +531,6 @@
     <string name="sleep_timer_default_set">Spegnimento automatico impostato come predefinito a %d minuti</string>
     <string name="found_in_settings_content">Trovato in Impostazioni &gt; Contenuti</string>
     <string name="plays">riproduzioni</string>
-    <string name="error_episode_save">Errore nel salvare l\'episodio</string>
-    <string name="error_episode_remove">Errore nel rimuovere l\'episodio</string>
-    <string name="error_podcast_subscribe">Errore nel seguire il podcast</string>
     <string name="lyrics_provider_priority_desc">Trascina per riordinare i fornitori in base alle preferenze. Una posizione più alta significa una priorità più alta</string>
     <string name="changelog">Novità</string>
     <string name="changelog_empty">Nessuna novità disponibile</string>
@@ -546,7 +543,6 @@
     <string name="check_for_updates_title">Controlla aggiornamenti</string>
     <string name="checking_for_updates">Controllo di aggiornamenti…</string>
     <string name="latest_version_format">Ultima: %s</string>
-    <string name="error_podcast_unsubscribe">Impossibile annullare l\'iscrizione al podcast</string>
     <string name="listen_together_auto_approval_suggestions">Approvazione automatica dei brani suggeriti</string>
     <string name="listen_together_auto_approval_suggestions_desc">Approva automaticamente e inserisci in coda le richieste di brani da parte degli ospiti</string>
     <string name="importing_playlist">Importazione di playlist…</string>
@@ -576,21 +572,6 @@
     <string name="wanna_play_favorite_song">Vuoi riprodurre il loro brano preferito?</string>
     <string name="yeah">Sì!</string>
     <string name="stands_with_palestine">Questo progetto sostiene la Palestina 🇵🇸</string>
-    <string name="filter_podcasts">Podcast</string>
-    <string name="view_podcast">Mostra podcast</string>
-    <string name="podcast_channels">Canali podcast</string>
-    <string name="latest_episodes">Ultimi episodi</string>
-    <string name="new_episodes">Nuovi episodi</string>
-    <string name="episodes_for_later">Episodi per dopo</string>
-    <string name="save_episode_for_later">Salva per dopo</string>
-    <string name="save_episode_for_later_desc">Aggiungi alla playlist Episodi per dopo</string>
-    <string name="remove_episode_from_saved">Rimuovi dai salvati</string>
-    <string name="subscribe_to_podcast">Salva podcast nella libreria</string>
-    <plurals name="n_episode">
-        <item quantity="one">%d episodio</item>
-        <item quantity="many">%d episodi</item>
-        <item quantity="other">%d episodi</item>
-    </plurals>
     <string name="restore_confirm_title">Vuoi ripristinare il backup?</string>
     <string name="restore_confirm_message">Questo ripristinerà i dati dell\'app dal backup</string>
     <string name="restore_account_warning">Le seguenti informazioni sull\'account verranno ripristinate e conservate:</string>
@@ -611,7 +592,6 @@
     <string name="widget_recognizer_channel_name">Riconoscimento Musicale</string>
     <string name="widget_recognizer_channel_desc">Mostra una notifica mentre stai identificando un brano dal widget</string>
     <string name="widget_recognizer_notification_text">Registrazione dell\'audio per identificare il brano…</string>
-    <string name="filter_episodes">Episodi</string>
     <string name="filter_channels">Canali</string>
     <string name="auto_playlist">Playlist automatica</string>
     <string name="downloaded_episodes">Episodi scaricati</string>
@@ -625,7 +605,6 @@
     <string name="speed_dial">Selezione rapida</string>
     <string name="pin_to_speed_dial">Fissa nella selezione rapida</string>
     <string name="unpin_from_speed_dial">Sblocca dalla selezione rapida</string>
-    <string name="your_shows">I tuoi spettacoli</string>
     <string name="view_channel">Visualizza canale</string>
     <string name="filter_profiles">Profili</string>
     <string name="sleep_timer_repeat">Ripeti</string>

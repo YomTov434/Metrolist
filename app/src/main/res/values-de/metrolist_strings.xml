@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="liked">Favoriten</string>
     <string name="offline">Heruntergeladen</string>
@@ -544,9 +544,6 @@
     <string name="failed_to_check_updates">Update-Suche fehlgeschlagen: %s</string>
     <string name="set_as_default">Als Standard einstellen</string>
     <string name="plays">Spielt</string>
-    <string name="error_episode_save">Speichern der Episode fehlgeschlagen</string>
-    <string name="error_episode_remove">Entfernen der Episode fehlgeschlagen</string>
-    <string name="error_podcast_subscribe">Abonnieren des Podcasts fehlgeschlagen</string>
     <string name="widget_recognizer_description">Finde Lieder, die um dich herum spielen, direkt von deinem Homescreen</string>
     <string name="widget_recognizer_tap_to_search">Tippe hier, um ein Lied zu erkennen</string>
     <string name="widget_recognizer_listening">Zuhören …</string>
@@ -582,20 +579,6 @@
     <string name="wanna_play_favorite_song">Möchten Sie ihr Lieblingslied spielen?</string>
     <string name="yeah">Ja!</string>
     <string name="stands_with_palestine">Dieses Projekt steht hinter Palästina 🇵🇸</string>
-    <string name="filter_podcasts">Podcasts</string>
-    <string name="view_podcast">Podcast anzeigen</string>
-    <string name="podcast_channels">Podcast-Kanäle</string>
-    <string name="latest_episodes">Neueste Episoden</string>
-    <string name="your_shows">Deine Sendungen</string>
-    <string name="new_episodes">Neue Folgen</string>
-    <string name="episodes_for_later">Folgen zum später anschauen</string>
-    <string name="save_episode_for_later">Für später speichern</string>
-    <string name="save_episode_for_later_desc">Zur Playliste „Episoden zum späteren Ansehen“ hinzufügen</string>
-    <string name="subscribe_to_podcast">Podcast zur Mediathek hinzufügen</string>
-    <plurals name="n_episode">
-        <item quantity="one">%d Episode</item>
-        <item quantity="other">%d Episoden</item>
-    </plurals>
     <string name="restore_confirm_title">Sicherung wiederherstellen?</string>
     <string name="restore_confirm_message">Dadurch werden Ihre App-Daten aus der ausgewählten Sicherung wiederhergestellt</string>
     <string name="restore_account_warning">Die folgenden Kontoinformationen werden wiederhergestellt und beibehalten:</string>
@@ -603,10 +586,7 @@
     <string name="checking_previous_account">Auf vorherigen Account prüfen …</string>
     <string name="no_account_found">Kein Account gefunden</string>
     <string name="sleep_timer_default_set">Einschlaf-Timer standardmäßig auf %d Minuten eingestellt</string>
-    <string name="error_podcast_unsubscribe">Podcast-Abo kündigen fehlgeschlagen</string>
     <string name="discord_rpc_preview">Vorschau auf „Rich Presence“</string>
-    <string name="remove_episode_from_saved">Von gespeicherten Episoden entfernen</string>
-    <string name="filter_episodes">Episoden</string>
     <string name="filter_channels">Kanäle</string>
     <string name="auto_playlist">Auto-Playlist</string>
     <string name="downloaded_episodes">Heruntergeladene Episoden</string>

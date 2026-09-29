@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="local_history">Local</string>
     <string name="remote_history">La distanță</string>
@@ -542,10 +542,6 @@
     <string name="set_as_default">Setează ca prestabilit</string>
     <string name="sleep_timer_default_set">Durata prestabilită a temporizatorul pentru somn a fost setată la %d (de) minute</string>
     <string name="plays">redă</string>
-    <string name="error_episode_save">Nu s-a putut salva episodul</string>
-    <string name="error_episode_remove">Nu s-a putut elimina episodul</string>
-    <string name="error_podcast_subscribe">Nu s-a putut abona la podcast</string>
-    <string name="error_podcast_unsubscribe">Nu s-a putut dezabona de la podcast</string>
     <string name="widget_recognizer_name">Recunoscător de muzică</string>
     <string name="widget_recognizer_description">Identifică melodiile care se redau în jurul tău direct de pe ecranul de pornire</string>
     <string name="widget_recognizer_tap_to_search">Atinge pentru a identifica o melodie</string>
@@ -588,23 +584,6 @@
     <string name="wanna_play_favorite_song">Vrei să redai melodia lui/ei preferată?</string>
     <string name="yeah">Da!</string>
     <string name="stands_with_palestine">Acest proiect ține cu Palestina 🇵🇸</string>
-    <string name="filter_podcasts">Podcasturi</string>
-    <string name="view_podcast">Vezi podcastul</string>
-    <string name="podcast_channels">Canale de podcasturi</string>
-    <string name="latest_episodes">Cele mai recente episoade</string>
-    <string name="your_shows">Emisiunile tale</string>
-    <string name="new_episodes">Episoade noi</string>
-    <string name="episodes_for_later">Episoade pentru mai târziu</string>
-    <string name="save_episode_for_later">Salvează pentru mai târziu</string>
-    <string name="save_episode_for_later_desc">Adaugă la playlistul Episoade pentru mai târziu</string>
-    <string name="remove_episode_from_saved">Eliminată din salvate</string>
-    <string name="subscribe_to_podcast">Salvează podcastul în bibliotecă</string>
-    <plurals name="n_episode">
-        <item quantity="one">Un episod</item>
-        <item quantity="few">%d episoade</item>
-        <item quantity="other">%d de episoade</item>
-    </plurals>
-    <string name="filter_episodes">Episoade</string>
     <string name="filter_channels">Canale</string>
     <string name="auto_playlist">Playlist automat</string>
     <string name="downloaded_episodes">Episoade descărcate</string>

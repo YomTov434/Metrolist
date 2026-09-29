@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="weeks">שבועות</string>
     <string name="months">חודשים</string>
@@ -401,10 +401,6 @@
     <string name="error_playing">שגיאה בהפעלה</string>
     <string name="failed_to_parse_proxy">נכשל בניתוח כתובת ה-url של ה-proxy.</string>
     <string name="error_playback_failed">ההפעלה נכשלה</string>
-    <string name="error_episode_save">שמירת הפרק נכשלה</string>
-    <string name="error_episode_remove">הסרת הפרק נכשלה</string>
-    <string name="error_podcast_subscribe">נכשלה ההרשמה לפודקאסט</string>
-    <string name="error_podcast_unsubscribe">ביטול המנוי לפודקאסט נכשל</string>
     <string name="view_channel">צפה בערוץ</string>
     <string name="album_art">עטיפת אלבום</string>
     <string name="no_song_playing">אין שיר מתנגן</string>
@@ -788,23 +784,6 @@
     <string name="metrolist">METROLIST</string>
     <string name="wanna_play_favorite_song">רוצה להשמיע את השיר האהוב עליהם?</string>
     <string name="yeah">כן!</string>
-    <string name="filter_podcasts">פודקאסטים</string>
-    <string name="view_podcast">צפה בפודקאסט</string>
-    <string name="podcast_channels">ערוצי פודקאסטים</string>
-    <string name="latest_episodes">פרקים אחרונים</string>
-    <string name="your_shows">התוכניות שלך</string>
-    <string name="new_episodes">פרקים חדשים</string>
-    <string name="episodes_for_later">פרקים להאזנה מאוחר יותר</string>
-    <string name="save_episode_for_later">שמירה להאזנה מאוחר יותר</string>
-    <string name="save_episode_for_later_desc">הוספה לרשימת ההשמעה \"פרקים להאזנה מאוחר יותר\" שלך</string>
-    <string name="remove_episode_from_saved">הסרה מהשמורים</string>
-    <string name="subscribe_to_podcast">שמירת הפודקאסט לספרייה</string>
-    <plurals name="n_episode">
-        <item quantity="one">פרק %d</item>
-        <item quantity="two">%d פרקים</item>
-        <item quantity="other">%d פרקים</item>
-    </plurals>
-    <string name="filter_episodes">פרקים</string>
     <string name="filter_profiles">פרופילים</string>
     <string name="filter_channels">ערוצים</string>
     <string name="auto_playlist">רשימת השמעה אוטומטית</string>

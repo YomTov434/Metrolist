@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="back_button_desc">Назад</string>
     <string name="please_wait">Пожалуйста, подождите</string>
@@ -546,10 +546,6 @@
     <string name="sleep_timer_default_set">Таймер сна по умолчанию: %d мин</string>
     <string name="found_in_settings_content">Находится в Настройки &gt; Контент</string>
     <string name="plays">прослушиваний</string>
-    <string name="error_episode_save">Не удалось сохранить выпуск</string>
-    <string name="error_episode_remove">Не удалось удалить выпуск</string>
-    <string name="error_podcast_subscribe">Не удалось подписаться на подкаст</string>
-    <string name="error_podcast_unsubscribe">Не удалось отписаться от подкаста</string>
     <string name="listen_together_auto_approval_suggestions">Автоматически одобрять предложенные треки</string>
     <string name="listen_together_auto_approval_suggestions_desc">Автоматически одобрять предложенные гостями треки и добавлять их в очередь</string>
     <string name="speed_dial">Быстрый выбор</string>
@@ -581,23 +577,6 @@
     <string name="wanna_play_favorite_song">Включить его любимую песню?</string>
     <string name="yeah">Да!</string>
     <string name="stands_with_palestine">Этот проект поддерживает Палестину 🇵🇸</string>
-    <string name="filter_podcasts">Подкасты</string>
-    <string name="view_podcast">Перейти к подкасту</string>
-    <string name="podcast_channels">Каналы подкастов</string>
-    <string name="latest_episodes">Последние выпуски</string>
-    <string name="your_shows">Ваши шоу</string>
-    <string name="new_episodes">Новые выпуски</string>
-    <string name="episodes_for_later">Сохраненные выпуски</string>
-    <string name="save_episode_for_later">Сохранить выпуск</string>
-    <string name="save_episode_for_later_desc">Добавить в плейлист «Сохраненные выпуски»</string>
-    <string name="remove_episode_from_saved">Удалить из сохранённых</string>
-    <string name="subscribe_to_podcast">Сохранить подкаст в библиотеку</string>
-    <plurals name="n_episode">
-        <item quantity="one">%d выпуск</item>
-        <item quantity="few">%d выпуска</item>
-        <item quantity="many">%d выпусков</item>
-        <item quantity="other">%d выпусков</item>
-    </plurals>
     <string name="restore_confirm_title">Восстановить из резервной копии?</string>
     <string name="restore_confirm_message">Данные приложения будут восстановлены из выбранной резервной копии</string>
     <string name="restore_account_warning">Данные следующего аккаунта будут восстановлены и сохранены:</string>
@@ -619,7 +598,6 @@
     <string name="widget_recognizer_channel_name">Распознавание музыки</string>
     <string name="widget_recognizer_channel_desc">Показывает уведомление при распознавании трека через виджет</string>
     <string name="widget_recognizer_notification_text">Запись звука для распознавания трека…</string>
-    <string name="filter_episodes">Выпуски</string>
     <string name="filter_channels">Каналы</string>
     <string name="auto_playlist">Создан автоматически</string>
     <string name="downloaded_episodes">Скачанные выпуски</string>

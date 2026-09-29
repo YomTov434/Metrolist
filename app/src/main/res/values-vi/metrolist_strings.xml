@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="local_history">Thiết bị này</string>
     <string name="remote_history">YouTube Music</string>
@@ -333,15 +333,12 @@
     <string name="advanced_desc">Điều chỉnh tốc độ (tempo) và cao độ (pitch) của bài hát</string>
     <string name="equalizer_desc">Mở bộ chỉnh âm trong ứng dụng</string>
     <string name="enable">Cho phép</string>
-    <string name="save_episode_for_later">Lưu để nghe sau</string>
     <string name="metrolist">METROLIST</string>
     <string name="credits_license_name">Giấy phép Công cộng GNU phiên bản 3.0 (GPLv3)</string>
     <string name="daily_discover_based_on">Dựa trên %1$s</string>
     <string name="logout_keep">Giữ lại</string>
     <string name="logout_clear">Xoá bỏ</string>
     <string name="credits_telegram">Kênh Telegram</string>
-    <string name="filter_podcasts">Podcasts</string>
-    <string name="view_podcast">Xem podcast</string>
     <string name="no_account_found">Không tìm thấy tài khoản</string>
     <string name="enter_room_code">Nhập mã phòng</string>
     <string name="listen_together_settings_desc">Cấu hình server, username, và thêm nữa</string>
@@ -418,18 +415,6 @@
     <string name="buy_mo_a_coffee">Ủng hộ tôi một ly cà phê!</string>
     <string name="community_and_info">Cộng đồng &amp; Thông tin</string>
     <string name="stands_with_palestine">Dự án này đứng về Palestine 🇵🇸</string>
-    <string name="podcast_channels">Kênh Podcast</string>
-    <string name="latest_episodes">Tập mới Nhất</string>
-    <string name="your_shows">Chương trình của bạn</string>
-    <string name="new_episodes">Tập mới</string>
-    <string name="episodes_for_later">Các tập để xem sau</string>
-    <string name="save_episode_for_later_desc">Thêm vào danh sách phát Các tập để xem sau của bạn</string>
-    <string name="remove_episode_from_saved">Đã xóa khỏi lưu</string>
-    <string name="subscribe_to_podcast">Lưu podcast vào thư viện</string>
-    <plurals name="n_episode">
-        <item quantity="other">%d tập</item>
-    </plurals>
-    <string name="filter_episodes">Tập</string>
     <string name="filter_profiles">Hồ sơ</string>
     <string name="filter_channels">Kênh</string>
     <string name="auto_playlist">Danh sách phát tự động</string>
@@ -552,10 +537,6 @@
     <string name="copied_title">Đã sao chép tiêu đề</string>
     <string name="copied_artist">Đã sao chép nghệ sĩ</string>
     <string name="error_playback_failed">Không thể phát lại</string>
-    <string name="error_episode_save">Không thể lưu tập</string>
-    <string name="error_episode_remove">Không thể loại bỏ tập</string>
-    <string name="error_podcast_subscribe">Không thể đăng ký podcast</string>
-    <string name="error_podcast_unsubscribe">Không thể hủy đăng ký podcast</string>
     <string name="view_channel">Xem kênh</string>
     <string name="not_playing">Không có bài hát đang phát</string>
     <string name="tap_to_play">Ấn để mở Metrolist</string>

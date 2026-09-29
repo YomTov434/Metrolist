@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <plurals name="n_time">
         <item quantity="other">%d kali</item>
@@ -555,10 +555,6 @@
     <string name="sleep_timer_sunday">Minggu</string>
     <string name="found_in_settings_content">Tersedia di Pengaturan &gt; Konten</string>
     <string name="plays">diputar</string>
-    <string name="error_episode_save">Gagal menyimpan episode</string>
-    <string name="error_episode_remove">Gagal menghapus episode</string>
-    <string name="error_podcast_subscribe">Gagal berlangganan podcast</string>
-    <string name="error_podcast_unsubscribe">Gagal berhenti berlangganan podcast</string>
     <string name="view_channel">Lihat saluran</string>
     <string name="widget_recognizer_name">Pengenal Musik</string>
     <string name="widget_recognizer_description">Identifikasi lagu yang diputar di sekitar Anda langsung dari layar beranda</string>
@@ -606,21 +602,6 @@
     <string name="wanna_play_favorite_song">Ingin memutar lagu favorit mereka?</string>
     <string name="yeah">Tentu!</string>
     <string name="stands_with_palestine">Proyek ini berpihak pada Palestina 🇵🇸</string>
-    <string name="filter_podcasts">Podcast</string>
-    <string name="view_podcast">Lihat podcast</string>
-    <string name="podcast_channels">Saluran podcast</string>
-    <string name="latest_episodes">Episode terbaru</string>
-    <string name="your_shows">Acara Anda</string>
-    <string name="new_episodes">Episode baru</string>
-    <string name="episodes_for_later">Episode untuk nanti</string>
-    <string name="save_episode_for_later">Simpan untuk nanti</string>
-    <string name="save_episode_for_later_desc">Tambahkan ke Episode Anda untuk nanti</string>
-    <string name="remove_episode_from_saved">Hapus dari daftar tersimpan</string>
-    <string name="subscribe_to_podcast">Simpan podcast ke pustaka</string>
-    <plurals name="n_episode">
-        <item quantity="other">%d episode</item>
-    </plurals>
-    <string name="filter_episodes">Episode</string>
     <string name="filter_profiles">Profil</string>
     <string name="filter_channels">Saluran</string>
     <string name="auto_playlist">Daftar putar otomatis</string>

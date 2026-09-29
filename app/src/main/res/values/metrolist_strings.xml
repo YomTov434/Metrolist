@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="local_history">Local</string>
     <string name="remote_history">Remote</string>
@@ -548,10 +548,6 @@
     <string name="error_offline_playback">You’re offline. Connect to the internet, or play a track downloaded for offline use.</string>
     <string name="error_explicit_login_recommended">Explicit playback works better with a logged-in account.</string>
     <string name="error_job_cancelled">The video is not available for playback. Try again or skip to the next song.</string>
-    <string name="error_episode_save">Failed to save episode</string>
-    <string name="error_episode_remove">Failed to remove episode</string>
-    <string name="error_podcast_subscribe">Failed to subscribe to podcast</string>
-    <string name="error_podcast_unsubscribe">Failed to unsubscribe from podcast</string>
     <string name="view_channel">View channel</string>
 
     <!-- Widget strings -->
@@ -882,23 +878,6 @@
     <string name="yeah">Yeah!</string>
     <string name="stands_with_palestine">This project stands with Palestine 🇵🇸</string>
 
-    <!-- Podcasts -->
-    <string name="filter_podcasts">Podcasts</string>
-    <string name="view_podcast">View podcast</string>
-    <string name="podcast_channels">Podcast channels</string>
-    <string name="latest_episodes">Latest episodes</string>
-    <string name="your_shows">Your shows</string>
-    <string name="new_episodes">New episodes</string>
-    <string name="episodes_for_later">Episodes for later</string>
-    <string name="save_episode_for_later">Save for later</string>
-    <string name="save_episode_for_later_desc">Add to your Episodes for later playlist</string>
-    <string name="remove_episode_from_saved">Remove from saved</string>
-    <string name="subscribe_to_podcast">Save podcast to library</string>
-    <plurals name="n_episode">
-        <item quantity="one">%d episode</item>
-        <item quantity="other">%d episodes</item>
-    </plurals>
-    <string name="filter_episodes">Episodes</string>
     <string name="filter_profiles">Profiles</string>
     <string name="filter_channels">Channels</string>
     <string name="auto_playlist">Auto playlist</string>

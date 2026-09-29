@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="lyrics_auto_scroll">Desplazamiento automático de letras</string>
     <string name="advanced_login">Iniciar sesión con token</string>
@@ -660,10 +660,6 @@
     <string name="wizard_select_eq_profiles">Seleccionar perfil de ecualización para %s</string>
     <string name="wizard_save_profiles">Guardar perfiles</string>
     <string name="your_daily_discover">Tu descubrimiento diario</string>
-    <string name="error_episode_save">Error al guardar el episodio</string>
-    <string name="error_episode_remove">Error al borrar el episodio</string>
-    <string name="error_podcast_subscribe">Error al suscribirse al podcast</string>
-    <string name="error_podcast_unsubscribe">Error al desuscribirse del podcast</string>
     <string name="view_channel">Ver canal</string>
     <string name="widget_recognizer_name">Reconocimiento de canción</string>
     <string name="widget_recognizer_description">Identifica la canción que se está reproduciendo directamente desde tu pantalla de inicio</string>
@@ -715,23 +711,6 @@
     <string name="wanna_play_favorite_song">¿Quieres reproducir su canción favorita?</string>
     <string name="yeah">¡Si!</string>
     <string name="stands_with_palestine">Este proyecto apoya a palestina 🇵🇸</string>
-    <string name="filter_podcasts">Podcasts</string>
-    <string name="view_podcast">Ver podcast</string>
-    <string name="podcast_channels">Canales de podcast</string>
-    <string name="latest_episodes">Últimos episodios</string>
-    <string name="your_shows">Tus shows</string>
-    <string name="new_episodes">Nuevos episodios</string>
-    <string name="episodes_for_later">Episodios para luego</string>
-    <string name="save_episode_for_later">Guardar para luego</string>
-    <string name="save_episode_for_later_desc">Agregar a tus episodios para luego</string>
-    <string name="remove_episode_from_saved">Eliminar de guardados</string>
-    <string name="subscribe_to_podcast">Guardar podcast en la librería</string>
-    <plurals name="n_episode">
-        <item quantity="one">%d Episodio</item>
-        <item quantity="many">%d Episodios</item>
-        <item quantity="other">%d Episodios</item>
-    </plurals>
-    <string name="filter_episodes">Episodios</string>
     <string name="filter_profiles">Perfiles</string>
     <string name="filter_channels">Canales</string>
     <string name="auto_playlist">Lista de reproducción automatica</string>

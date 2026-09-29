@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="charts">Arrakasta Zerrendak</string>
     <string name="back_button_desc">Itzuli</string>
@@ -459,10 +459,6 @@
     <string name="error_playing">Akatsa erreprodukzioan</string>
     <string name="failed_to_parse_proxy">Proxy-aren URL-a aztertzean akatsa</string>
     <string name="error_playback_failed">Erreprodukzioan akatsa</string>
-    <string name="error_episode_save">Atala gordetzean akatsa</string>
-    <string name="error_episode_remove">Atala kentzerakoan akatsa</string>
-    <string name="error_podcast_subscribe">Podcast-era harpidetzean akatsa</string>
-    <string name="error_podcast_unsubscribe">Podcast-etik harpidetzea kentzean akatsa</string>
     <string name="view_channel">Kanala ikusi</string>
     <string name="album_art">Albumaren azala</string>
     <string name="no_song_playing">Ez dago abestirik erreproduzitzen</string>

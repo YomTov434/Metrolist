@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="local_history">Lokal</string>
     <string name="remote_history">Jauh</string>
@@ -128,10 +128,6 @@
     <string name="sleep_timer_default_set">Pemasa tidur lalai ditetapkan sebagai %d minit</string>
     <string name="found_in_settings_content">Ditemukan dalam Tetapan &gt; Kandungan</string>
     <string name="plays">memainkan</string>
-    <string name="error_episode_save">Gagal untuk menyimpan episod</string>
-    <string name="error_episode_remove">Gagal untuk membuang episod</string>
-    <string name="error_podcast_subscribe">Gagal untuk melanggani podcast tersebut</string>
-    <string name="error_podcast_unsubscribe">Gagal untuk nyahlanggan daripada podcast tersebut</string>
     <string name="listen_together_auto_approval_joins">Sahkan permintaan masuk secara automatik</string>
     <string name="listen_together_auto_approval_joins_desc">Sahkan permintaan masuk secara automatik tanpa menyemak secara manual</string>
     <string name="listen_together_auto_approval_suggestions">Sahkan pengesyoran lagu secara automatik</string>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="local_history">ในเครื่อง</string>
     <string name="remote_history">จากบัญชี</string>
@@ -537,10 +537,6 @@
     <string name="sleep_timer_default_set">ตั้งค่าเวลาปิดเพลงอัตโนมัติเริ่มต้นเป็น %d นาที</string>
     <string name="found_in_settings_content">ดูได้ที่ การตั้งค่า &gt; เนื้อหา</string>
     <string name="plays">ครั้ง</string>
-    <string name="error_episode_save">เกิดข้อผิดพลาดในการบันทึกตอน</string>
-    <string name="error_episode_remove">เกิดข้อผิดพลาดในการลบตอน</string>
-    <string name="error_podcast_subscribe">เกิดข้อผิดพลาดในการติดตามพอดแคสต์</string>
-    <string name="error_podcast_unsubscribe">เกิดข้อผิดพลาดในการเลิกติดตามพอดแคสต์</string>
     <string name="listen_together_auto_approval_suggestions">อนุมัติคำแนะนำเพลงอัตโนมัติ</string>
     <string name="listen_together_auto_approval_suggestions_desc">อนุมัติและเพิ่มเพลงที่ผู้เข้าร่วมแนะนำเข้าสู่คิวโดยอัตโนมัติ</string>
     <string name="importing_playlist">กำลังนำเข้าเพลย์ลิสต์…</string>
@@ -573,20 +569,6 @@
     <string name="wanna_play_favorite_song">อยากเล่นเพลงโปรดของพวกเขาไหม?</string>
     <string name="yeah">ใช่เลย!</string>
     <string name="stands_with_palestine">โปรเจกต์นี้ขอยืนหยัดเคียงข้างปาเลสไตน์ 🇵🇸</string>
-    <string name="filter_podcasts">พอดแคสต์</string>
-    <string name="view_podcast">ดูพอดแคสต์</string>
-    <string name="podcast_channels">ช่องพอดแคสต์</string>
-    <string name="latest_episodes">ตอนล่าสุด</string>
-    <string name="your_shows">รายการของคุณ</string>
-    <string name="new_episodes">ตอนใหม่</string>
-    <string name="episodes_for_later">ตอนที่บันทึกไว้ฟังทีหลัง</string>
-    <string name="save_episode_for_later">บันทึกไว้ฟังทีหลัง</string>
-    <string name="save_episode_for_later_desc">เพิ่มลงในเพลย์ลิสต์สำหรับฟังทีหลัง</string>
-    <string name="remove_episode_from_saved">นำออกจากรายการที่บันทึกไว้</string>
-    <string name="subscribe_to_podcast">บันทึกพอดแคสต์ไว้ในคลัง</string>
-    <plurals name="n_episode">
-        <item quantity="other">%d ตอน</item>
-    </plurals>
     <string name="restore_confirm_title">กู้คืนข้อมูลจากแบ็กอัป?</string>
     <string name="restore_confirm_message">การดำเนินการนี้จะกู้คืนข้อมูลแอปจากไฟล์แบ็กอัปที่เลือก</string>
     <string name="restore_account_warning">ข้อมูลบัญชีต่อไปนี้จะได้รับการกู้คืนและเก็บรักษาไว้:</string>
@@ -607,7 +589,6 @@
     <string name="widget_recognizer_channel_name">การค้นหาเพลง</string>
     <string name="widget_recognizer_channel_desc">แสดงการแจ้งเตือนขณะกำลังค้นหาเพลงจากวิดเจ็ต</string>
     <string name="widget_recognizer_notification_text">กำลังบันทึกเสียงเพื่อระบุเพลง…</string>
-    <string name="filter_episodes">ตอน</string>
     <string name="filter_channels">ช่อง</string>
     <string name="auto_playlist">เพลย์ลิสต์อัตโนมัติ</string>
     <string name="downloaded_episodes">ตอนที่ดาวน์โหลดแล้ว</string>

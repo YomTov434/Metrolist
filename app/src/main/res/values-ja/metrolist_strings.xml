@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="local_history">ローカル</string>
     <string name="remote_history">リモート</string>
@@ -548,10 +548,6 @@
     <string name="sleep_timer_default_set">スリープタイマーのデフォルト値を%d分に設定しました</string>
     <string name="found_in_settings_content">設定 → コンテンツにあります</string>
     <string name="plays">回再生</string>
-    <string name="error_episode_save">エピソードの保存に失敗しました</string>
-    <string name="error_episode_remove">エピソードの削除に失敗しました</string>
-    <string name="error_podcast_subscribe">ポッドキャストの登録に失敗しました</string>
-    <string name="error_podcast_unsubscribe">ポッドキャストの登録解除に失敗しました</string>
     <string name="listen_together_auto_approval_suggestions">楽曲リクエストを自動で承認</string>
     <string name="listen_together_auto_approval_suggestions_desc">ゲストからの楽曲リクエストを自動で承認し、キューに追加します</string>
     <string name="importing_playlist">プレイリストをインポート中…</string>
@@ -573,20 +569,6 @@
     <string name="wanna_play_favorite_song">お気に入りの曲を再生しますか？</string>
     <string name="yeah">はい</string>
     <string name="stands_with_palestine">このプロジェクトはパレスチナを支持しています 🇵🇸</string>
-    <string name="filter_podcasts">ポッドキャスト</string>
-    <string name="view_podcast">ポッドキャストを表示</string>
-    <string name="podcast_channels">ポッドキャストチャンネル</string>
-    <string name="latest_episodes">最新のエピソード</string>
-    <string name="your_shows">あなたの番組</string>
-    <string name="new_episodes">新しいエピソード</string>
-    <string name="episodes_for_later">あとで聴く</string>
-    <string name="save_episode_for_later">あとで保存</string>
-    <string name="save_episode_for_later_desc">「あとで聴く」に追加</string>
-    <string name="remove_episode_from_saved">保存した曲から削除</string>
-    <string name="subscribe_to_podcast">ポッドキャストをライブラリに保存</string>
-    <plurals name="n_episode">
-        <item quantity="other">%dエピソード</item>
-    </plurals>
     <string name="restore_confirm_title">バックアップを復元しますか？</string>
     <string name="restore_confirm_message">選択したバックアップからアプリのデータを復元します</string>
     <string name="restore_account_warning">以下のアカウント情報が復元され、保存されます：</string>
@@ -607,7 +589,6 @@
     <string name="widget_recognizer_channel_name">楽曲認識</string>
     <string name="widget_recognizer_channel_desc">ウィジェットから曲を認識している間、通知を表示します</string>
     <string name="widget_recognizer_notification_text">音声を録音中…</string>
-    <string name="filter_episodes">エピソード</string>
     <string name="filter_channels">チャンネル</string>
     <string name="auto_playlist">自動プレイリスト</string>
     <string name="downloaded_episodes">ダウンロードしたエピソード</string>
