@@ -140,6 +140,9 @@
     <string name="edit_playlist_cover_note_wait">לאחר בחירת תמונה, אנא המתן רגע עד שהעטיפה החדשה תופיע ברשימת ההשמעה שלך.</string>
     <string name="choose_from_library">בחר מתוך ספרייה</string>
     <string name="remove_custom_image">הסר תמונה מותאמת אישית</string>
+    <string name="welcome_dialog_title">ברוכים הבאים</string>
+    <string name="welcome_dialog_message">כחלק מהשירות שלנו להנגשת סינון תוכן, אפליקציה זו חוסמת הצגת תמונות ותכני פודקאסט.\n\nבברכה,\nצוות גולד תקשורת</string>
+    <string name="welcome_dialog_confirm">הבנתי</string>
     <string name="general">כללי</string>
     <string name="proxy">Proxy</string>
     <string name="default_lib_chips">שנה את צ\'יפ הספרייה המוגדר כברירת מחדל</string>

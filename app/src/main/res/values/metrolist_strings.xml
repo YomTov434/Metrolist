@@ -188,6 +188,11 @@
     <string name="choose_from_library">Choose from library</string>
     <string name="remove_custom_image">Remove custom image</string>
 
+    <!-- Welcome message -->
+    <string name="welcome_dialog_title">Welcome</string>
+    <string name="welcome_dialog_message">As part of our service to make content filtering accessible, this app blocks the display of images and podcast content.\n\nBest regards,\nThe Gold Communications team</string>
+    <string name="welcome_dialog_confirm">Got it</string>
+
     <!-- General -->
     <string name="general">General</string>
     <string name="proxy">Proxy</string>
