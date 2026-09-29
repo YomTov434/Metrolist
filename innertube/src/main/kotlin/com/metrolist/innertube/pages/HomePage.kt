@@ -29,6 +29,13 @@ data class HomePage(
         val endpoint: BrowseEndpoint?,
         val deselectEndPoint: BrowseEndpoint?,
     ) {
+        // The mood/genre chip row's "Podcasts" chip has no structural flag to detect it
+        // by (its browse endpoint is a generic category browse, not a podcast page type),
+        // so it's matched by its known localized title. Only the locales this app's
+        // content language can actually resolve to need to be listed here.
+        val isPodcastChip: Boolean
+            get() = title.equals("Podcasts", ignoreCase = true) || title == "פודקאסטים"
+
         companion object {
             fun fromChipCloudChipRenderer(renderer: SectionListRenderer.Header.ChipCloudRenderer.Chip): Chip? {
                 return Chip(

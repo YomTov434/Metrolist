@@ -78,6 +78,7 @@ data class SearchSummaryPage(
         fun fromMusicCardShelfRenderer(renderer: MusicCardShelfRenderer): YTItem? {
             val subtitle = renderer.subtitle.runs?.splitBySeparator()
             return when {
+                renderer.onTap.browseEndpoint?.isPodcastEndpoint == true -> null
                 renderer.onTap.watchEndpoint != null -> {
                     SongItem(
                         id = renderer.onTap.watchEndpoint.videoId ?: return null,

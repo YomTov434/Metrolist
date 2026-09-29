@@ -1269,6 +1269,7 @@ object YouTube {
                     ?.chipCloudRenderer
                     ?.chips
                     ?.mapNotNull { HomePage.Chip.fromChipCloudChipRenderer(it) }
+                    ?.filterNot { it.isPodcastChip }
             Timber.d("home() chips: ${chips?.size ?: 0}")
             HomePage(chips, sections, continuation)
         }
