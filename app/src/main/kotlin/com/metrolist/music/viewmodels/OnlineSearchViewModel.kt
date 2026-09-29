@@ -28,6 +28,7 @@ import com.metrolist.music.utils.SearchRoutes
 import com.metrolist.music.utils.dataStore
 import com.metrolist.music.utils.get
 import com.metrolist.music.utils.reportException
+import com.metrolist.music.utils.Updater
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.async
@@ -115,6 +116,13 @@ constructor(
     }
 
     init {
+        // Lightweight, cache-respecting update check whenever a search starts --
+        // catches a customer who keeps searching for hours without relaunching
+        // the app. See Updater.pendingMandatoryUpdate.
+        viewModelScope.launch {
+            Updater.refreshMandatoryUpdateState()
+        }
+
         viewModelScope.launch {
             filter.collect { filter ->
                 if (filter == null) {

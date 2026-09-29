@@ -491,19 +491,18 @@ class MainActivity : FragmentActivity() {
         }
 
         setContent {
-            var mandatoryUpdateRelease by remember { mutableStateOf<ReleaseInfo?>(null) }
+            // Shared across the whole app (see Updater.pendingMandatoryUpdate): a
+            // background worker, a navigation change, or starting a search can all
+            // flag an update, not just this initial launch check.
+            val pendingMandatoryUpdate by Updater.pendingMandatoryUpdate.collectAsStateWithLifecycle()
 
             LaunchedEffect(Unit) {
-                Updater.checkForUpdate(forceRefresh = true).onSuccess { (releaseInfo, hasUpdate) ->
-                    if (hasUpdate && releaseInfo != null) {
-                        mandatoryUpdateRelease = releaseInfo
-                    }
-                }
+                Updater.refreshMandatoryUpdateState(forceRefresh = true)
             }
 
-            val pendingMandatoryUpdate = mandatoryUpdateRelease
-            if (pendingMandatoryUpdate != null) {
-                MandatoryUpdateScreen(releaseInfo = pendingMandatoryUpdate)
+            val mandatoryRelease = pendingMandatoryUpdate
+            if (mandatoryRelease != null) {
+                MandatoryUpdateScreen(releaseInfo = mandatoryRelease)
             } else {
                 MetrolistApp(
                     latestVersionName = latestVersionName,
@@ -777,6 +776,15 @@ class MainActivity : FragmentActivity() {
                 val accountImageUrl by homeViewModel.accountImageUrl.collectAsStateWithLifecycle()
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val (previousTab, setPreviousTab) = rememberSaveable { mutableStateOf("home") }
+
+                // Lightweight, cache-respecting update check on every screen change --
+                // catches a customer who stays inside the app (browsing, not relaunching
+                // it) for a long session. See Updater.pendingMandatoryUpdate.
+                if (BuildConfig.UPDATER_AVAILABLE) {
+                    LaunchedEffect(navBackStackEntry) {
+                        Updater.refreshMandatoryUpdateState()
+                    }
+                }
 
                 val (listenTogetherInTopBar) = rememberPreference(ListenTogetherInTopBarKey, defaultValue = true)
                 val navigationItems =

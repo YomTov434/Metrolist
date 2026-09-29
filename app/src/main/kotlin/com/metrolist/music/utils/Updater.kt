@@ -12,6 +12,9 @@ import io.ktor.client.request.header
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
@@ -293,4 +296,27 @@ object Updater {
      * Get the latest release info (cached)
      */
     fun getCachedLatestRelease(): ReleaseInfo? = cachedReleaseInfo
+
+    private val _pendingMandatoryUpdate = MutableStateFlow<ReleaseInfo?>(null)
+
+    /**
+     * Shared, app-wide "there is a mandatory update waiting" flag. Every place that can
+     * detect an update (app launch, background worker, a navigation change, starting a
+     * search, ...) writes into this single flow via [refreshMandatoryUpdateState] instead
+     * of keeping its own local state, so any of them can pop the mandatory update gate.
+     */
+    val pendingMandatoryUpdate: StateFlow<ReleaseInfo?> = _pendingMandatoryUpdate.asStateFlow()
+
+    /**
+     * Checks for an update and, if one is available, flags [pendingMandatoryUpdate].
+     * Safe to call from anywhere (UI, ViewModels, a background worker); respects the
+     * normal 2-hour cache unless [forceRefresh] is set.
+     */
+    suspend fun refreshMandatoryUpdateState(forceRefresh: Boolean = false): ReleaseInfo? {
+        val (releaseInfo, hasUpdate) = checkForUpdate(forceRefresh).getOrNull() ?: (null to false)
+        if (hasUpdate && releaseInfo != null) {
+            _pendingMandatoryUpdate.value = releaseInfo
+        }
+        return releaseInfo?.takeIf { hasUpdate }
+    }
 }

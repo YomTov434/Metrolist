@@ -32,6 +32,7 @@ import com.metrolist.music.constants.*
 import com.metrolist.music.di.ApplicationScope
 import com.metrolist.music.extensions.toEnum
 import com.metrolist.music.extensions.toInetSocketAddress
+import com.metrolist.music.update.UpdateCheckWorker
 import com.metrolist.music.utils.BrandImageInterceptor
 import com.metrolist.music.utils.CrashHandler
 import com.metrolist.music.utils.ArtistNameAliases
@@ -39,6 +40,11 @@ import com.metrolist.music.utils.InnerTubeXPlayer
 import com.metrolist.music.utils.dataStore
 import com.metrolist.music.utils.safeDataStoreEdit
 import com.metrolist.music.utils.reportException
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -57,6 +63,7 @@ import java.net.Authenticator
 import java.net.PasswordAuthentication
 import java.net.Proxy
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -92,6 +99,10 @@ class App :
         Timber.plant(Timber.DebugTree())
         InnerTubeXPlayer.initialize(this)
 
+        if (BuildConfig.UPDATER_AVAILABLE) {
+            scheduleUpdateCheckWorker()
+        }
+
         // Pre-read Coil cache size on background to avoid runBlocking in newImageLoader
         applicationScope.launch(Dispatchers.IO) {
             cachedCoilCacheSize = dataStore.data.map { it[MaxImageCacheSizeKey] ?: 512 }.first()
@@ -115,6 +126,28 @@ class App :
 
             observeSettingsChanges()
         }
+    }
+
+    /**
+     * Closes the gap where a device sits on one screen (or just plays music) for
+     * hours without the app being relaunched, so the launch-time mandatory-update
+     * check never runs. KEEP so re-scheduling on every process start doesn't reset
+     * the backoff/interval WorkManager is already tracking.
+     */
+    private fun scheduleUpdateCheckWorker() {
+        val request =
+            PeriodicWorkRequestBuilder<UpdateCheckWorker>(4, TimeUnit.HOURS)
+                .setConstraints(
+                    Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .build(),
+                )
+                .build()
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            UpdateCheckWorker.UNIQUE_WORK_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
+            request,
+        )
     }
 
     private suspend fun initializeSettings() {
