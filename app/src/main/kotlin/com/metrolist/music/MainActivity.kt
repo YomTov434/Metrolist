@@ -529,6 +529,10 @@ class MainActivity : FragmentActivity() {
                     val (releaseInfo, hasUpdate) = Updater.checkForUpdate().getOrNull() ?: (null to false)
                     releaseInfo?.let { onLatestVersionNameChange(it.versionName) }
 
+                    // Only ever offer updates from our own release pipeline (YomTov434/Metrolist).
+                    // Never surface MetrolistGroup's upstream KMP releases here: those are a
+                    // separate, unbranded APK with none of our content filtering or signing,
+                    // and customers must never be prompted to install it.
                     val standaloneUpdate =
                         releaseInfo
                             ?.takeIf { hasUpdate }
@@ -537,13 +541,7 @@ class MainActivity : FragmentActivity() {
                                     AvailableUpdate(release, downloadUrl, isKmp = false)
                                 }
                             }
-                    val kmpUpdate =
-                        Updater.getLatestKmpRelease().getOrNull()?.let { release ->
-                            release.assets.firstOrNull()?.let { asset ->
-                                AvailableUpdate(release, asset.downloadUrl, isKmp = true)
-                            }
-                        }
-                    val update = kmpUpdate ?: standaloneUpdate
+                    val update = standaloneUpdate
                     availableUpdate = update?.takeUnless {
                         it.release.tagName == preferences[it.dismissalKey]
                     }
