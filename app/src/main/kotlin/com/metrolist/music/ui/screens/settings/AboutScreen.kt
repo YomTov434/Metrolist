@@ -327,6 +327,10 @@ fun AboutScreen(
             }
         }
 
+        Spacer(Modifier.height(24.dp))
+
+        VariantSwitchCard()
+
         Spacer(Modifier.height(48.dp))
     }
 

@@ -880,4 +880,15 @@
     <string name="stream_source_android_vr_desc">לקוחות Android VR (כל הגרסאות).</string>
     <string name="stream_source_web_creator">WEB_CREATOR</string>
     <string name="stream_source_web_creator_desc">לקוח אינטרנט ליוצרים.</string>
+    <string name="variant_switch_to_cast_title">גרסה עם Google Cast</string>
+    <string name="variant_switch_to_cast_description">מעבר לגרסה שיודעת לשדר לטלוויזיה חכמה, ל\u2011Chromecast או לרמקול תומך. הספרייה וההגדרות נשמרות.</string>
+    <string name="variant_switch_to_cast_action">מעבר לגרסה עם Cast</string>
+    <string name="variant_switch_to_plain_title">גרסה רגילה</string>
+    <string name="variant_switch_to_plain_description">חזרה לגרסה בלי Google Cast. היא קטנה יותר ולא דורשת שירותי גוגל. הספרייה וההגדרות נשמרות.</string>
+    <string name="variant_switch_to_plain_action">חזרה לגרסה הרגילה</string>
+    <string name="variant_switch_downloading">מוריד\u2026 האפליקציה תופעל מחדש בסיום ההתקנה.</string>
+    <string name="variant_switch_failed">המעבר נכשל: %1$s</string>
+    <string name="variant_switch_no_play_services_title">שירותי גוגל לא נמצאו</string>
+    <string name="variant_switch_no_play_services_message">Google Cast דורש את שירותי Google Play, שאינם מותקנים במכשיר הזה. הגרסה עם Cast תותקן ותעבוד, אבל השידור עצמו לא יפעל.</string>
+    <string name="variant_switch_continue_anyway">להתקין בכל זאת</string>
 </resources>

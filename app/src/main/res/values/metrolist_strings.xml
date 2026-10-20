@@ -1000,4 +1000,15 @@
     <string name="stream_source_web_creator_desc">Creator web client.</string>
     <string name="top_result">Top result</string>
     <string name="other">Other</string>
+    <string name="variant_switch_to_cast_title">Google Cast version</string>
+    <string name="variant_switch_to_cast_description">Switch to the build that can stream to a Chromecast, a Google TV or a Cast-enabled speaker. Your library and settings are kept.</string>
+    <string name="variant_switch_to_cast_action">Switch to the Cast version</string>
+    <string name="variant_switch_to_plain_title">Standard version</string>
+    <string name="variant_switch_to_plain_description">Go back to the build without Google Cast. It is smaller and needs no Google services. Your library and settings are kept.</string>
+    <string name="variant_switch_to_plain_action">Switch to the standard version</string>
+    <string name="variant_switch_downloading">Downloading\u2026 the app restarts once it is installed.</string>
+    <string name="variant_switch_failed">Switch failed: %1$s</string>
+    <string name="variant_switch_no_play_services_title">Google services not found</string>
+    <string name="variant_switch_no_play_services_message">Google Cast needs Google Play services, which are not installed on this device. The Cast version will install and run, but casting will not work.</string>
+    <string name="variant_switch_continue_anyway">Install anyway</string>
 </resources>
