@@ -249,11 +249,28 @@ object Updater {
      * Get the download URL for the correct app variant
      */
     fun getDownloadUrlForCurrentVariant(releaseInfo: ReleaseInfo): String? {
-        val (currentArch, currentVariant) = getCurrentAppVariant()
-        
+        val (_, currentVariant) = getCurrentAppVariant()
+        return getDownloadUrlForVariant(releaseInfo, currentVariant)
+    }
+
+    /** "foss" for the plain build, "gms" for the one with Google Cast. */
+    val currentVariant: String
+        get() = getCurrentAppVariant().second
+
+    /**
+     * Download URL for an explicitly chosen variant, used when switching between
+     * the plain and the Cast build. Falls back to the universal asset when no
+     * per-architecture one was published for that variant.
+     */
+    fun getDownloadUrlForVariant(releaseInfo: ReleaseInfo, variant: String): String? {
+        val (currentArch, _) = getCurrentAppVariant()
+
         return releaseInfo.assets
-            .find { it.architecture == currentArch && it.variant == currentVariant }
+            .find { it.architecture == currentArch && it.variant == variant }
             ?.downloadUrl
+            ?: releaseInfo.assets
+                .find { it.architecture == "universal" && it.variant == variant }
+                ?.downloadUrl
     }
 
     /**
