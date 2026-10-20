@@ -204,9 +204,17 @@ jobs:
       - name: Parse release notes from changelog
         run: |
           VERSION="${{ needs.check-version.outputs.new_version }}"
+          VERSION_CODE="${{ needs.check-version.outputs.version_code }}"
           chmod +x .github/scripts/parse_changelog.sh
 
-          if bash .github/scripts/parse_changelog.sh "$VERSION" changelog.md > release_notes.md; then
+          # versionName stays fixed across internal bumps, so entries are keyed
+          # by versionCode. The versionName lookup is kept as a fallback for
+          # entries written before that.
+          if bash .github/scripts/parse_changelog.sh "$VERSION_CODE" changelog.md > release_notes.md; then
+            echo "Release notes sourced from changelog.md for versionCode $VERSION_CODE"
+            echo "--- Preview (first 20 lines) ---"
+            head -20 release_notes.md
+          elif bash .github/scripts/parse_changelog.sh "$VERSION" changelog.md > release_notes.md; then
             echo "Release notes sourced from changelog.md for v$VERSION"
             echo "--- Preview (first 20 lines) ---"
             head -20 release_notes.md
