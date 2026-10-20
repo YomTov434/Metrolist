@@ -53,9 +53,14 @@ jobs:
       - name: Report build errors
         if: failure()
         run: |
-          grep -E '^(e: |w: .*error|FAILURE:|Caused by:|\* What went wrong)' build-output.log \
-            | head -40 \
-            | while IFS= read -r line; do echo "::error::${line}"; done
+          {
+            grep -E '^e: ' build-output.log | head -30
+            echo '--- tail ---'
+            tail -60 build-output.log
+          } > errors.txt
+          # One annotation: GitHub caps how many it keeps per step.
+          MSG=$(sed -e 's/%/%25/g' -e 's/\r/%0D/g' errors.txt | awk '{printf "%s%%0A", $0}')
+          echo "::error::${MSG}"
 
       - name: Sign APK
         uses: ilharp/sign-android-release@v2.0.0
