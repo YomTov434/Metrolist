@@ -37,7 +37,9 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build Release APK (No Lint)
-        run: ./gradlew --console=plain assembleFossRelease --warning-mode summary -x lint -x lintFossRelease
+        run: |
+          set -o pipefail
+          ./gradlew --console=plain assembleFossRelease --warning-mode summary -x lint -x lintFossRelease 2>&1 | tee build-output.log
         env:
           METROLIST_APPLICATION_ID: com.metrolist.music.test
           METROLIST_APP_NAME: Metrolist Testing
@@ -45,6 +47,15 @@ jobs:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           LASTFM_API_KEY: ${{ secrets.LASTFM_API_KEY }}
           LASTFM_SECRET: ${{ secrets.LASTFM_SECRET }}
+
+      # Surfaces compiler errors as check annotations, which are readable
+      # through the API even when the raw log archive is not.
+      - name: Report build errors
+        if: failure()
+        run: |
+          grep -E '^(e: |w: .*error|FAILURE:|Caused by:|\* What went wrong)' build-output.log \
+            | head -40 \
+            | while IFS= read -r line; do echo "::error::${line}"; done
 
       - name: Sign APK
         uses: ilharp/sign-android-release@v2.0.0
