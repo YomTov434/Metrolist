@@ -207,6 +207,7 @@ import com.metrolist.music.ui.theme.MetrolistTheme
 import com.metrolist.music.ui.theme.extractThemeColor
 import com.metrolist.music.ui.utils.appBarScrollBehavior
 import com.metrolist.music.ui.utils.resetHeightOffset
+import com.metrolist.music.update.AppUpdateController
 import com.metrolist.music.utils.ReleaseInfo
 import com.metrolist.music.utils.SearchRoutes
 import com.metrolist.music.utils.SyncUtils
@@ -496,8 +497,14 @@ class MainActivity : FragmentActivity() {
                 Updater.refreshMandatoryUpdateState(forceRefresh = true)
             }
 
+            // A variant switch installs the latest release itself, so the gate
+            // would only interrupt it — and a configuration change mid-download
+            // used to do exactly that.
+            val updatePurpose by AppUpdateController.purpose.collectAsStateWithLifecycle()
+            val switchingVariant = updatePurpose == AppUpdateController.Purpose.VARIANT_SWITCH
+
             val mandatoryRelease = pendingMandatoryUpdate
-            if (mandatoryRelease != null) {
+            if (mandatoryRelease != null && !switchingVariant) {
                 MandatoryUpdateScreen(releaseInfo = mandatoryRelease)
             } else {
                 MetrolistApp(

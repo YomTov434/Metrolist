@@ -21,10 +21,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -33,13 +32,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.metrolist.music.BuildConfig
 import com.metrolist.music.R
-import com.metrolist.music.update.UpdateInstaller
+import com.metrolist.music.update.AppUpdateController
 import com.metrolist.music.utils.Updater
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import timber.log.Timber
-import java.io.File
 
 private const val GMS_VARIANT = "gms"
 private const val FOSS_VARIANT = "foss"
@@ -56,59 +50,42 @@ private fun hasPlayServices(context: Context): Boolean =
  * Lets the user move between the plain build and the one with Google Cast.
  * Both share an application id and signing key, so the download installs over
  * the current app and the library and settings survive.
- *
- * Not offered on the IzzyOnDroid build, which ships without the updater.
  */
 @Composable
 fun VariantSwitchCard(modifier: Modifier = Modifier) {
     if (!BuildConfig.UPDATER_AVAILABLE) return
 
     val context = LocalContext.current
-    val scope = rememberCoroutineScope()
 
     val targetVariant = if (Updater.currentVariant == GMS_VARIANT) FOSS_VARIANT else GMS_VARIANT
     val switchingToCast = targetVariant == GMS_VARIANT
 
-    var busy by remember { mutableStateOf(false) }
-    var progress by remember { mutableFloatStateOf(0f) }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
+    // Owned by AppUpdateController, so rotating the device or leaving this
+    // screen does not cancel a switch that is already downloading.
+    val state by AppUpdateController.state.collectAsStateWithLifecycle()
+    val purpose by AppUpdateController.purpose.collectAsStateWithLifecycle()
+    val isSwitching = purpose == AppUpdateController.Purpose.VARIANT_SWITCH
+
     var confirmMissingPlayServices by remember { mutableStateOf(false) }
 
+    val busy = isSwitching && state !is AppUpdateController.State.Failed &&
+        state != AppUpdateController.State.Idle
+    val progress =
+        (state as? AppUpdateController.State.Downloading)
+            ?.takeIf { it.totalBytes > 0 }
+            ?.let { (it.bytesRead.toFloat() / it.totalBytes).coerceIn(0f, 1f) }
+    val errorMessage = (state as? AppUpdateController.State.Failed)?.message?.takeIf { isSwitching }
+
     fun startSwitch() {
-        busy = true
-        progress = 0f
-        errorMessage = null
-        scope.launch {
-            runCatching {
-                val release = Updater.getLatestRelease(forceRefresh = true).getOrThrow()
-                val url = Updater.getDownloadUrlForVariant(release, targetVariant)
-                    ?: throw IllegalStateException("No $targetVariant asset in release ${release.tagName}")
-
-                val dest = File(context.cacheDir, "variant-$targetVariant.apk")
-                UpdateInstaller.downloadApk(url, dest) { read, total ->
-                    if (total > 0) progress = read.toFloat() / total
-                }
-
-                val installed =
-                    if (UpdateInstaller.isRootAvailable()) {
-                        UpdateInstaller.installApkSilently(dest)
-                    } else {
-                        false
-                    }
-
-                withContext(Dispatchers.Main) {
-                    if (installed) {
-                        UpdateInstaller.relaunchApp(context)
-                    } else {
-                        // No root, or pm refused: hand the file to the system installer.
-                        UpdateInstaller.installApkViaSystemPicker(context, dest)
-                    }
-                }
-            }.onFailure {
-                Timber.e(it, "Variant switch failed")
-                errorMessage = it.message ?: "unknown error"
-            }
-            busy = false
+        AppUpdateController.reset()
+        AppUpdateController.start(
+            context = context,
+            purpose = AppUpdateController.Purpose.VARIANT_SWITCH,
+            fileName = "variant-$targetVariant.apk",
+        ) {
+            val release = Updater.getLatestRelease(forceRefresh = true).getOrThrow()
+            Updater.getDownloadUrlForVariant(release, targetVariant)
+                ?: throw IllegalStateException("No $targetVariant asset in release ${release.tagName}")
         }
     }
 
@@ -139,10 +116,14 @@ fun VariantSwitchCard(modifier: Modifier = Modifier) {
 
             if (busy) {
                 Spacer(Modifier.height(16.dp))
-                LinearProgressIndicator(
-                    progress = { progress },
-                    modifier = Modifier.fillMaxWidth(),
-                )
+                if (progress != null) {
+                    LinearProgressIndicator(
+                        progress = { progress },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                } else {
+                    LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                }
                 Spacer(Modifier.height(8.dp))
                 Text(
                     text = stringResource(R.string.variant_switch_downloading),

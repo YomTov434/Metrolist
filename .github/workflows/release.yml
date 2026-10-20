@@ -96,8 +96,6 @@ jobs:
             variantName: Foss
           - variant: gms
             variantName: Gms
-          - variant: izzy
-            variantName: Izzy
 
     steps:
       - uses: actions/checkout@v7
@@ -157,8 +155,6 @@ jobs:
 
           if [ "${{ matrix.variant }}" = "gms" ]; then
             TARGET_NAME="Metrolist-with-Google-Cast.apk"
-          elif [ "${{ matrix.variant }}" = "izzy" ]; then
-            TARGET_NAME="Metrolist-izzy.apk"
           else
             TARGET_NAME="Metrolist.apk"
           fi
@@ -171,7 +167,7 @@ jobs:
       - name: Upload Signed APKs
         uses: actions/upload-artifact@v7
         with:
-          name: ${{ matrix.variant == 'gms' && 'Metrolist-with-Google-Cast' || matrix.variant == 'izzy' && 'Metrolist-izzy' || 'Metrolist' }}
+          name: ${{ matrix.variant == 'gms' && 'Metrolist-with-Google-Cast' || 'Metrolist' }}
           path: app/build/outputs/apk/${{ matrix.variant }}/release/out/*.apk
 
   create-release:

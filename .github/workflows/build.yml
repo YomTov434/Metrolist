@@ -33,11 +33,9 @@ jobs:
     strategy:
       matrix:
         include:
-          # FOSS and Izzy differ from GMS only by ~80 lines of Cast stubs,
-          # plus the updater flag for Izzy (GMS and FOSS enable the updater,
-          # Izzy disables it). Both are still built by the release workflow,
-          # so building them nightly too doubled this workflow for almost no
-          # extra coverage.
+          # FOSS differs from GMS only by ~80 lines of Cast stubs, and the
+          # release workflow builds it anyway, so building it nightly too
+          # doubled this workflow for almost no extra coverage.
           - variant: gms
             variantName: Gms
 
@@ -106,11 +104,9 @@ jobs:
     strategy:
       matrix:
         include:
-          # FOSS and Izzy differ from GMS only by ~80 lines of Cast stubs,
-          # plus the updater flag for Izzy (GMS and FOSS enable the updater,
-          # Izzy disables it). Both are still built by the release workflow,
-          # so building them nightly too doubled this workflow for almost no
-          # extra coverage.
+          # FOSS differs from GMS only by ~80 lines of Cast stubs, and the
+          # release workflow builds it anyway, so building it nightly too
+          # doubled this workflow for almost no extra coverage.
           - variant: gms
             variantName: Gms
 
