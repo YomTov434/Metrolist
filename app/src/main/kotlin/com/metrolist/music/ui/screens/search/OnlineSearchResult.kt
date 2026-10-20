@@ -547,8 +547,6 @@ private fun String.toLocalizedSearchSection(): String =
         "Albums" -> stringResource(R.string.albums)
         "Artists" -> stringResource(R.string.artists)
         "Playlists" -> stringResource(R.string.playlists)
-        "Podcasts" -> stringResource(R.string.filter_podcasts)
-        "Episodes" -> stringResource(R.string.filter_episodes)
         "Profiles" -> stringResource(R.string.filter_profiles)
         else -> this
     }
