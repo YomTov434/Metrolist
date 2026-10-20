@@ -11,6 +11,17 @@ Customers read this text on the update screen, so write it for them —
 what changed and why it matters — in Hebrew first, then English.
 -->
 
+---v112
+## תיקונים
+
+- הורדת העדכון כבר לא נעצרת באמצע כשמסובבים את המסך או יוצאים מהמסך. ההורדה ממשיכה ברקע עד הסוף.
+
+---
+
+## Fixes
+
+- Downloading an update no longer stops halfway when you rotate the screen or leave the screen. It keeps going in the background.
+
 ---v111
 ## מה חדש
 
