@@ -41,7 +41,7 @@ android {
         minSdk = 26
         targetSdk = 36
         // Gold Communications' own versionCode sequence, starting at 100.
-        versionCode = 111
+        versionCode = 112
         versionName = "13.7.0"
         val baseVersionName = requireNotNull(versionName)
         buildConfigField("String", "BASE_VERSION_NAME", "\"$baseVersionName\"")
@@ -84,13 +84,6 @@ android {
             dimension = "variant"
             buildConfigField("Boolean", "CAST_AVAILABLE", "true")
             buildConfigField("Boolean", "UPDATER_AVAILABLE", "true")
-        }
-
-        // IzzyOnDroid - no gcast, no updater - the ONLY F-droid compliant build
-        create("izzy") {
-            dimension = "variant"
-            buildConfigField("Boolean", "CAST_AVAILABLE", "false")
-            buildConfigField("Boolean", "UPDATER_AVAILABLE", "false")
         }
     }
 

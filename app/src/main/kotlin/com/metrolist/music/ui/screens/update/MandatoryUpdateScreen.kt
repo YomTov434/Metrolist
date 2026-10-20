@@ -23,10 +23,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -35,60 +32,31 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.metrolist.music.R
 import com.metrolist.music.ui.theme.MetrolistTheme
-import com.metrolist.music.update.UpdateInstaller
+import com.metrolist.music.update.AppUpdateController
 import com.metrolist.music.utils.ReleaseInfo
 import com.metrolist.music.utils.Updater
-import kotlinx.coroutines.launch
-import java.io.File
 import java.util.Locale
-
-private sealed interface MandatoryUpdateState {
-    data object Idle : MandatoryUpdateState
-    data class Downloading(val bytesRead: Long, val totalBytes: Long) : MandatoryUpdateState
-    data object Installing : MandatoryUpdateState
-    data object AwaitingManualInstall : MandatoryUpdateState
-    data class Failed(val message: String) : MandatoryUpdateState
-}
 
 @Composable
 fun MandatoryUpdateScreen(releaseInfo: ReleaseInfo) {
     val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
 
-    var state by remember { mutableStateOf<MandatoryUpdateState>(MandatoryUpdateState.Idle) }
+    // Held by AppUpdateController rather than by this composable, so rotating
+    // the device does not cancel a download that is already running.
+    val state by AppUpdateController.state.collectAsStateWithLifecycle()
 
     // This screen has no navigation escape hatch: the system back gesture/button
     // must not be able to dismiss it while a mandatory update is pending.
     BackHandler(enabled = true) {}
 
     fun startUpdate() {
-        state = MandatoryUpdateState.Downloading(0L, 0L)
-        coroutineScope.launch {
-            try {
-                val downloadUrl =
-                    Updater.getDownloadUrlForCurrentVariant(releaseInfo)
-                        ?: throw IllegalStateException("No compatible APK found for this device")
-                val destFile = File(context.cacheDir, "update.apk")
-
-                UpdateInstaller.downloadApk(downloadUrl, destFile) { bytesRead, totalBytes ->
-                    state = MandatoryUpdateState.Downloading(bytesRead, totalBytes)
-                }
-
-                state = MandatoryUpdateState.Installing
-
-                if (UpdateInstaller.isRootAvailable()) {
-                    if (UpdateInstaller.installApkSilently(destFile)) {
-                        UpdateInstaller.relaunchApp(context)
-                    } else {
-                        state = MandatoryUpdateState.Failed(context.getString(R.string.mandatory_update_failed_title))
-                    }
-                } else {
-                    state = MandatoryUpdateState.AwaitingManualInstall
-                    UpdateInstaller.installApkViaSystemPicker(context, destFile)
-                }
-            } catch (e: Exception) {
-                state = MandatoryUpdateState.Failed(e.message ?: context.getString(R.string.mandatory_update_failed_title))
-            }
+        AppUpdateController.start(
+            context = context,
+            purpose = AppUpdateController.Purpose.UPDATE,
+            fileName = "update.apk",
+        ) {
+            Updater.getDownloadUrlForCurrentVariant(releaseInfo)
+                ?: throw IllegalStateException("No compatible APK found for this device")
         }
     }
 
@@ -111,7 +79,7 @@ fun MandatoryUpdateScreen(releaseInfo: ReleaseInfo) {
                     verticalArrangement = Arrangement.Center,
                 ) {
                     when (val currentState = state) {
-                        MandatoryUpdateState.Idle -> {
+                        AppUpdateController.State.Idle -> {
                             Text(
                                 text = stringResource(R.string.mandatory_update_title),
                                 style = MaterialTheme.typography.headlineSmall,
@@ -148,7 +116,7 @@ fun MandatoryUpdateScreen(releaseInfo: ReleaseInfo) {
                             }
                         }
 
-                        is MandatoryUpdateState.Downloading -> {
+                        is AppUpdateController.State.Downloading -> {
                             Text(
                                 text = stringResource(R.string.mandatory_update_downloading_title),
                                 style = MaterialTheme.typography.headlineSmall,
@@ -189,7 +157,7 @@ fun MandatoryUpdateScreen(releaseInfo: ReleaseInfo) {
                             }
                         }
 
-                        MandatoryUpdateState.Installing -> {
+                        AppUpdateController.State.Installing -> {
                             CircularProgressIndicator()
                             Text(
                                 text = stringResource(R.string.mandatory_update_installing),
@@ -199,7 +167,7 @@ fun MandatoryUpdateScreen(releaseInfo: ReleaseInfo) {
                             )
                         }
 
-                        MandatoryUpdateState.AwaitingManualInstall -> {
+                        AppUpdateController.State.AwaitingManualInstall -> {
                             Text(
                                 text = stringResource(R.string.mandatory_update_confirm_install),
                                 style = MaterialTheme.typography.bodyLarge,
@@ -207,7 +175,7 @@ fun MandatoryUpdateScreen(releaseInfo: ReleaseInfo) {
                             )
                         }
 
-                        is MandatoryUpdateState.Failed -> {
+                        is AppUpdateController.State.Failed -> {
                             Text(
                                 text = stringResource(R.string.mandatory_update_failed_title),
                                 style = MaterialTheme.typography.headlineSmall,
@@ -221,7 +189,7 @@ fun MandatoryUpdateScreen(releaseInfo: ReleaseInfo) {
                                 textAlign = TextAlign.Center,
                             )
                             Button(
-                                onClick = { state = MandatoryUpdateState.Idle },
+                                onClick = { AppUpdateController.reset() },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(top = 24.dp),
