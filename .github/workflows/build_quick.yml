@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -15,7 +15,7 @@ concurrency:
 jobs:
   build_quick:
     name: Quick Universal Release Build
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
     timeout-minutes: 15
 
     steps:
@@ -37,7 +37,9 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build Release APK (No Lint)
-        run: ./gradlew --console=plain assembleFossRelease --warning-mode summary -x lint -x lintFossRelease
+        run: |
+          set -o pipefail
+          ./gradlew --console=plain assembleFossRelease --warning-mode summary -x lint -x lintFossRelease 2>&1 | tee build-output.log
         env:
           METROLIST_APPLICATION_ID: com.metrolist.music.test
           METROLIST_APP_NAME: Metrolist Testing
@@ -45,6 +47,20 @@ jobs:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           LASTFM_API_KEY: ${{ secrets.LASTFM_API_KEY }}
           LASTFM_SECRET: ${{ secrets.LASTFM_SECRET }}
+
+      # Surfaces compiler errors as check annotations, which are readable
+      # through the API even when the raw log archive is not.
+      - name: Report build errors
+        if: failure()
+        run: |
+          {
+            grep -E '^e: ' build-output.log | head -30
+            echo '--- tail ---'
+            tail -60 build-output.log
+          } > errors.txt
+          # One annotation: GitHub caps how many it keeps per step.
+          MSG=$(sed -e 's/%/%25/g' -e 's/\r/%0D/g' errors.txt | awk '{printf "%s%%0A", $0}')
+          echo "::error::${MSG}"
 
       - name: Sign APK
         uses: ilharp/sign-android-release@v2.0.0
@@ -67,3 +83,20 @@ jobs:
         with:
           name: app-universal-test-release
           path: app/build/outputs/apk/foss/release/out/*
+
+      # Also publishes the APK to a DRAFT pre-release so it can be downloaded
+      # through the releases API. A draft is never returned by
+      # /releases/latest, so the in-app updater cannot pick it up.
+      - name: Publish test APK to a draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="test-build"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" app/build/outputs/apk/foss/release/out/*.apk --clobber
+          else
+            gh release create "$TAG" --draft --prerelease \
+              --title "Test build (not for release)" \
+              --notes "Test-signed APK for manual checking. Draft on purpose." \
+              app/build/outputs/apk/foss/release/out/*.apk
+          fi

@@ -159,9 +159,13 @@ object YouTube {
             )
         }
 
-    suspend fun searchSummary(query: String): Result<SearchSummaryPage> =
+    // Background metadata resolution must never write to account search history.
+    suspend fun searchSummary(
+        query: String,
+        recordSearchHistory: Boolean = false,
+    ): Result<SearchSummaryPage> =
         runCatching {
-            val response = innerTube.search(WEB_REMIX, query).body<SearchResponse>()
+            val response = innerTube.search(WEB_REMIX, query, setLogin = recordSearchHistory).body<SearchResponse>()
             val allSummaries = mutableListOf<SearchSummary>()
 
             response.contents
@@ -304,9 +308,10 @@ object YouTube {
     suspend fun search(
         query: String,
         filter: SearchFilter,
+        recordSearchHistory: Boolean = false,
     ): Result<SearchResult> =
         runCatching {
-            val response = innerTube.search(WEB_REMIX, query, filter.value).body<SearchResponse>()
+            val response = innerTube.search(WEB_REMIX, query, filter.value, setLogin = recordSearchHistory).body<SearchResponse>()
             val searchItems = mutableListOf<YTItem>()
             var searchContinuation: String? = null
 
@@ -342,9 +347,12 @@ object YouTube {
             )
         }
 
-    suspend fun searchContinuation(continuation: String): Result<SearchResult> =
+    suspend fun searchContinuation(
+        continuation: String,
+        recordSearchHistory: Boolean = false,
+    ): Result<SearchResult> =
         runCatching {
-            val response = innerTube.search(WEB_REMIX, continuation = continuation).body<SearchResponse>()
+            val response = innerTube.search(WEB_REMIX, continuation = continuation, setLogin = recordSearchHistory).body<SearchResponse>()
             val items =
                 response.continuationContents
                     ?.musicShelfContinuation
@@ -393,12 +401,9 @@ object YouTube {
                                 ?.firstOrNull()
                                 ?.text!!,
                         artists =
-                            response.header.musicDetailHeaderRenderer.subtitle.runs?.filter { it.navigationEndpoint != null }?.map {
-                                Artist(
-                                    name = it.text,
-                                    id = it.navigationEndpoint?.browseEndpoint?.browseId,
-                                )
-                            },
+                            PageHelper
+                                .extractArtists(response.header.musicDetailHeaderRenderer.subtitle.runs)
+                                .takeIf { it.isNotEmpty() },
                         year =
                             response.header.musicDetailHeaderRenderer.subtitle.runs
                                 ?.lastOrNull()
@@ -469,13 +474,8 @@ object YouTube {
                                 ?.musicResponsiveHeaderRenderer
                                 ?.straplineTextOne
                                 ?.runs
-                                ?.oddElements()
-                                ?.map {
-                                    Artist(
-                                        name = it.text,
-                                        id = it.navigationEndpoint?.browseEndpoint?.browseId,
-                                    )
-                                }!!,
+                                ?.let(PageHelper::extractArtists)
+                                ?.takeIf { it.isNotEmpty() },
                         year =
                             response.contents.twoColumnBrowseResultsRenderer.tabs
                                 .firstOrNull()
@@ -998,23 +998,22 @@ object YouTube {
                     ?.let { Artist(name = it.text, id = it.navigationEndpoint?.browseEndpoint?.browseId) }
                 if (fromStrapline != null) return@run fromStrapline
 
-                val detailSubtitle = base?.musicEditablePlaylistDetailHeaderRenderer
-                    ?.header?.musicDetailHeaderRenderer?.subtitle?.runs
-                    ?: response.header?.musicDetailHeaderRenderer?.subtitle?.runs
-                if (detailSubtitle != null) {
-                    val segments = detailSubtitle.splitBySeparator()
-                    val run = segments.getOrNull(1)?.firstOrNull()
-                        ?: segments.firstOrNull()?.firstOrNull()
-                    val fromDetail = run?.let {
-                        Artist(name = it.text, id = it.navigationEndpoint?.browseEndpoint?.browseId)
-                    }
+                    val detailSubtitle =
+                        base
+                            ?.musicEditablePlaylistDetailHeaderRenderer
+                            ?.header
+                            ?.musicDetailHeaderRenderer
+                            ?.subtitle
+                            ?.runs
+                            ?: response.header
+                                ?.musicDetailHeaderRenderer
+                                ?.subtitle
+                                ?.runs
+                    val fromDetail = PageHelper.extractArtists(detailSubtitle).firstOrNull()
                     if (fromDetail != null) return@run fromDetail
-                }
 
-                val fromHeaderSubtitle = header?.subtitle?.runs
-                    ?.firstOrNull { it.navigationEndpoint != null }
-                    ?.let { Artist(name = it.text, id = it.navigationEndpoint?.browseEndpoint?.browseId) }
-                if (fromHeaderSubtitle != null) return@run fromHeaderSubtitle
+                    val fromHeaderSubtitle = PageHelper.extractArtists(header?.subtitle?.runs).firstOrNull()
+                    if (fromHeaderSubtitle != null) return@run fromHeaderSubtitle
 
                 val facepile = header?.facepile?.avatarStackViewModel
                 if (facepile != null) {
@@ -1028,7 +1027,7 @@ object YouTube {
                     ?.let { Artist(name = it.text, id = it.navigationEndpoint?.browseEndpoint?.browseId) }
                 if (fromMusicHeaderStrapline != null) return@run fromMusicHeaderStrapline
 
-                null
+                PlaylistPage.ownerFromDetailSubtitle(detailSubtitle)
             }
 
             val authorAvatarUrl: String? = header?.facepile
@@ -1478,7 +1477,7 @@ object YouTube {
                                         items =
                                             content.musicShelfRenderer.contents
                                                 ?.mapNotNull(MusicShelfRenderer.Content::musicResponsiveListItemRenderer)
-                                                ?.mapNotNull(LibraryPage.Companion::fromMusicResponsiveListItemRenderer)
+                                                ?.mapNotNull { LibraryPage.fromMusicResponsiveListItemRenderer(it) }
                                                 ?: emptyList(),
                                     )
                                 }
@@ -1489,7 +1488,7 @@ object YouTube {
                                         items =
                                             content.musicPlaylistShelfRenderer.contents
                                                 .getItems()
-                                                .mapNotNull(LibraryPage.Companion::fromMusicResponsiveListItemRenderer),
+                                                .mapNotNull { LibraryPage.fromMusicResponsiveListItemRenderer(it) },
                                     )
                                 }
 
@@ -1514,23 +1513,32 @@ object YouTube {
                         setLogin = true,
                     ).body<BrowseResponse>()
 
-            val tab = response.contents?.singleColumnBrowseResultsRenderer?.tabs?.getOrNull(tabIndex)
-                ?: response.contents?.twoColumnBrowseResultsRenderer?.tabs?.getOrNull(tabIndex)
-            val contents = tab
-                ?.tabRenderer
-                ?.content
-                ?.sectionListRenderer
-                ?.contents
-                ?.firstOrNull {
-                    it.gridRenderer != null ||
-                        it.musicShelfRenderer != null ||
-                        it.musicPlaylistShelfRenderer != null ||
-                        it.itemSectionRenderer?.contents.orEmpty().any { child ->
-                            child.gridRenderer != null ||
-                                child.musicShelfRenderer != null ||
-                                child.musicPlaylistShelfRenderer != null
-                        }
-                }
+            val isUploaded = browseId.startsWith("FEmusic_library_privately_owned")
+            val tab =
+                response.contents
+                    ?.singleColumnBrowseResultsRenderer
+                    ?.tabs
+                    ?.getOrNull(tabIndex)
+                    ?: response.contents
+                        ?.twoColumnBrowseResultsRenderer
+                        ?.tabs
+                        ?.getOrNull(tabIndex)
+            val contents =
+                tab
+                    ?.tabRenderer
+                    ?.content
+                    ?.sectionListRenderer
+                    ?.contents
+                    ?.firstOrNull {
+                        it.gridRenderer != null ||
+                            it.musicShelfRenderer != null ||
+                            it.musicPlaylistShelfRenderer != null ||
+                            it.itemSectionRenderer?.contents.orEmpty().any { child ->
+                                child.gridRenderer != null ||
+                                    child.musicShelfRenderer != null ||
+                                    child.musicPlaylistShelfRenderer != null
+                            }
+                    }
             val nestedContents = contents?.itemSectionRenderer?.contents.orEmpty()
             val gridRenderer = contents?.gridRenderer
                 ?: nestedContents.firstNotNullOfOrNull { it.gridRenderer }
@@ -1554,9 +1562,10 @@ object YouTube {
 
                 playlistShelfRenderer != null -> {
                     LibraryPage(
-                        items = playlistShelfRenderer.contents
-                            .getItems()
-                            .mapNotNull(LibraryPage.Companion::fromMusicResponsiveListItemRenderer),
+                        items =
+                            playlistShelfRenderer.contents
+                                .getItems()
+                                .mapNotNull { LibraryPage.fromMusicResponsiveListItemRenderer(it, isUploaded) },
                         continuation = playlistShelfRenderer.continuations?.getContinuation(),
                     )
                 }
@@ -1566,7 +1575,7 @@ object YouTube {
                         .mapNotNull(MusicShelfRenderer.Content::musicResponsiveListItemRenderer)
                     val parsedItems =
                         listItemRenderers.mapNotNull { renderer ->
-                            LibraryPage.fromMusicResponsiveListItemRenderer(renderer)
+                            LibraryPage.fromMusicResponsiveListItemRenderer(renderer, isUploaded)
                         }
                     LibraryPage(
                         items = parsedItems,
@@ -1575,18 +1584,20 @@ object YouTube {
                 }
 
                 else -> LibraryPage(items = emptyList(), continuation = null)
-            }
+            }.copy(isUploaded = isUploaded)
         }
 
-    suspend fun libraryContinuation(continuation: String) =
-        runCatching {
-            val response =
-                innerTube
-                    .browse(
-                        client = WEB_REMIX,
-                        continuation = continuation,
-                        setLogin = true,
-                    ).body<BrowseResponse>()
+    suspend fun libraryContinuation(
+        continuation: String,
+        isUploaded: Boolean = false,
+    ) = runCatching {
+        val response =
+            innerTube
+                .browse(
+                    client = WEB_REMIX,
+                    continuation = continuation,
+                    setLogin = true,
+                ).body<BrowseResponse>()
 
             val contents = response.continuationContents
 
@@ -1608,7 +1619,7 @@ object YouTube {
                                 ?.musicShelfContinuation
                                 ?.contents!!
                                 .mapNotNull(MusicShelfRenderer.Content::musicResponsiveListItemRenderer)
-                                .mapNotNull { LibraryPage.fromMusicResponsiveListItemRenderer(it) },
+                                .mapNotNull { LibraryPage.fromMusicResponsiveListItemRenderer(it, isUploaded) },
                         continuation = contents.musicShelfContinuation.continuations?.getContinuation(),
                     )
                 }
@@ -1827,11 +1838,7 @@ object YouTube {
                                 ?.firstOrNull()
                                 ?.text ?: return null,
                         artists =
-                            renderer.subtitle?.runs?.oddElements()?.drop(1)?.mapNotNull {
-                                it.navigationEndpoint?.browseEndpoint?.browseId?.let { id ->
-                                    Artist(name = it.text, id = id)
-                                }
-                            },
+                            PageHelper.extractArtists(renderer.subtitle?.runs),
                         year =
                             renderer.subtitle
                                 ?.runs

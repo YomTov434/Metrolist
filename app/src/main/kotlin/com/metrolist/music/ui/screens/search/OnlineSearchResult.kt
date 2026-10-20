@@ -73,6 +73,7 @@ import com.metrolist.innertube.YouTube.SearchFilter.Companion.FILTER_FEATURED_PL
 import com.metrolist.innertube.YouTube.SearchFilter.Companion.FILTER_PROFILE
 import com.metrolist.innertube.YouTube.SearchFilter.Companion.FILTER_SONG
 import com.metrolist.innertube.YouTube.SearchFilter.Companion.FILTER_VIDEO
+import com.metrolist.innertube.YouTubeConstants
 import com.metrolist.innertube.models.AlbumItem
 import com.metrolist.innertube.models.ArtistItem
 import com.metrolist.innertube.models.PlaylistItem
@@ -455,7 +456,7 @@ fun OnlineSearchResult(
                     if (searchFilter == null) {
                         searchSummary?.summaries?.forEach { summary ->
                             item {
-                                NavigationTitle(summary.title)
+                                NavigationTitle(summary.title.toLocalizedSearchSection())
                             }
 
                             itemsIndexed(
@@ -535,3 +536,17 @@ fun OnlineSearchResult(
         }
     }
 }
+
+@Composable
+private fun String.toLocalizedSearchSection(): String =
+    when (this) {
+        YouTubeConstants.DEFAULT_TOP_RESULT -> stringResource(R.string.top_result)
+        YouTubeConstants.DEFAULT_OTHER_RESULTS -> stringResource(R.string.other)
+        "Songs" -> stringResource(R.string.songs)
+        "Videos" -> stringResource(R.string.filter_videos)
+        "Albums" -> stringResource(R.string.albums)
+        "Artists" -> stringResource(R.string.artists)
+        "Playlists" -> stringResource(R.string.playlists)
+        "Profiles" -> stringResource(R.string.filter_profiles)
+        else -> this
+    }
