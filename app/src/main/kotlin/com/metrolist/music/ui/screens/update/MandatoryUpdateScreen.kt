@@ -86,7 +86,18 @@ fun MandatoryUpdateScreen(releaseInfo: ReleaseInfo) {
                                 textAlign = TextAlign.Center,
                             )
                             Text(
-                                text = stringResource(R.string.mandatory_update_version_format, releaseInfo.versionName),
+                                // versionName mirrors upstream and repeats across our
+                                // updates, so it cannot tell two of them apart on its own.
+                                text = releaseInfo.versionCode?.let {
+                                    stringResource(
+                                        R.string.mandatory_update_version_code_format,
+                                        releaseInfo.versionName,
+                                        it,
+                                    )
+                                } ?: stringResource(
+                                    R.string.mandatory_update_version_format,
+                                    releaseInfo.versionName,
+                                ),
                                 style = MaterialTheme.typography.bodyLarge,
                                 modifier = Modifier.padding(top = 8.dp),
                                 textAlign = TextAlign.Center,
