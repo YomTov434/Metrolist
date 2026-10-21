@@ -11,6 +11,17 @@ Customers read this text on the update screen, so write it for them —
 what changed and why it matters — in Hebrew first, then English.
 -->
 
+---v113
+## תיקונים
+
+- מסך העדכון מציג עכשיו גם את מספר הגרסה הפנימי, כך שאפשר להבחין בין עדכון לעדכון.
+
+---
+
+## Fixes
+
+- The update screen now shows the internal build number too, so one update can be told apart from the next.
+
 ---v112
 ## תיקונים
 

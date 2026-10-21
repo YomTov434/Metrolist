@@ -299,6 +299,7 @@
     <!-- Mandatory update gate -->
     <string name="mandatory_update_title">נדרש עדכון</string>
     <string name="mandatory_update_version_format">גרסה %s זמינה</string>
+    <string name="mandatory_update_version_code_format">גרסה %1$s (%2$d) זמינה</string>
     <string name="mandatory_update_blocking_message">יש להתקין עדכון זה כדי להמשיך להשתמש באפליקציה.</string>
     <string name="mandatory_update_download_now">הורד עכשיו</string>
     <string name="mandatory_update_downloading_title">מוריד עדכון</string>

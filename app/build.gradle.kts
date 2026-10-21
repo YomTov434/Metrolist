@@ -41,7 +41,7 @@ android {
         minSdk = 26
         targetSdk = 36
         // Gold Communications' own versionCode sequence, starting at 100.
-        versionCode = 112
+        versionCode = 113
         versionName = "13.7.0"
         val baseVersionName = requireNotNull(versionName)
         buildConfigField("String", "BASE_VERSION_NAME", "\"$baseVersionName\"")

@@ -230,25 +230,37 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          echo "Creating release v${{ needs.check-version.outputs.new_version }}"
+          VERSION="${{ needs.check-version.outputs.new_version }}"
+          VERSION_CODE="${{ needs.check-version.outputs.version_code }}"
+
+          # The tag carries the versionCode as well as the versionName, which
+          # stays fixed across internal updates. Keying on the versionName
+          # alone made every release reuse one tag, so each new build
+          # overwrote the previous build's APKs instead of archiving them.
+          TAG="v${VERSION}-${VERSION_CODE}"
+          TITLE="${VERSION} (${VERSION_CODE})"
+
+          echo "Creating release $TAG"
 
           {
-            echo "VersionCode: ${{ needs.check-version.outputs.version_code }}"
+            echo "VersionCode: ${VERSION_CODE}"
             echo "Released by @${{ github.triggering_actor }}"
             echo ""
             cat release_notes.md
           } > attributed_release_notes.md
 
-          TAG="v${{ needs.check-version.outputs.new_version }}"
-
+          # The tag is new for every release, so this normally creates one.
+          # The edit branch only matters when the same version is re-run.
           if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release edit "$TAG" --title "${{ needs.check-version.outputs.new_version }}" --notes-file attributed_release_notes.md --latest
+            gh release edit "$TAG" --title "$TITLE" --notes-file attributed_release_notes.md --latest
             gh release upload "$TAG" release_files/*.apk --clobber
             echo "Release updated successfully!"
           else
-            gh release create "$TAG" --title "${{ needs.check-version.outputs.new_version }}" --notes-file attributed_release_notes.md --latest release_files/*.apk
+            gh release create "$TAG" --title "$TITLE" --notes-file attributed_release_notes.md --latest release_files/*.apk
             echo "Release created successfully!"
           fi
+
+          echo "RELEASE_TAG=$TAG" >> "$GITHUB_ENV"
 
       - name: Update release summary
         run: |
@@ -257,4 +269,4 @@ jobs:
           echo "- **Version Code**: ${{ needs.check-version.outputs.version_code }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Released by**: @${{ github.triggering_actor }}" >> $GITHUB_STEP_SUMMARY
           echo "- **APKs Built**: $(ls release_files/*.apk | wc -l)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Release URL**: https://github.com/${{ github.repository }}/releases/tag/v${{ needs.check-version.outputs.new_version }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Release URL**: https://github.com/${{ github.repository }}/releases/tag/${RELEASE_TAG}" >> $GITHUB_STEP_SUMMARY

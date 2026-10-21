@@ -392,6 +392,7 @@
     <!-- Mandatory update gate -->
     <string name="mandatory_update_title">Update Required</string>
     <string name="mandatory_update_version_format">Version %s is available</string>
+    <string name="mandatory_update_version_code_format">Version %1$s (%2$d) is available</string>
     <string name="mandatory_update_blocking_message">This update must be installed before you can continue using the app.</string>
     <string name="mandatory_update_download_now">Download Now</string>
     <string name="mandatory_update_downloading_title">Downloading Update</string>
